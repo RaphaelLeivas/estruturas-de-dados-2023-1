@@ -18,6 +18,8 @@ Para compilar C, usa `gcc`.
 
 Instale a extensão do VS Code para C / C++. assim temos intellisense e verificação de sintaxe ao desenvolver.
 
+Se a extensão reclamar do include path, tente fechar e abrir o VS Code de novo.
+
 
 ## Formatação automática de codigo
 
