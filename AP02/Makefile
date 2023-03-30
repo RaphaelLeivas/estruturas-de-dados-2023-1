@@ -21,7 +21,7 @@ CFLAGS = -Wall -c -I$(INC) -pg
 EXE = $(BIN)/ap02
 
 run:  $(EXE)
-	$(EXE) -a
+	$(EXE) -b
 	gprof $(EXE) -a gmon.out > tmp/analise.txt	
 
 $(BIN)/ap02: $(OBJS)

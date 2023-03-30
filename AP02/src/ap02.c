@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// #include "../include/customTime.h"
+#include "../include/customTime.h"
 #include "../include/factorial.h"
 #include "../include/fibonacci.h"
 #include "../include/msgassert.h"
@@ -45,19 +45,77 @@ void parse_args(int argc, char **argv) {
 int main(int argc, char **argv) {
   parse_args(argc, argv);
 
-  // int64_t before, after, diff;
-  // struct rusage start, end;
+  int A[] = {1, 3, 5, 10, 15, 20, 25, 30, 35, 40};
+  int B[] = {100, 300, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000};
+  int A_length = sizeof(A) / sizeof(A[0]);
 
-  // getrusage(RUSAGE_SELF, &start);
-  // before = getUnixTimestamp(NANOSECONDS_OPTION);
+  int64_t unixTimestampRecursive[A_length];
+  int64_t unixTimestampIteractive[A_length];
 
-  if (opescolhida == OP_FIBONACCI) {
-    printf("Running OP_FIBONACCI \n");
-    getRecursiveFibonacci(40);
-    getIteractiveFibonacci(400);
-  } else if (opescolhida == OP_FACTORIAL) {
-    printf("Running OP_FACTORIAL \n");
-    getRecursiveFactorial(40);
+  float userTimeRecursive[A_length];
+  float userTimeIteractive[A_length];
+  float systemTimeIteractive[A_length];
+  float systemTimeRecursive[A_length];
+
+  for (int i = 0; i < A_length; i++) {
+    if (opescolhida == OP_FIBONACCI) {
+      // int64_t before = getUnixTimestamp(MICROSECONDS_OPTION);
+
+      struct rusage start, end;
+
+      getrusage(RUSAGE_SELF, &start);
+      getRecursiveFibonacci(A[i]);
+      getrusage(RUSAGE_SELF, &end);
+
+      userTimeRecursive[i] = getUserTimeDiff(&start, &end);
+      systemTimeRecursive[i] = getSystemTimeDiff(&start, &end);
+
+      // int64_t after = getUnixTimestamp(MICROSECONDS_OPTION);
+      // unixTimestampRecursive[i] = after - before;
+
+      // before = getUnixTimestamp(MICROSECONDS_OPTION);
+      getrusage(RUSAGE_SELF, &start);
+      getIteractiveFibonacci(A[i]);
+      getrusage(RUSAGE_SELF, &end);
+
+      // after = getUnixTimestamp(MICROSECONDS_OPTION);
+      // unixTimestampIteractive[i] = after - before;
+
+      userTimeIteractive[i] = getUserTimeDiff(&start, &end);
+      systemTimeIteractive[i] = getSystemTimeDiff(&start, &end);
+    } else if (opescolhida == OP_FACTORIAL) {
+      int64_t before = getUnixTimestamp(MICROSECONDS_OPTION);
+
+      // struct rusage start, end;
+
+      // getrusage(RUSAGE_SELF, &start);
+      getRecursiveFactorial(B[i]);
+      // getrusage(RUSAGE_SELF, &end);
+
+      // userTimeRecursive[i] = getUserTimeDiff(&start, &end);
+      // systemTimeRecursive[i] = getSystemTimeDiff(&start, &end);
+
+      int64_t after = getUnixTimestamp(MICROSECONDS_OPTION);
+      unixTimestampRecursive[i] = after - before;
+
+      before = getUnixTimestamp(MICROSECONDS_OPTION);
+      // getrusage(RUSAGE_SELF, &start);
+      getIteractiveFactorial(B[i]);
+      // getrusage(RUSAGE_SELF, &end);
+
+      after = getUnixTimestamp(MICROSECONDS_OPTION);
+      unixTimestampIteractive[i] = after - before;
+
+      // userTimeIteractive[i] = getUserTimeDiff(&start, &end);
+      // systemTimeIteractive[i] = getSystemTimeDiff(&start, &end);
+    }
+  }
+
+  for (int i = 0; i < A_length; i++) {
+    printf("Iteractive unix = %" PRId64 "", unixTimestampIteractive[i]);
+    printf("     ");
+    printf("recursive unix= %" PRId64 "", unixTimestampRecursive[i]);
+    printf("\n");
   }
 
   // after = getUnixTimestamp(NANOSECONDS_OPTION);
