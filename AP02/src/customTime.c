@@ -54,3 +54,13 @@ int64_t getUnixTimestamp(int option) {
 
   return result;
 };
+
+float getUserTimeDiff(struct rusage *start, struct rusage *end) {
+  return (end->ru_utime.tv_sec - start->ru_utime.tv_sec) +
+         1e-6 * (end->ru_utime.tv_usec - start->ru_utime.tv_usec);
+};
+
+float getSystemTimeDiff(struct rusage *start, struct rusage *end) {
+  return (end->ru_stime.tv_sec - start->ru_stime.tv_sec) +
+         1e-6 * (end->ru_stime.tv_usec - start->ru_stime.tv_usec);
+};

@@ -8,6 +8,8 @@ unsigned int getRecursiveFibonacci(unsigned int n) {
     return 0;
   }
 
+  // printf("Teste system TImeeeee");
+
   if (n == 0) {
     return 0;
   }

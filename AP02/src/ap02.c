@@ -57,13 +57,26 @@ void parse_args(int argc, char **argv)
 
 int main(int argc, char **argv) {
   int64_t before, after, diff;
+  struct rusage start, end;
 
-  before = getUnixTimestamp(MICROSECONDS_OPTION);
-  getRecursiveFibonacci(30);
-  after = getUnixTimestamp(MICROSECONDS_OPTION);
+  getrusage(RUSAGE_SELF, &start);
+  before = getUnixTimestamp(NANOSECONDS_OPTION);
+
+  getRecursiveFibonacci(35);
+
+  after = getUnixTimestamp(NANOSECONDS_OPTION);
+  getrusage(RUSAGE_SELF, &end);
+
+  printf("\n\n\n");
+
+  printf("  CPU time: %.06f sec user, %.06f sec system\n",
+         getUserTimeDiff(&start, &end), getSystemTimeDiff(&start, &end));
+
   diff = after - before;
 
-  printf("%" PRId64 "\n", diff);
+  printf("\n\n\n");
+
+  printf("Unix timestamp time: %" PRId64 "\n", diff);
 
   return 0;
 

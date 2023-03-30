@@ -11,4 +11,8 @@
 
 int64_t getUnixTimestamp(int option);
 
+// funções abaixo extraidas de https://www.delftstack.com/howto/c/getrusage-example-in-c/
+float getUserTimeDiff(struct rusage *start, struct rusage *end);
+float getSystemTimeDiff(struct rusage *start, struct rusage *end);
+
 #endif
