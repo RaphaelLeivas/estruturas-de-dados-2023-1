@@ -1,8 +1,0 @@
-- https://stackoverflow.com/a/27586044
-
-- Diferença entre tempo de sistema e tempo de usuário
-- At a high level, the ru_utime struct returns the amount of time your program has spent doing actual computation, 
-and the ru_stime struct returns the amount of time your program has been waiting for an answer from the kernel when doing disk access, 
-printing to the screen etc.
-
-- IMPORTANTE: Ao chamar o gprof e passar o executável, tem que passar os ARGUMENTOS DO EXERCUTÁVEL TAMBÉM
