@@ -78,3 +78,16 @@ Outra forma de compilar é
 g++ -Wall -g -o test.exe test.cpp
 
 ``` 
+
+## Compilação com Makefile - AP e TPs da disciplina
+
+Use o WSL para compilar, pois o código é testado em Linux. Assim, edite os arquivos pelo
+VS Code (windows) e execute as compilações nos terminais do WSL. Usa o local
+
+
+```
+
+cd /mnt/c/dev/estruturas-de-dados-2023-1
+make run
+
+```

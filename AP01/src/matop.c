@@ -61,6 +61,9 @@ void parse_args(int argc, char **argv)
   // no caso de escolher mais de uma operacao, vale a ultima
   while ((c = getopt(argc, argv, "smtc:p:x:y:lh")) != EOF)
   {
+    printf("%s\n", "------");
+    printf("%d", c);
+    printf("%s\n", "-------");
     switch (c)
     {
     case 'm':
