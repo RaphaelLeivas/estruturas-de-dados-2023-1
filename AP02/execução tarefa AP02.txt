@@ -1,0 +1,18 @@
+- consigo extrair os timestamp e fazer a taerfa
+	* OK
+
+- falta extrair system e user times
+	* OK
+
+- falta enviar argumentos via linha de comando
+	* OK
+	* usar getopt_long para argumentos com mais de uma letra. tem que aprender como usar
+
+- falta usar o gprof para ver consumo de memória
+	* nao pede isso no moodle
+
+- falta fazer o relatorio PDF
+	* faz após a aula de ASDL
+
+
+- usa o timestamp como tempo de relogio, e usa o rusage para os tempos de sistema e usuario, ai compara eles

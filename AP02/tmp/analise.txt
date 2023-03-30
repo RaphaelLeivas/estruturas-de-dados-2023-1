@@ -3,8 +3,8 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  Ts/call  Ts/call  name    
- 75.00      0.04     0.04                             getRecursiveFibonacci
- 25.00      0.06     0.01                             getSystemTimeDiff
+ 97.53      0.79     0.79                             getRecursiveFibonacci
+  2.47      0.81     0.02                             getIteractiveFibonacci
 
  %         the percentage of the total running time of the
 time       program used by this function.

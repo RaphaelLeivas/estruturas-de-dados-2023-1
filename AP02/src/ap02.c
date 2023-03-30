@@ -12,105 +12,67 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/customTime.h"
+// #include "../include/customTime.h"
 #include "../include/factorial.h"
 #include "../include/fibonacci.h"
 #include "../include/msgassert.h"
 
-static int selectedOperation = -1;
-
-#define OP_FACTORIAL 0
 #define OP_FIBONACCI 1
+#define OP_FACTORIAL 2
 
-void parse_args(int argc, char **argv)
-// Descricao: le as opcoes da linha de comando e inicializa variaveis
-// Entrada: argc e argv
-// Saida: selectedOperation
-{
-  // variaveis externas do getopt
-  extern char *optarg;
-  extern int optind;
+// variaveis globais para opcoes
+static int opescolhida;
 
+void parse_args(int argc, char **argv) {
   // variavel auxiliar
   int c;
 
   // inicializacao variaveis globais para opcoes
-  selectedOperation = -1;
+  opescolhida = -1;
 
-  // getopt - letra indica a opcao, : junto a letra indica parametro
-  while ((c = getopt(argc, argv, "smtc:p:x:y:lh")) != EOF) {
-    printf("%s\n", "------");
-    printf("%d", c);
-    printf("%s\n", "-------");
+  while ((c = getopt(argc, argv, "ab")) != EOF) {
     switch (c) {
       case 'a':
-        selectedOperation = OP_FACTORIAL;
+        opescolhida = OP_FIBONACCI;
         break;
       case 'b':
-        selectedOperation = OP_FIBONACCI;
-        break;
       default:
-        exit(1);
+        opescolhida = OP_FACTORIAL;
     }
   }
 }
 
 int main(int argc, char **argv) {
-  int64_t before, after, diff;
-  struct rusage start, end;
+  parse_args(argc, argv);
 
-  getrusage(RUSAGE_SELF, &start);
-  before = getUnixTimestamp(NANOSECONDS_OPTION);
-
-  getRecursiveFibonacci(35);
-
-  after = getUnixTimestamp(NANOSECONDS_OPTION);
-  getrusage(RUSAGE_SELF, &end);
-
-  printf("\n\n\n");
-
-  printf("  CPU time: %.06f sec user, %.06f sec system\n",
-         getUserTimeDiff(&start, &end), getSystemTimeDiff(&start, &end));
-
-  diff = after - before;
-
-  printf("\n\n\n");
-
-  printf("Unix timestamp time: %" PRId64 "\n", diff);
-
-  return 0;
-
+  // int64_t before, after, diff;
   // struct rusage start, end;
 
-  // struct timespec tp;
-  // int result = clock_gettime(CLOCK_MONOTONIC, &tp);
-  // printf("  tp.tv_sec %.06f tp.tv_nsec %.06f sec system\n", tp.tv_sec,
-  //        tp.tv_nsec);
-
   // getrusage(RUSAGE_SELF, &start);
-  // printf("%d", getRecursiveFibonacci(25));
+  // before = getUnixTimestamp(NANOSECONDS_OPTION);
+
+  if (opescolhida == OP_FIBONACCI) {
+    printf("Running OP_FIBONACCI \n");
+    getRecursiveFibonacci(40);
+    getIteractiveFibonacci(400);
+  } else if (opescolhida == OP_FACTORIAL) {
+    printf("Running OP_FACTORIAL \n");
+    getRecursiveFactorial(40);
+  }
+
+  // after = getUnixTimestamp(NANOSECONDS_OPTION);
   // getrusage(RUSAGE_SELF, &end);
 
-  // printf("getRecursiveFibonacci stats:\n");
+  // printf("\n\n\n");
+
   // printf("  CPU time: %.06f sec user, %.06f sec system\n",
-  //        diffUserTime(&start, &end), diffSystemTime(&start, &end));
+  //        getUserTimeDiff(&start, &end), getSystemTimeDiff(&start, &end));
 
-  // getrusage(RUSAGE_SELF, &start);
-  // loopFunc1(NUM_ITERS);
-  // getrusage(RUSAGE_SELF, &end);
+  // diff = after - before;
 
-  // printf("loopFunc2 stats:\n");
-  // printf("  CPU time: %.06f sec user, %.06f sec system\n",
-  //        diffUserTime(&start, &end), diffSystemTime(&start, &end));
+  // printf("\n\n\n");
 
-  // printf("\n");
-  // printf("%d", selectedOperation);
+  // printf("Unix timestamp time: %" PRId64 "\n", diff);
 
-  // printf("%s", "Factorial = ");
-  // printf("%d", getRecursiveFibonacci(10));
-
-  // printf("\n");
-
-  // conclui registro de acesso
   return 0;
 }

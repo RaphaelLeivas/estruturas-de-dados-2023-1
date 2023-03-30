@@ -16,13 +16,13 @@ INC = include
 BIN = bin
 OBJS = $(OBJ)/ap02.o $(OBJ)/customTime.o $(OBJ)/fibonacci.o $(OBJ)/factorial.o
 HDRS = $(INC)/msgassert.h $(INC)/customTime.h $(INC)/fibonacci.h $(INC)/factorial.h
-CFLAGS = -Wall -c -I$(INC)
+CFLAGS = -Wall -c -I$(INC) -pg
 
 EXE = $(BIN)/ap02
 
 run:  $(EXE)
-	$(EXE) -s -x 5 -y 5
-	gprof $(EXE) gmon.out > tmp/analise.txt	
+	$(EXE) -a
+	gprof $(EXE) -a gmon.out > tmp/analise.txt	
 
 $(BIN)/ap02: $(OBJS)
 	$(CC) -pg -o $(BIN)/ap02 $(OBJS) $(LIBS)
