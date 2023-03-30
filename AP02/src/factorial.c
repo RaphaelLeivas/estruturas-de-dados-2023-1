@@ -28,6 +28,11 @@ unsigned int getRecursiveFactorial(unsigned int n) {
     return 0;
   }
 
+  // operação computacional intensa
+  for (int i = 1; i < 1000; i++) {
+    sin(1);
+  };
+
   if (n == 0) {
     return 1;
   }

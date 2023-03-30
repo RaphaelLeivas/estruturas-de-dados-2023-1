@@ -1,14 +1,12 @@
 Flat profile:
 
 Each sample counts as 0.01 seconds.
- no time accumulated
-
   %   cumulative   self              self     total           
- time   seconds   seconds    calls  Ts/call  Ts/call  name    
-  0.00      0.00     0.00       40     0.00     0.00  getUnixTimestamp
-  0.00      0.00     0.00       10     0.00     0.00  getIteractiveFactorial
-  0.00      0.00     0.00       10     0.00     0.00  getRecursiveFactorial
-  0.00      0.00     0.00        1     0.00     0.00  parse_args
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+100.00      0.03     0.03       10     3.00     3.00  getRecursiveFactorial
+  0.00      0.03     0.00       40     0.00     0.00  getUnixTimestamp
+  0.00      0.03     0.00       10     0.00     0.00  getIteractiveFactorial
+  0.00      0.03     0.00        1     0.00     0.00  parse_args
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -46,22 +44,29 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 4 byte(s) no time propagated
+granularity: each sample hit covers 4 byte(s) for 33.33% of 0.03 seconds
 
 index % time    self  children    called     name
-                0.00    0.00      40/40          main [11]
-[1]      0.0    0.00    0.00      40         getUnixTimestamp [1]
+                               18400             getRecursiveFactorial [1]
+                0.03    0.00      10/10          main [2]
+[1]    100.0    0.03    0.00      10+18400   getRecursiveFactorial [1]
+                               18400             getRecursiveFactorial [1]
 -----------------------------------------------
-                0.00    0.00      10/10          main [11]
-[2]      0.0    0.00    0.00      10         getIteractiveFactorial [2]
+                                                 <spontaneous>
+[2]    100.0    0.00    0.03                 main [2]
+                0.03    0.00      10/10          getRecursiveFactorial [1]
+                0.00    0.00      40/40          getUnixTimestamp [3]
+                0.00    0.00      10/10          getIteractiveFactorial [4]
+                0.00    0.00       1/1           parse_args [5]
 -----------------------------------------------
-                               18400             getRecursiveFactorial [3]
-                0.00    0.00      10/10          main [11]
-[3]      0.0    0.00    0.00      10+18400   getRecursiveFactorial [3]
-                               18400             getRecursiveFactorial [3]
+                0.00    0.00      40/40          main [2]
+[3]      0.0    0.00    0.00      40         getUnixTimestamp [3]
 -----------------------------------------------
-                0.00    0.00       1/1           main [11]
-[4]      0.0    0.00    0.00       1         parse_args [4]
+                0.00    0.00      10/10          main [2]
+[4]      0.0    0.00    0.00      10         getIteractiveFactorial [4]
+-----------------------------------------------
+                0.00    0.00       1/1           main [2]
+[5]      0.0    0.00    0.00       1         parse_args [5]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -154,5 +159,5 @@ notice and this notice are preserved.
 
 Index by function name
 
-   [2] getIteractiveFactorial  [1] getUnixTimestamp
-   [3] getRecursiveFactorial   [4] parse_args
+   [4] getIteractiveFactorial  [3] getUnixTimestamp
+   [1] getRecursiveFactorial   [5] parse_args

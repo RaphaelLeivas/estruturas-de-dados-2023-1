@@ -51,7 +51,6 @@ int main(int argc, char **argv) {
 
   int64_t unixTimestampRecursive[A_length];
   int64_t unixTimestampIteractive[A_length];
-
   float userTimeRecursive[A_length];
   float userTimeIteractive[A_length];
   float systemTimeIteractive[A_length];
@@ -112,25 +111,11 @@ int main(int argc, char **argv) {
   }
 
   for (int i = 0; i < A_length; i++) {
-    printf("Iteractive unix = %" PRId64 "", unixTimestampIteractive[i]);
+    printf("Result iteractive unix = %" PRId64 "", unixTimestampIteractive[i]);
     printf("     ");
-    printf("recursive unix= %" PRId64 "", unixTimestampRecursive[i]);
+    printf("Result recursive unix= %" PRId64 "", unixTimestampRecursive[i]);
     printf("\n");
   }
-
-  // after = getUnixTimestamp(NANOSECONDS_OPTION);
-  // getrusage(RUSAGE_SELF, &end);
-
-  // printf("\n\n\n");
-
-  // printf("  CPU time: %.06f sec user, %.06f sec system\n",
-  //        getUserTimeDiff(&start, &end), getSystemTimeDiff(&start, &end));
-
-  // diff = after - before;
-
-  // printf("\n\n\n");
-
-  // printf("Unix timestamp time: %" PRId64 "\n", diff);
 
   return 0;
 }
