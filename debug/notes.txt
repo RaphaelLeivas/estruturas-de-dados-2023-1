@@ -1,0 +1,61 @@
+- rode tudo no wsl. 
+
+- compile o programa normalmente com o make da disciplina, usando a flag -g.
+    - a flag -g tira otimizações do código e permite ação do gdb
+- gdb /mnt/c/dev/estruturas-de-dados-2023-1/debug/bin/primes
+- run [ arg1 arg2 (permite envio de argumentos) ]
+- break 
+    - ele para em um breakpoint, e a partir desse breakpoint vai dando next
+    - seta os break antes do run
+    - break em funções fala os argumentos dessa função também, o que é muito util.
+    - delete {breakpoint_id}
+- next 
+    - ele para ANTES DE EXECUTAR a linha dada. 
+    - quando dou print aqui, ele printa a variaveis ANTES da atribuição
+    da linha exibida pelo next
+- print 
+    - fala o valor de uma variavel, apos um breakpoint
+    - permite fazer operações matemáticas também
+- up and down
+    - permitem mover acima e baixo da stack de chamadas no codigo
+- display
+    - fala pro gdp exibir o valor  deum variavel a todo comando que rodarmos
+    - undisplay {display_id}
+- backtrace
+    - printa a stack de chamada inteira (stack trace)
+    - quando uma função retorna tudo certinho, ela sai da stack
+        - a stack salva as funções "em aberto", pendente retornar
+- step
+    - ao contrario de next, entra dentro das funções
+- continue
+    - continua executando o codigo, sem parar toda hora e parar exclusivamente
+    nos breakpoints
+    - sete os breakpoints, e fique pulando entre eles com continue
+- finish
+    - termina a chamada de função (ate ela retornar e sair da stack)
+- watch (hardware watchpoints)
+    - pede o gdp para olhar a variavel, e quando ela mudar, printar ela
+    - tipo useEffect!
+    - vai dando continue, vendo as mudanças na variavel entre cada watchpoint
+- info breakpoints 
+    - mosta tabela com os ids, onde eles estao, etc
+    - delete {watchpoint_id} - igual delete breakpoints
+    - `delete` apaga todos breakpoints e watchpoints
+- whatis
+    - fala o type de uma variavel
+    - typeof 
+- reverse debugging
+    - começa em uma linha, e vai andando para trás as linhas vendo o que aconteceu
+    antes dessa linha
+    - reverse-next (rn), reverse-step (rs), reverse-continue
+    - target record-full
+set var
+    - permite alterar valores pontuais sem ter que fechar gdb, recompilar, reabrir gdb
+    com novo valor
+
+---- Aprendendo com o gdb
+
+- ponteiros salvam um hexadecimal (endereço da memória)
+- o motivo que falamos o tipo do pointeiro (int*, float*) é para compilador
+saber a o que esse hexadecimal esta se referindo, para ele nao apesar salvar um hex
+la que é impossível saber o que ele representa.
