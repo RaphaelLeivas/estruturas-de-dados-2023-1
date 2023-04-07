@@ -5,8 +5,9 @@ OBJ = obj
 INC = include
 BIN = bin
 OBJS = $(OBJ)/primes.o
-HDRS = 
-CFLAGS = -g -w -c -std=c++14 -I$(INC)
+HDRS =  
+CFLAGS = -g -w -c -std=c++14 -I$(INC) # DEBUGGING
+# CFLAGS = -Wall -c -I$(INC) -pg # PRODUCTION
 
 EXE = $(BIN)/primes
 
