@@ -1,0 +1,14 @@
+O problema é que esta sendo alocado um vetor de 10 posições, indexado de
+0 a 9, e tentando acessar a posição de index 10, que não foi alocada para isso.
+Assim, temos o erro reprotado pelo GDB:
+
+Breakpoint 4, main (argc=1, argv=0x7fffffffe1c8) at src/c1.c:9
+9           a[i] = i;
+1: a[i] = 126161
+2: i = 10
+(gdb) c
+Continuing.
+corrupted size vs. prev_size
+
+A solução é trocar o 11 no loop for para 10, que assim temos garantia que
+não serão acessadas posições não alocadas ao vetor a.
