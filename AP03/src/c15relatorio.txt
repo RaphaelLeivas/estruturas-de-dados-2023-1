@@ -1,0 +1,64 @@
+Temos que a saida retorna erro:
+
+make: *** [Makefile:15: run] Error 1
+
+Usango GDB, Temos
+
+Breakpoint 1, main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:7
+7         for (int i = 1; i < 5; i++) {
+(gdb) print argc
+$1 = 1
+
+Como o programa retorna o valor de argc, e ele tem valor = 1, ao retornar
+1 o compilador acha que teve erro (pois retornou diferente de zero). 
+
+Começamos fazendo o codigo retornar o valor da variavel a. Note que ela sempre
+terá valor igual a 2 em todas interações do loop, pois ele é reinicializada dentro
+do loop a cada interação, como mostra o GDB: 
+
+Breakpoint 2, main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:9
+9           a = inc(a);
+(gdb) display a
+1: a = 1
+(gdb) c
+Continuing.
+
+Breakpoint 2, main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:9
+9           a = inc(a);
+1: a = 1
+(gdb) c
+Continuing.
+
+Breakpoint 2, main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:9
+9           a = inc(a);
+1: a = 1
+(gdb) n
+
+Assim, a solução está implementada, com a resposta no GDB abaixo:
+
+Hardware watchpoint 2: a
+
+Old value = 2
+New value = 3
+main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:8
+8         for (int i = 1; i < 5; i++) {
+(gdb) c
+Continuing.
+
+Hardware watchpoint 2: a
+
+Old value = 3
+New value = 4
+main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:8
+8         for (int i = 1; i < 5; i++) {
+(gdb) c
+Continuing.
+
+Hardware watchpoint 2: a
+
+Old value = 4
+New value = 5
+main (argc=1, argv=0x7fffffffe1c8) at src/c15.c:8
+8         for (int i = 1; i < 5; i++) {
+(gdb) c
+Continuing.

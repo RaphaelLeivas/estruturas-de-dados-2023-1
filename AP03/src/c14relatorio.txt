@@ -1,0 +1,38 @@
+O problema está na inicialização nula da variavel factorial.
+Como ela começa com zero, o produto dela com i sempre é nulo, como mostra o gdb
+
+Breakpoint 1, main () at src/c14.c:10
+10          fact = fact * i;
+1: i = 5
+2: fact = 0
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at src/c14.c:10
+10          fact = fact * i;
+1: i = 6
+2: fact = 0
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at src/c14.c:10
+10          fact = fact * i;
+1: i = 7
+2: fact = 0
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at src/c14.c:10
+10          fact = fact * i;
+1: i = 8
+2: fact = 0
+(gdb)
+
+A solução é 
+
+  int n, i, fact = 1;
+
+A partir da qual temos a resposta final do código como
+
+Positive integer:8
+Factorial 8 = 40320

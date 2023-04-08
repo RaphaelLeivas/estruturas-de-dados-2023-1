@@ -1,0 +1,11 @@
+Olhando o codigo, vemos varios problemas
+- as funções de calculo sempre retornam 0, e nao o valor das operações feitas
+- temos operações de divisao por zero sem proteção
+
+Corrindo e verificando os valores com o GDB, temos
+
+Breakpoint 1, actual_calc (a=13, b=0) at src/c16.c:7
+7         if (b == 0) return 0;
+
+A função actual_calc retorna 0 pois b = 0 (proteção contra divisão por zero).
+Por consequência, a função calc também retorna 0.
