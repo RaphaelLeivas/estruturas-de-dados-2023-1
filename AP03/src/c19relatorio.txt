@@ -1,0 +1,33 @@
+Temos o erro de:
+
+    Program received signal SIGSEGV, Segmentation fault.
+
+Sabemos que a função sum_to_n está funcionando certinha pois o GDB nos mostra que 
+
+Breakpoint 2, sum_to_n (num=884) at src/c19.c:8
+8         int i, sum = 0;
+(gdb) n
+9         for (i = 1; i <= num; i++) sum += i;
+(gdb) n
+10        return sum;
+(gdb) print sum
+$4 = 391170
+
+Assim, sum_to_n recebe o argumento certo (884) e retorna o valor certo (391170). 
+Continuamos isolando o erro até encontrar ele na linha
+
+    sprintf(buf, "sum=%d", sum_to_n(atoi(line)));
+
+que ocorre pois o ponteiro buf nao foi alocado espaço de memória com malloc
+para receber o resultado da soma. Assim, usando
+
+    buf = malloc(LINE_LENGTH * sizeof(char));
+
+onde LINE_LENGTH é um define de valor 10 usado para facilitar a leitura e 
+a manutenção, temos a respota correta do programa final:
+
+bin/c19
+enter a number:
+885
+sum=392055
+Compile successfull.
