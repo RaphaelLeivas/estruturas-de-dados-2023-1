@@ -1,0 +1,14 @@
+Nesse caso não é necessário usar o GDB para encontrar o erro.
+
+Com o loop iterando de 0 a 26, na ultima iteração desse loop temos que ele 
+acessa a posição de memória não alocada de index 26 do vetor source. Assim,
+o comportamento do código não está correto.
+
+A solução é
+
+  for (uint8_t i = 0; i < 26; i++) {
+    *(destination + i) = *(source + i); 
+  }
+
+Assim, o loop só acessa posições de memórias de fato alocadas.
+Usando defines, o codigo fica mais legível.

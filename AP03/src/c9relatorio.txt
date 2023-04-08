@@ -1,0 +1,20 @@
+O erro ocorre pois declaramos uma memória de 10 posições, indexada
+de 0 a 9, e tentamos escrever a memória de posição 10, que não foi alocada.
+
+bin/c9
+corrupted size vs. prev_size
+make: *** [Makefile:15: run] Aborted
+
+A solução enteder que a ultima posição de uma memória de tamanho n é sempre n - 1,
+nesse caso, 9:
+
+  x[9] = 0;
+
+O GDB nos mostra que, com a correção, a ultima posição (9) da memória alocada
+está com o valor 0 setado, enquanto a posição 10 não alocada está com um valor
+aleatório em memória.
+
+(gdb) print x[9]
+$6 = 0
+(gdb) print x[10]
+$7 = 126289
