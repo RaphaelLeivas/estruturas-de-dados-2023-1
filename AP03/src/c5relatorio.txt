@@ -1,0 +1,6 @@
+O código nao apresenta erros, e possui comportamento esperado.
+A operação rand() % ARR_SIZE é garantida de retornar um inteiro entre
+0 e 999, o que nao causará erros de acesso indevido de memória no vetor.
+
+A única melhoria implementada foi liberar a memória alocada:
+    free(intArray);

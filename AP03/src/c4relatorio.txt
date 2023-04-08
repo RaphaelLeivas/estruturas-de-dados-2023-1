@@ -1,0 +1,16 @@
+O erro de segmentation fault estava sendo causadpo pois não foi alocado espaço em
+memória para a struct Matrix. A correção foi
+
+  struct Matrix* rotation3D = malloc(sizeof(struct Matrix));
+
+O teste de preencher e printar todas as posições da matriz também foi feito.
+
+O problema foi encontrado com o GDB através de 
+
+Breakpoint 1, main () at src/c4.c:14
+14        rotation3D->rows = 4;
+(gdb) s
+Program received signal SIGSEGV, Segmentation fault.
+0x000055555555523a in main () at src/c4.c:14
+14        rotation3D->rows = 4;
+(gdb) quit
