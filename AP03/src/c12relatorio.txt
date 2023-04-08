@@ -1,0 +1,18 @@
+Pelo GDB, vemos que o compilador atribui valor inicial zero 
+a um inteiro nao inicializado. 
+
+Breakpoint 1, main () at src/c12.c:5
+5         if (x == 0) {
+(gdb) print x
+$1 = 0
+
+Assim, o codigo precisa saber tratar uma variavel de fato igual a zero 
+de uma variavel nao inicializada. Usamos o artificio de iniciar ela com -1.
+
+  int x = -1;
+
+Dessa forma conseguimos ver se ela é zero pois alguem no codigo efetivamente
+setou ela como zero, e nao que ela apenas nao foi inicializada.
+
+
+

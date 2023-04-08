@@ -1,0 +1,12 @@
+O codigo pode ser reescrito como mostra o arquivo c13correto.txt.
+
+Assim, removemos sobreescritas descessárias de memório, e nao deixamos
+memória alocada sem liberação no final (chamamos free(p)) por ultimo.
+
+Por fim, usamos 
+
+p = (char *)malloc(16 * sizeof(char));
+
+para alocar o espaço de 16 caracteres, usando o sizeof(char).
+
+O GDB nao detectou erros no codigo original e no codigo corrigido.
