@@ -1,0 +1,55 @@
+O primeiro problema é que temos um loop infinito com o while(1).
+Depois, temos que aloca uma memória de 128 bytes a cada loop, sem 
+fazer nada com ela, e assim temos a saída abaixo:
+
+94736725563440
+94736725563584
+94736725563728
+94736725563872
+94736725564016
+94736725564160
+94736725564304
+94736725564448
+94736725564592
+94736725564736
+94736725564880
+94736725565024
+94736725565168
+94736725565312
+94736725565456
+94736725565600
+94736725565744
+94736725565888
+94736725566032
+94736725566176
+94736725566320
+947367255664^Cmake: *** [Makefile:15: run] Interrupt
+
+Assumindo que o objetivo é declarar uma matrix de 128 x 128, o 
+codigo corrigido foi implementado. Com o GDB, verificamos o comportamento esperado
+
+Breakpoint 1, main () at src/c10.c:12
+12          ++i;
+1: p[i] = (int *) 0x55555555d5c0
+2: i = 15
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at src/c10.c:12
+12          ++i;
+1: p[i] = (int *) 0x55555555d7d0
+2: i = 16
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at src/c10.c:12
+12          ++i;
+1: p[i] = (int *) 0x55555555d9e0
+2: i = 17
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at src/c10.c:12
+12          ++i;
+1: p[i] = (int *) 0x55555555dbf0
+2: i = 18

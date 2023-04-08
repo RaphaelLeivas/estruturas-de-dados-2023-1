@@ -1,0 +1,18 @@
+É mais interessante que msg tenha 9 posições, pois a palavra atribuida é uma 
+string de 9 caracteres. A correção foi implementada
+
+Com o GDB, verificamos que o comportamento é condizente com o esperado
+
+Breakpoint 1, main () at src/c11.c:7
+7         char *msg = malloc(9);
+(gdb) display msg
+1: msg = 0x0
+(gdb) n
+8         strcpy(msg, "Holberton");
+1: msg = 0x55555555b330 ""
+(gdb) n
+9         msg[0] = 'R';
+1: msg = 0x55555555b330 "Holberton"
+(gdb) n
+10        printf("%ld, %s\n", (long)getpid(), msg);
+1: msg = 0x55555555b330 "Rolberton"
