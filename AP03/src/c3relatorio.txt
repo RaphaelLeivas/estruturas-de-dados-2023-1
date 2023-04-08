@@ -1,0 +1,6 @@
+Pelo código, entende-se que o objetivo é declarar uma matrix usando malloc.
+Assim, a correção foi implementanda corretamente, usando defines para
+faciltiar o uso do codigo e manutenção.
+
+Não há erros de segmentation fault no codigo original, ele apenas
+não faz nada.
