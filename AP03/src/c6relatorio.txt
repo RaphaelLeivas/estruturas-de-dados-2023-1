@@ -1,0 +1,24 @@
+Faltou apenas atribuir o novo ponteiro realocado de volta para a struct
+passada por referência para a função resizeArray.
+
+array->data = dPtr; // atualiza array->data
+
+Com essa correção, o codigo tem o comportamento esperado.
+
+Não conseguir averiguar com certeza que o novo espaço de memória mudou, pois 
+a variável continua com o mesmo endereço:
+
+Breakpoint 4, resizeArray (array=0x55555555b3b0) at src/c6.c:11
+11          int32_t* dPtr = array->data;
+(gdb) print array->data
+$4 = (int32_t *) 0x55555555b3d0
+(gdb) n
+12          dPtr = realloc(dPtr, 15 * sizeof(int32_t)); //doesn't update array->data
+(gdb) print array->data
+$5 = (int32_t *) 0x55555555b3d0
+(gdb) n
+13          array->data = dPtr;
+(gdb) print array->data
+$6 = (int32_t *) 0x55555555b3d0
+
+

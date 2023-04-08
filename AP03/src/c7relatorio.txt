@@ -1,0 +1,48 @@
+O comportamento do codigo esta correto, como mostra a saída do gdb abaixo
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRS"
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRST"
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRSTU"
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRSTUV"
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRSTUVW"
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRSTUVWX"
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at src/c7.c:8
+8               *(alphabet + i) = 'A' + i;
+1: alphabet = 0x55555555b380 "ABCDEFGHIJKLMNOPQRSTUVWXY"
+(gdb) c
+Continuing.
+ABCDEFGHIJKLMNOPQRSTUVWXYZ[Inferior 1 (process 1502) exited normally]
+(gdb)
+
+Vemos que as letras do alfabeto sao incrementalmente adicionadas ao vetor de caracteres,
+e ao final do código não temos erros de acesso indevida de memória, etc.

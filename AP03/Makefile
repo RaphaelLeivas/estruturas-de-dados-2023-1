@@ -4,21 +4,21 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/c5.o
+OBJS = $(OBJ)/c7.o
 HDRS =  
 CFLAGS = -g -w -c -std=c++14 -I$(INC) # DEBUGGING
 # CFLAGS = -Wall -c -I$(INC) -pg # PRODUCTION
 
-EXE = $(BIN)/c5
+EXE = $(BIN)/c7
 
 run:  $(EXE)
 	$(EXE)
 
-$(BIN)/c5: $(OBJS)
-	$(CC) -pg -o $(BIN)/c5 $(OBJS) $(LIBS)
+$(BIN)/c7: $(OBJS)
+	$(CC) -pg -o $(BIN)/c7 $(OBJS) $(LIBS)
 
-$(OBJ)/c5.o: $(HDRS) $(SRC)/c5.c
-	$(CC) $(CFLAGS) -o $(OBJ)/c5.o $(SRC)/c5.c 
+$(OBJ)/c7.o: $(HDRS) $(SRC)/c7.c
+	$(CC) $(CFLAGS) -o $(OBJ)/c7.o $(SRC)/c7.c 
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

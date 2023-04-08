@@ -1,4 +1,10 @@
 // alocação dinamica de vetores e matrizes
+// quando fazemos struct Matrix* = malloc(sizeof(Matrix)),
+// é como se fosse a mesma coisa que struct Matrix* = new Matrix() em linguagens
+// de alto nivel
+
+// realloc apenas aumenta ou diminui o espaço inicialmente atribuido a um ponteiro
+// com malloc
 
 #include <stdio.h>
 #include <stdlib.h>
