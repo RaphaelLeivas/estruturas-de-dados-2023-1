@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/CircularQueue.o $(OBJ)/AP04.o
-HDRS = $(INC)/CircularQueue.hpp
+OBJS = $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/AP04.o
+HDRS = $(INC)/CircularQueue.hpp $(INC)/Stack.hpp
 CFLAGS = -Wall -c -I$(INC)
 
 EXE = $(BIN)/AP04
@@ -31,6 +31,9 @@ $(OBJ)/AP04.o: $(HDRS) $(SRC)/AP04.cpp
 
 $(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
+
+$(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

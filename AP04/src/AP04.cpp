@@ -3,13 +3,13 @@
 
 #include <iostream>
 
-#include "../include/CircularQueue.hpp"
+#include "../include/Stack.hpp"
 
-#define QUEUE_SIZE 5
+#define STACK_SIZE 5
 
 int main(int argc, char** argv) {
-    CircularQueue* q = new CircularQueue(QUEUE_SIZE);
+    Stack* s = new Stack(STACK_SIZE);
 
-    delete q;
+    delete s;
     return 0;
 }
