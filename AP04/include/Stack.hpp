@@ -12,12 +12,13 @@ class Stack {
     int pop();
     void push(int value);
     bool isEmpty();
-    // void destroy();
+    bool isFull();
     unsigned int getSize();
 
    private:
     unsigned int size;
     CircularQueue* queue;
+    CircularQueue* auxQueue;
 };
 
 #endif

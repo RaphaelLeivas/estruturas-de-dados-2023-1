@@ -12,7 +12,9 @@ int main(int argc, char** argv) {
 
     s->push(10);
     s->push(20);
+    s->push(30);
 
+    std::cout << "Stack value = " << s->pop() << std::endl;
     std::cout << "Stack value = " << s->pop() << std::endl;
     std::cout << "Stack value = " << s->pop() << std::endl;
 
