@@ -5,9 +5,7 @@ Stack::Stack(unsigned int size) {
     this->queue = new CircularQueue(size);
 }
 
-Stack::~Stack() {}
-
-void Stack::destroy() {
+Stack::~Stack() {
     this->queue->empty();
     delete this->queue;
 }

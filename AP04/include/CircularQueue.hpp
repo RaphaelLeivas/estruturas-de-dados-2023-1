@@ -8,9 +8,7 @@ class CircularQueue {
    public:
     CircularQueue(int);
     ~CircularQueue();
-    int getSize();
-    int getRear();
-    int getFront();
+
     void add(int);
     int remove();
     void print();
@@ -18,10 +16,17 @@ class CircularQueue {
     bool isEmpty();
     bool isFull();
 
+    // getters
+    int getSize();
+    int getRear();
+    int getFront();
+
    private:
     int size;
     int front, rear;
     int* queuePointer;
+
+    // setters
     void setSize(int);
     void setRear(int);
     void setFront(int);

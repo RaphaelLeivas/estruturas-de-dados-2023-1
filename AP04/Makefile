@@ -23,6 +23,10 @@ EXE = $(BIN)/AP04
 run:  $(EXE)
 	$(EXE)
 
+dev:  $(EXE)
+	$(EXE)
+	valgrind --leak-check=full --show-leak-kinds=all ./$(BIN)/AP04
+
 $(BIN)/AP04: $(OBJS)
 	$(CC) -pg -o $(BIN)/AP04 $(OBJS) $(LIBS)
 

@@ -8,7 +8,9 @@ CircularQueue::CircularQueue(int size) {
     this->rear = -1;
 }
 
-CircularQueue::~CircularQueue() {}
+CircularQueue::~CircularQueue() {
+    delete[] this->queuePointer;
+}
 
 int CircularQueue::getSize() { return this->size; }
 int CircularQueue::getRear() { return this->rear; }

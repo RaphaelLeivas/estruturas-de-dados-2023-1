@@ -12,7 +12,7 @@ class Stack {
     int pop();
     void push(int value);
     bool isEmpty();
-    void destroy();
+    // void destroy();
     unsigned int getSize();
 
    private:
