@@ -16,7 +16,10 @@ INC = include
 BIN = bin
 OBJS = $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/AP04.o
 HDRS = $(INC)/CircularQueue.hpp $(INC)/Stack.hpp
-CFLAGS = -Wall -c -I$(INC)
+
+CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
+CFLAGS_PROD = -Wall -c -I$(INC) -pg
+CFLAGS = CFLAGS_PROD
 
 EXE = $(BIN)/AP04
 
@@ -25,7 +28,10 @@ run:  $(EXE)
 
 dev:  $(EXE)
 	$(EXE)
-	valgrind --leak-check=full --show-leak-kinds=all ./$(BIN)/AP04
+	valgrind --leak-check=full ./$(BIN)/AP04
+
+$(BIN)/AP04: $(OBJS)
+	$(CC) -pg -o $(BIN)/AP04 $(OBJS) $(LIBS)
 
 $(BIN)/AP04: $(OBJS)
 	$(CC) -pg -o $(BIN)/AP04 $(OBJS) $(LIBS)
