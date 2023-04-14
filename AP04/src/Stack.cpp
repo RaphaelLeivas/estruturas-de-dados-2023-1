@@ -14,10 +14,11 @@ unsigned int Stack::getSize() { return this->size; }
 
 void Stack::push(int value) {
     if (this->isFull()) {
-        throw std::invalid_argument("Unable to pop from stack: Stack is full!");
+        throw std::invalid_argument("Unable to push to stack: Stack is full!");
     }
 
     this->queue->add(value);
+    std::cout << "Pushed to stack: " << value << std::endl;
 }
 
 int Stack::pop() {
@@ -32,7 +33,7 @@ int Stack::pop() {
 
     // copia todos que estao na fila principal para a auxiliar ate chegar no
     // ultimo
-    for (int i = 0; i < size; ++i) {
+    for (unsigned int i = 0; i < size; ++i) {
         result = this->queue->remove();
         if (!this->queue->isEmpty()) {
             this->auxQueue->add(result);
@@ -43,7 +44,7 @@ int Stack::pop() {
     }
 
     // quando a fila principal esvaziar, result guarda a ultima posição
-    // inserida, que é a resposta do Stack.pop()
+    // que é a resposta do Stack.pop()
 
     // agora volta tudo que esta na auxiliar de volta para a fila principal
     while (!this->auxQueue->isEmpty()) {
@@ -51,6 +52,8 @@ int Stack::pop() {
     }
 
     delete this->auxQueue;
+
+    std::cout << "Popped from stack: " << result << std::endl;
 
     return result;
 }
