@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/TP01.o
-HDRS = $(INC)/CircularQueue.hpp $(INC)/Stack.hpp
+OBJS = $(OBJ)/Stack.o $(OBJ)/TP01.o
+HDRS = $(INC)/Stack.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -28,17 +28,16 @@ run:  $(EXE)
 
 dev:  $(EXE)
 	$(EXE)
-	valgrind -s --leak-check=full ./$(BIN)/TP01
 	gdb /mnt/c/dev/estruturas-de-dados-2023-1/TP01/bin/TP01
+
+valgrind:
+	valgrind -s --leak-check=full --show-leak-kinds=reachable ./$(BIN)/TP01
 
 $(BIN)/TP01: $(OBJS)
 	$(CC) -pg -o $(BIN)/TP01 $(OBJS) $(LIBS)
 
 $(OBJ)/TP01.o: $(HDRS) $(SRC)/TP01.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/TP01.o $(SRC)/TP01.cpp
-
-$(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
 
 $(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp

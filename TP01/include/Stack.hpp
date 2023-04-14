@@ -3,22 +3,21 @@
 
 #include <iostream>
 #include <stdexcept>
-#include "CircularQueue.hpp"
 
 class Stack {
    public:
-    Stack(unsigned int size);
+    Stack(int size);
     ~Stack();
-    int pop();
-    void push(int value);
+    float pop();
+    void push(float value);
     bool isEmpty();
     bool isFull();
-    unsigned int getSize();
 
    private:
-    unsigned int size;
-    CircularQueue* queue;
-    CircularQueue* auxQueue;
+    int size;
+    int top;
+    float* stack;
+    void setTop(int index);
 };
 
 #endif
