@@ -12,6 +12,7 @@ class Stack {
     void push(float value);
     bool isEmpty();
     bool isFull();
+    void print();
 
    private:
     int size;

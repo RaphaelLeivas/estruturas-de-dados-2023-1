@@ -1,11 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <iostream>
 
 #include "../include/Stack.hpp"
 
-#define print(a) std::cout << a << std::endl
 #define STACK_SIZE 10
 
 int main(int argc, char** argv) {
@@ -22,6 +20,8 @@ int main(int argc, char** argv) {
     s->push(RANDOM_NUMBERS[7]);
     s->push(RANDOM_NUMBERS[8]);
     s->push(RANDOM_NUMBERS[9]);
+
+    s->print();
 
     s->pop();
     s->pop();
