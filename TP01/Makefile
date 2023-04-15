@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/Stack.o $(OBJ)/TP01.o
-HDRS = $(INC)/Stack.hpp
+OBJS = $(OBJ)/Stack.o $(OBJ)/NumExp.o $(OBJ)/TP01.o
+HDRS = $(INC)/Stack.hpp $(INC)/NumExp.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -41,6 +41,9 @@ $(OBJ)/TP01.o: $(HDRS) $(SRC)/TP01.cpp
 
 $(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp
+
+$(OBJ)/NumExp.o: $(HDRS) $(SRC)/NumExp.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/NumExp.o $(SRC)/NumExp.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out
