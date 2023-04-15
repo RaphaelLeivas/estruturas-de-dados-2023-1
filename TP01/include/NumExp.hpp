@@ -3,15 +3,16 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
-#define EXP_MAX_LENGTH 1000
+#include "Stack.hpp"
 
-// NumExp é essencialmente um vetor de caracteres 
+// NumExp é essencialmente uma string com alguns metodos adicionados
 // usa ele para manipular as expressoes de forma mais modularizada
 
 class NumExp {
    public:
-    NumExp(char* const exp, int size);
+    NumExp(std::string exp);
     ~NumExp();
     void toPostfix();
     void toInfix();
@@ -20,7 +21,7 @@ class NumExp {
     void print();
 
    private:
-    char* exp;
+    std::string exp;
     int size;
 };
 

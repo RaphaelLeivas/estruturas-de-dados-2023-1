@@ -1,15 +1,18 @@
 #include "../include/NumExp.hpp"
 
-NumExp::NumExp(char* const exp, int size) {
+NumExp::NumExp(std::string exp) {
     this->exp = exp;
-    this->size = size;
+    this->size = exp.length();
 }
 
 NumExp::~NumExp() {}
 
-void NumExp::print() {
-    for (int i = 0; i < size; ++i) {
-        std::cout << this->exp[i];
+void NumExp::print() { std::cout << this->exp << std::endl; }
+
+float NumExp::computeResult() {
+    Stack* stack = new Stack(this->size);
+
+    for (int i = 0; i < this->size; ++i) {
+        
     }
-    std::cout << std::endl;
 }

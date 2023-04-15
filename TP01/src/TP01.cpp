@@ -1,29 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <iostream>
+#include <string>
 
 // file management
 #include <fstream>
-#include <string>
 
-#include "../include/Stack.hpp"
 #include "../include/NumExp.hpp"
 
-#define STACK_SIZE 10
-
-
 int main(int argc, char** argv) {
-    NumExp* sum = new NumExp((char*)"Testeee", 7);
-    sum->print();
+    std::ifstream input("/mnt/c/dev/estruturas-de-dados-2023-1/TP01/input.txt");
+    std::string line;
 
-    std::ifstream file;
-    file.open("../texto.txt", std::ios::in);
-    std::string text;
+    while (std::getline(input, line)) {
+        NumExp* sum = new NumExp(line);
+        sum->print();
 
-    if (getline(file, text)) {
-        std::cout << text << std::endl;
+        delete sum;
     }
 
-    delete sum;
     return 0;
 }
