@@ -14,10 +14,12 @@ int main(int argc, char** argv) {
     std::string line;
 
     while (std::getline(input, line)) {
-        NumExp* sum = new NumExp(line);
-        sum->print();
+        NumExp* exp = new NumExp(line);
+        float result = exp->computeExpression();
 
-        delete sum;
+        std::cout << result << std::endl;
+
+        delete exp;
     }
 
     return 0;

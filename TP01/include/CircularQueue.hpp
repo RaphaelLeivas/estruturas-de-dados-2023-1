@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
 
 class CircularQueue {
    public:
