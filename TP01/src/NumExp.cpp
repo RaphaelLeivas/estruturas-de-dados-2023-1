@@ -9,8 +9,8 @@ NumExp::~NumExp() {}
 
 void NumExp::print() { std::cout << this->exp << std::endl; }
 
-float NumExp::computeExpression() {
-    Stack<float>* stack = new Stack<float>(this->size);
+double NumExp::computeExpression() {
+    Stack<double>* stack = new Stack<double>(this->size);
 
     std::istringstream iss(this->exp);
     std::string item;
@@ -23,12 +23,12 @@ float NumExp::computeExpression() {
 
         if (this->isOperator(item)) {
             // se é operador, puxa os dois ultimos da stack
-            float num2 = stack->pop();
-            float num1 = stack->pop();
+            double num2 = stack->pop();
+            double num1 = stack->pop();
 
             // calcula a operação
             char op = item[0];
-            float operationResult = this->computeOperation(op, num1, num2);
+            double operationResult = this->computeOperation(op, num1, num2);
 
             // salva na stack o resultado da operação
             stack->push(operationResult);
@@ -40,7 +40,7 @@ float NumExp::computeExpression() {
     }
 
     // a ultima coisa que sobrou na stack é o resultado da expressão
-    float expressionResult = stack->pop();
+    double expressionResult = stack->pop();
     delete stack;
 
     return expressionResult;
@@ -129,7 +129,7 @@ bool NumExp::isOperator(std::string op) {
     }
 }
 
-float NumExp::computeOperation(char op, float num1, float num2) {
+double NumExp::computeOperation(char op, double num1, double num2) {
     switch (op) {
         case '+': {
             return num1 + num2;

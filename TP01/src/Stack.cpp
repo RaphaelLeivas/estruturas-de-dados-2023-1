@@ -46,5 +46,5 @@ template <typename T> void Stack<T>::print() {
 // assim fica mais limpo e modularizado entre .cpp e .hpp, pois nao precisa
 // modificar as funções para deixar o template genérico
 
-template class Stack<float>;
+template class Stack<double>;
 template class Stack<std::string>;

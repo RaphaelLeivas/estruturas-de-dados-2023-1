@@ -21,7 +21,7 @@ class NumExp {
     ~NumExp();
     void toPostfix();
     void toInfix();
-    float computeExpression();
+    double computeExpression();
     static bool isValid();
     void print();
 
@@ -29,7 +29,7 @@ class NumExp {
     std::string exp;
     int size;
     bool isOperator(std::string);
-    float computeOperation(char, float, float);
+    double computeOperation(char, double, double);
 };
 
 #endif
