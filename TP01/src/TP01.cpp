@@ -10,6 +10,7 @@
 #include "../include/NumExp.hpp"
 
 int main(int argc, char** argv) {
+    // std::ifstream input("/mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s1.n5.i.in");
     std::ifstream input("/mnt/c/dev/estruturas-de-dados-2023-1/TP01/input.txt");
     std::string line;
 
@@ -21,6 +22,13 @@ int main(int argc, char** argv) {
 
         delete exp;
     }
+
+    // NumExp* exp = new NumExp("4 + 5 * 9");
+
+    // exp->toPostfix();
+    // exp->print();
+
+    // delete exp;
 
     return 0;
 }

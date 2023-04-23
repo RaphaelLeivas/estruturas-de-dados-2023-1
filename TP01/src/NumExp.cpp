@@ -10,7 +10,7 @@ NumExp::~NumExp() {}
 void NumExp::print() { std::cout << this->exp << std::endl; }
 
 float NumExp::computeExpression() {
-    Stack* stack = new Stack(this->size);
+    Stack<float>* stack = new Stack<float>(this->size);
 
     std::istringstream iss(this->exp);
     std::string item;
@@ -43,6 +43,30 @@ float NumExp::computeExpression() {
     delete stack;
 
     return expressionResult;
+}
+
+// converte o salvo em exp para pos-fixa
+// assumindo que o que esta salvo em exp é infixa
+void NumExp::toPostfix() {
+    Stack<std::string>* stack = new Stack<std::string>(this->size);
+
+    std::istringstream iss(this->exp);
+    std::string item;
+    std::string result;
+    char delimiter = ' ';
+
+    while (std::getline(iss, item, delimiter)) {
+        if (this->isOperator(item)) {
+            // se é operador, joga ele para a stack
+            stack->push(item);
+        } else {
+            // se não é operador, é um número e joga ele para a string resulado
+            result.append(item);
+        }
+    }
+
+
+    delete stack;
 }
 
 bool NumExp::isOperator(std::string op) {

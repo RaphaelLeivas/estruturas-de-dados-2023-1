@@ -1,16 +1,16 @@
 #include "../include/Stack.hpp"
 
-Stack::Stack(int size) {
+template <typename T> Stack<T>::Stack(int size) {
     this->size = size;
     this->top = -1;
-    this->stack = new float[size];
+    this->stack = new T[size];
 }
 
-Stack::~Stack() { delete[] this->stack; }
+template <typename T> Stack<T>::~Stack() { delete[] this->stack; }
 
-void Stack::setTop(int index) { this->top = index; }
+template <typename T> void Stack<T>::setTop(int index) { this->top = index; }
 
-void Stack::push(float value) {
+template <typename T> void Stack<T>::push(T value) {
     if (this->isFull()) {
         throw std::invalid_argument("Unable to push to stack: Stack is full!");
     }
@@ -19,25 +19,32 @@ void Stack::push(float value) {
     this->stack[top] = value;
 }
 
-float Stack::pop() {
+template <typename T> T Stack<T>::pop() {
     if (this->isEmpty()) {
         throw std::invalid_argument(
             "Unable to pop from stack: Stack is empty!");
     }
 
-    float result = this->stack[top];
+    T result = this->stack[top];
     this->setTop(top - 1);
 
     return result;
 }
 
-bool Stack::isEmpty() { return top == -1; }
-bool Stack::isFull() { return top == size - 1; }
+template <typename T> bool Stack<T>::isEmpty() { return top == -1; }
+template <typename T> bool Stack<T>::isFull() { return top == size - 1; }
 
-void Stack::print() {
+template <typename T> void Stack<T>::print() {
     std::cout << "Top" << std::endl << "------" << std::endl;
     for (int i = top; i >= 0; --i) {
         std::cout << this->stack[i] << std::endl;
     }
     std::cout << "------" << std::endl << "Bottom" << std::endl;
 }
+
+// instancia explicitamente os templates que o codigo vai precisar
+// assim fica mais limpo e modularizado entre .cpp e .hpp, pois nao precisa
+// modificar as funções para deixar o template genérico
+
+template class Stack<float>;
+template class Stack<std::string>;

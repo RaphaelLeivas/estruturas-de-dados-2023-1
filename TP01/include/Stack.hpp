@@ -4,12 +4,12 @@
 #include <iostream>
 #include <stdexcept>
 
-class Stack {
+template <typename T> class Stack {
    public:
     Stack(int size);
     ~Stack();
-    float pop();
-    void push(float value);
+    T pop();
+    void push(T value);
     bool isEmpty();
     bool isFull();
     void print();
@@ -17,7 +17,7 @@ class Stack {
    private:
     int size;
     int top;
-    float* stack;
+    T* stack;
     void setTop(int index);
 };
 
