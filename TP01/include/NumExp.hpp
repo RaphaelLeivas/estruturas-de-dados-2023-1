@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
-#include <regex>
+// #include <regex>
 
 #include "Stack.hpp"
 #include "CircularQueue.hpp"

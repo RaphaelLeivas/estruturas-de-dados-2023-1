@@ -16,8 +16,8 @@ EXE = $(BIN)/TP01
 run:  $(EXE)
 	$(EXE)
 
-# debug:  $(EXE)
-# 	gdb /mnt/c/dev/estruturas-de-dados-2023-1/TP01/bin/TP01
+debug:  $(EXE)
+	gdb /mnt/c/dev/estruturas-de-dados-2023-1/TP01/bin/TP01
 
 valgrind:
 	valgrind -s --leak-check=full --show-leak-kinds=reachable ./$(BIN)/TP01
