@@ -24,12 +24,17 @@ int main(int argc, char** argv) {
     //     delete exp;
     // }
 
-    NumExp* exp = new NumExp("( ( ( ( 4.771053 ) / ( 8.509878 ) ) + ( ( 2.799444 ) - ( 6.606407 ) ) ) - ( ( 3.703479 ) / ( 6.146766 ) ) )" );
+    NumExp* exp = new NumExp("5.946317  1.106634  6.917778  *  7.021876  5.427541  /  -  8.515828  0.091471  /  *  - " );
+    // NumExp* exp = new NumExp("10 20 *" );
     // NumExp* exp = new NumExp("4 + 8 * 5 - 44 / 11" );
 
-    exp->toPostfix();
+    exp->toInfix();
     exp->print();
-    std::cout << std::setprecision(6) << std::fixed << exp->computeExpression() << std::endl;
+    exp->toPostfix();
+
+    std::cout << std::fixed;
+    std::cout.precision(6);
+    std::cout << exp->computeExpression() << std::endl;
 
     delete exp;
 

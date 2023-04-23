@@ -17,6 +17,11 @@ double NumExp::computeExpression() {
     char delimiter = ' ';
 
     while (std::getline(iss, item, delimiter)) {
+        // protecao espaços duplos
+        if (item == "" || item == " ") {
+            continue;
+        }
+
         // remove caracteres especiais da string
         // item = std::regex_replace(item, std::regex("\r"), "");
         // item = std::regex_replace(item, std::regex("\n"), "");
@@ -57,6 +62,11 @@ void NumExp::toPostfix() {
     char delimiter = ' ';
 
     while (std::getline(iss, item, delimiter)) {
+        // protecao espaços duplos
+        if (item == "" || item == " ") {
+            continue;
+        }
+
         if (item == ")") {
             std::string op;
 
@@ -114,6 +124,47 @@ void NumExp::toPostfix() {
         std::string op = stack->pop();
         result.append(op + " ");
     }
+
+    delete stack;
+    this->exp = result;
+
+    return;
+}
+
+// converte o salvo em exp para iofixa
+// assumindo que o que esta salvo em exp é posfixa valida
+void NumExp::toInfix() {
+    Stack<std::string>* stack = new Stack<std::string>(this->size);
+
+    std::istringstream iss(this->exp);
+    std::string item;
+    char delimiter = ' ';
+
+    while (std::getline(iss, item, delimiter)) {
+        // protecao espaços duplos
+        if (item == "" || item == " ") {
+            continue;
+        }
+
+        if (this->isOperator(item)) {
+            // puxa os dois ultimos numeros da stack
+            std::string num1 = stack->pop();
+            std::string num2 = stack->pop();
+
+            // monta expressao infixa com parenteses
+            std::string expression =
+                "( " + num2 + " " + item + " " + num1 + " )";
+
+            // salva a expressao na stack
+            stack->push(expression);
+        } else {
+            // é um numero: joga para a stack
+            stack->push(item);
+        }
+    }
+
+    // ao final, o que restou na stack é a string resultado inteira
+    std::string result = stack->pop();
 
     delete stack;
     this->exp = result;
