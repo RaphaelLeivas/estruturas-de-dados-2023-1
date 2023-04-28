@@ -172,6 +172,10 @@ void NumExp::toInfix() {
     return;
 }
 
+// bool NumExp::isValid() {
+    
+// }
+
 bool NumExp::isOperator(std::string op) {
     if (op == "+" || op == "-" || op == "*" || op == "/") {
         return true;

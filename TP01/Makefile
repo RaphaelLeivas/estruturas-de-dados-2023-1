@@ -4,8 +4,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/Stack.o $(OBJ)/CircularQueue.o $(OBJ)/NumExp.o $(OBJ)/TP01.o
-HDRS = $(INC)/Stack.hpp $(INC)/CircularQueue.hpp $(INC)/NumExp.hpp
+OBJS = $(OBJ)/Stack.o $(OBJ)/NumExp.o $(OBJ)/TP01.o
+HDRS = $(INC)/Stack.hpp $(INC)/NumExp.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
@@ -33,9 +33,6 @@ $(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
 
 $(OBJ)/NumExp.o: $(HDRS) $(SRC)/NumExp.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/NumExp.o $(SRC)/NumExp.cpp
-
-$(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out
