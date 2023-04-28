@@ -22,18 +22,20 @@ class NumExp {
     bool isValid();
     void print();
     double computeExpression();
+    void toPostfix();
+    void toInfix();
+
+    // setters / getters
     void setExpType(ExpType expType);
     void setExp(std::string exp);
     ExpType getExpType();
     std::string getExp();
-    void toPostfix();
-    void toInfix();
 
    private:
     std::string exp;
     ExpType expType;
 
-    // metodos abaixo poderiam ser abstraidos
+    // auxiliares
     bool isOperator(std::string);
     double computeOperation(char, double, double);
 };
