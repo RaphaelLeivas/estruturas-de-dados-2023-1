@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <string>
 #include <sstream>
-// #include <regex>
 
 #include "Stack.hpp"
 
@@ -18,20 +17,26 @@ enum class ExpType { INFIX, POSTFIX };
 
 class NumExp {
    public:
-    NumExp(std::string exp);
+    NumExp(std::string exp, ExpType expType);
     ~NumExp();
-    void toPostfix();
-    void toInfix();
     double computeExpression();
-    static bool isValid();
+    void convertToInfix();
+    void convertToPostfix();
+    bool isValid();
     void print();
 
    private:
     std::string exp;
-    int size;
     ExpType expType;
+    int size;
+    void setExpType(ExpType expType);
+    void setExp(std::string exp);
+
+    // metodos abaixo poderiam ser abstraidos
     bool isOperator(std::string);
     double computeOperation(char, double, double);
+    std::string getPostfix(std::string);
+    std::string getInfix(std::string);
 };
 
 #endif

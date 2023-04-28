@@ -1,7 +1,8 @@
 #include "../include/NumExp.hpp"
 
-NumExp::NumExp(std::string exp) {
+NumExp::NumExp(std::string exp, ExpType expType) {
     this->exp = exp;
+    this->expType = expType;
     this->size = exp.length();
 }
 
@@ -9,10 +10,46 @@ NumExp::~NumExp() {}
 
 void NumExp::print() { std::cout << this->exp << std::endl; }
 
+void NumExp::setExpType(ExpType expType) { this->expType = expType; }
+void NumExp::setExp(std::string exp) { this->exp = exp; }
+
+// converte o salvo em this->exp para infixa
+void NumExp::convertToInfix() {
+    if (this->expType == ExpType::INFIX) {
+        return;
+    }
+
+    std::string currentExp = this->exp;
+    std::string convertedExp = this->getInfix(currentExp);
+    this->setExp(convertedExp);
+    this->setExpType(ExpType::INFIX);
+}
+
+// converte o salvo em this->exp para posfixa
+void NumExp::convertToPostfix() {
+    if (this->expType == ExpType::POSTFIX) {
+        return;
+    }
+
+    std::string currentExp = this->exp;
+    std::string convertedExp = this->getPostfix(currentExp);
+    this->setExp(convertedExp);
+    this->setExpType(ExpType::POSTFIX);
+}
+
 double NumExp::computeExpression() {
+    std::string expressionToCompute;
+
+    if (this->expType == ExpType::INFIX) {
+        expressionToCompute = this->getPostfix(this->exp);
+    } else {
+        expressionToCompute = this->exp;
+    }
+
+    // calcula a expressao via algoritmo de posfixa, que é mais simples
     Stack<double>* stack = new Stack<double>(this->size);
 
-    std::istringstream iss(this->exp);
+    std::istringstream iss(expressionToCompute);
     std::string item;
     char delimiter = ' ';
 
@@ -21,10 +58,6 @@ double NumExp::computeExpression() {
         if (item == "" || item == " ") {
             continue;
         }
-
-        // remove caracteres especiais da string
-        // item = std::regex_replace(item, std::regex("\r"), "");
-        // item = std::regex_replace(item, std::regex("\n"), "");
 
         if (this->isOperator(item)) {
             // se é operador, puxa os dois ultimos da stack
@@ -51,12 +84,11 @@ double NumExp::computeExpression() {
     return expressionResult;
 }
 
-// converte o salvo em exp para pos-fixa
-// assumindo que o que esta salvo em exp é infixa
-void NumExp::toPostfix() {
+// converte a string argumento para posfixa, e retorna essa nova string
+std::string NumExp::getPostfix(std::string expression) {
     Stack<std::string>* stack = new Stack<std::string>(this->size);
 
-    std::istringstream iss(this->exp);
+    std::istringstream iss(expression);
     std::string item;
     std::string result;
     char delimiter = ' ';
@@ -126,17 +158,14 @@ void NumExp::toPostfix() {
     }
 
     delete stack;
-    this->exp = result;
-
-    return;
+    return result;
 }
 
-// converte o salvo em exp para iofixa
-// assumindo que o que esta salvo em exp é posfixa valida
-void NumExp::toInfix() {
+// converte a string argumento para infixa, e retorna essa nova string
+std::string NumExp::getInfix(std::string expression) {
     Stack<std::string>* stack = new Stack<std::string>(this->size);
 
-    std::istringstream iss(this->exp);
+    std::istringstream iss(expression);
     std::string item;
     char delimiter = ' ';
 
@@ -167,13 +196,11 @@ void NumExp::toInfix() {
     std::string result = stack->pop();
 
     delete stack;
-    this->exp = result;
-
-    return;
+    return result;
 }
 
 // bool NumExp::isValid() {
-    
+
 // }
 
 bool NumExp::isOperator(std::string op) {
