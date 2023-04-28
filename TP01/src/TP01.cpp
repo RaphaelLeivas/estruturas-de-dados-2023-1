@@ -8,7 +8,7 @@
 // file management
 #include <fstream>
 
-#include "../include/NumExp.hpp"
+#include "../include/NumSolver.hpp"
 
 int main(int argc, char** argv) {
     // std::ifstream input("/mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s1.n5.i.in");
@@ -24,20 +24,24 @@ int main(int argc, char** argv) {
     //     delete exp;
     // }
 
-    NumExp* exp = new NumExp("3 4 + +", ExpType::INFIX);
+    NumSolver* numSolver = new NumSolver();
+    numSolver->save("INFIXA 3 + 4");
+
+    // NumExp* exp = new NumExp("3 4 + +", ExpType::INFIX);
     // NumExp* exp = new NumExp("10 20 *" );
     // NumExp* exp = new NumExp("4 + 8 * 5 - 44 / 11" );
 
     // exp->getInfix();
     // exp->print();
     // exp->getInfix();
-    exp->print();
+    // numSolver->print();
 
-    std::cout << std::fixed;
-    std::cout.precision(6);
-    std::cout << exp->isValid() << std::endl;
+    // std::cout << std::fixed;
+    // std::cout.precision(6);
+    // std::cout << numSolver->solve() << std::endl;
 
-    delete exp;
+    // delete exp;
+    delete numSolver;
 
     return 0;
 }

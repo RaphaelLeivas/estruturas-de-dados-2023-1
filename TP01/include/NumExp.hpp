@@ -2,9 +2,9 @@
 #define NUM_EXP_HPP
 
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
 
 #include "Stack.hpp"
 
@@ -19,24 +19,23 @@ class NumExp {
    public:
     NumExp(std::string exp, ExpType expType);
     ~NumExp();
-    double computeExpression();
-    void convertToInfix();
-    void convertToPostfix();
     bool isValid();
     void print();
+    double computeExpression();
+    void setExpType(ExpType expType);
+    void setExp(std::string exp);
+    ExpType getExpType();
+    std::string getExp();
+    void toPostfix();
+    void toInfix();
 
    private:
     std::string exp;
     ExpType expType;
-    int size;
-    void setExpType(ExpType expType);
-    void setExp(std::string exp);
 
     // metodos abaixo poderiam ser abstraidos
     bool isOperator(std::string);
     double computeOperation(char, double, double);
-    std::string getPostfix(std::string);
-    std::string getInfix(std::string);
 };
 
 #endif
