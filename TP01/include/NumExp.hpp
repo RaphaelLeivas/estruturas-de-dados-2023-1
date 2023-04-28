@@ -2,10 +2,9 @@
 #define NUM_EXP_HPP
 
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
-// #include <regex>
 
 #include "Stack.hpp"
 
@@ -18,18 +17,25 @@ enum class ExpType { INFIX, POSTFIX };
 
 class NumExp {
    public:
-    NumExp(std::string exp);
+    NumExp(std::string exp, ExpType expType);
     ~NumExp();
+    bool isValid();
+    void print();
+    double computeExpression();
     void toPostfix();
     void toInfix();
-    double computeExpression();
-    static bool isValid();
-    void print();
+
+    // setters / getters
+    void setExpType(ExpType expType);
+    void setExp(std::string exp);
+    ExpType getExpType();
+    std::string getExp();
 
    private:
     std::string exp;
-    int size;
     ExpType expType;
+
+    // auxiliares
     bool isOperator(std::string);
     double computeOperation(char, double, double);
 };

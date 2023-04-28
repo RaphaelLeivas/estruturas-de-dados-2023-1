@@ -1,16 +1,23 @@
 #include "../include/NumExp.hpp"
 
-NumExp::NumExp(std::string exp) {
+NumExp::NumExp(std::string exp, ExpType expType) {
     this->exp = exp;
-    this->size = exp.length();
+    this->expType = expType;
 }
 
 NumExp::~NumExp() {}
 
 void NumExp::print() { std::cout << this->exp << std::endl; }
 
+void NumExp::setExpType(ExpType expType) { this->expType = expType; }
+void NumExp::setExp(std::string exp) { this->exp = exp; }
+
+ExpType NumExp::getExpType() { return this->expType; }
+std::string NumExp::getExp() { return this->exp; }
+
 double NumExp::computeExpression() {
-    Stack<double>* stack = new Stack<double>(this->size);
+    // calcula a expressao via algoritmo de posfixa, que é mais simples
+    Stack<double>* stack = new Stack<double>(this->exp.length());
 
     std::istringstream iss(this->exp);
     std::string item;
@@ -21,10 +28,6 @@ double NumExp::computeExpression() {
         if (item == "" || item == " ") {
             continue;
         }
-
-        // remove caracteres especiais da string
-        // item = std::regex_replace(item, std::regex("\r"), "");
-        // item = std::regex_replace(item, std::regex("\n"), "");
 
         if (this->isOperator(item)) {
             // se é operador, puxa os dois ultimos da stack
@@ -51,10 +54,9 @@ double NumExp::computeExpression() {
     return expressionResult;
 }
 
-// converte o salvo em exp para pos-fixa
-// assumindo que o que esta salvo em exp é infixa
+// converte a string argumento para posfixa, e retorna essa nova string
 void NumExp::toPostfix() {
-    Stack<std::string>* stack = new Stack<std::string>(this->size);
+    Stack<std::string>* stack = new Stack<std::string>(this->exp.length());
 
     std::istringstream iss(this->exp);
     std::string item;
@@ -126,15 +128,13 @@ void NumExp::toPostfix() {
     }
 
     delete stack;
-    this->exp = result;
-
-    return;
+    this->setExp(result);
+    this->setExpType(ExpType::POSTFIX);
 }
 
-// converte o salvo em exp para iofixa
-// assumindo que o que esta salvo em exp é posfixa valida
+// converte a string salva para infixa
 void NumExp::toInfix() {
-    Stack<std::string>* stack = new Stack<std::string>(this->size);
+    Stack<std::string>* stack = new Stack<std::string>(this->exp.length());
 
     std::istringstream iss(this->exp);
     std::string item;
@@ -167,14 +167,35 @@ void NumExp::toInfix() {
     std::string result = stack->pop();
 
     delete stack;
-    this->exp = result;
-
-    return;
+    this->setExp(result);
+    this->setExpType(ExpType::INFIX);
 }
 
-// bool NumExp::isValid() {
+bool NumExp::isValid() {
+    // a expressao so é valida se ela conseguir calcular um numero
+
+    // seria melhor ver um algortimo que verifique a string em vez de calcular,
+    // pois assim vou estar calculando a string inteira a toa, sem salvar e sem
+    // o usuario pedir
+
+    // faz calculando direto mesmo, para nao gastar muito tempo
+
+    // na consigo diferenciar infixa invalida de posfixa valida
+    // ex: 3 4 + é valida posfixa, mas invalida infixa: melhorar no futuro
+
+    bool isValid = true;
+
+    try {
+       this->computeExpression();
+    }
+    catch(...) {
+        isValid = false;
+    }
+
+    return true; // temporario ate ter o algorimo correto de validar a string
     
-// }
+    return isValid;
+}
 
 bool NumExp::isOperator(std::string op) {
     if (op == "+" || op == "-" || op == "*" || op == "/") {
