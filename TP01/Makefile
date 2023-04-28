@@ -9,18 +9,35 @@ HDRS = $(INC)/Stack.hpp $(INC)/NumExp.hpp $(INC)/NumSolver.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
-CFLAGS = $(CFLAGS_PROD)
+CFLAGS = $(CFLAGS_DEBUG)
 
 EXE = $(BIN)/TP01
 
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s1.n5.i.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s2.n5.p.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s3.n5.i.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s4.n5.p.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s5.n5.i.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s6.n5.p.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s7.n5.i.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s8.n5.p.in
+
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s11.n10.i.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s12.n10.p.in
+
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s35.n50.i.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s36.n50.p.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s37.n50.i.in
+INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s38.n50.p.in
+
 run:  $(EXE)
-	$(EXE)
+	$(EXE) -f $(INPUTFILE)
 
 debug:  $(EXE)
-	gdb /mnt/c/dev/estruturas-de-dados-2023-1/TP01/bin/TP01
+	gdb --args $(EXE) -f $(INPUTFILE)
 
 valgrind:
-	valgrind -s --leak-check=full --show-leak-kinds=reachable ./$(BIN)/TP01
+	valgrind -s --leak-check=full --show-leak-kinds=reachable $(EXE) -f $(INPUTFILE)
 
 $(BIN)/TP01: $(OBJS)
 	$(CC) -pg -o $(BIN)/TP01 $(OBJS) $(LIBS)

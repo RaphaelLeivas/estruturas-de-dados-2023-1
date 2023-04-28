@@ -6,26 +6,38 @@
 #include <string>
 
 // file management
+#include <getopt.h>
+
 #include <fstream>
 
 #include "../include/NumSolver.hpp"
 
+std::string inputFilePath;
+
+void parse_args(int argc, char** argv) {
+    int c;
+    while ((c = getopt(argc, argv, "f:")) != EOF) {
+        if (c == 'f') {
+            inputFilePath = optarg;
+        }
+    }
+}
+
 int main(int argc, char** argv) {
+    parse_args(argc, argv);
+
     std::cout << std::fixed;
     std::cout.precision(6);
     NumSolver* numSolver = new NumSolver();
 
-    std::ifstream input(
-        "/mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/"
-        "entdouble.s2.n5.p.in");
-
+    std::ifstream input(inputFilePath);
     std::string line;
 
     while (std::getline(input, line)) {
         std::string command = numSolver->parseCommandFromLine(&line);
 
         if (command == INPUT_READ_COMMAND) {
-            numSolver->save(line); // salva o restante que esta na linha
+            numSolver->save(line);  // salva o restante que esta na linha
         } else if (command == INPUT_POSTFIX_COMMAND) {
             numSolver->convertToPostfix();
         } else if (command == INPUT_INFIX_COMMAND) {
