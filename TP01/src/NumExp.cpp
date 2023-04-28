@@ -199,9 +199,29 @@ std::string NumExp::getInfix(std::string expression) {
     return result;
 }
 
-// bool NumExp::isValid() {
+bool NumExp::isValid() {
+    // a expressao so é valida se ela conseguir calcular um numero
 
-// }
+    // seria melhor ver um algortimo que verifique a string em vez de calcular,
+    // pois assim vou estar calculando a string inteira a toa, sem salvar e sem
+    // o usuario pedir
+
+    // faz calculando direto mesmo, para nao gastar muito tempo
+
+    // na consigo diferenciar infixa invalida de posfixa valida
+    // ex: 3 4 + é valida posfixa, mas invalida infixa: melhorar no futuro
+
+    bool isValid = true;
+
+    try {
+       this->computeExpression();
+    }
+    catch(...) {
+        isValid = false;
+    }
+    
+    return isValid;
+}
 
 bool NumExp::isOperator(std::string op) {
     if (op == "+" || op == "-" || op == "*" || op == "/") {

@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
     //     delete exp;
     // }
 
-    NumExp* exp = new NumExp("6.245338  5.326499  7.733752  -  1.093085  /  4.995825  /  5.954532  *  *  4.752909  9.616572  *  8.550690  -  7.844262  5.471297  +  3.332128  7.449099  +  -  -  -  6.671527  0.051021  *  /  0.025147  9.360934  /  0.479166  +  +  7.084182  8.068251  -  8.999193  4.021101  +  +  6.038406  +  * ", ExpType::POSTFIX);
+    NumExp* exp = new NumExp("3 4 + +", ExpType::INFIX);
     // NumExp* exp = new NumExp("10 20 *" );
     // NumExp* exp = new NumExp("4 + 8 * 5 - 44 / 11" );
 
@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 
     std::cout << std::fixed;
     std::cout.precision(6);
-    std::cout << exp->computeExpression() << std::endl;
+    std::cout << exp->isValid() << std::endl;
 
     delete exp;
 
