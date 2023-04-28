@@ -3,19 +3,40 @@
 NumSolver::NumSolver() { this->savedExp = NULL; };
 
 NumSolver::~NumSolver() {
-    delete this->savedExp;
+    if (this->savedExp != NULL) {
+        delete this->savedExp;
+    }
 }
 
-void NumSolver::print() { this->savedExp->print(); }
-
+void NumSolver::printSavedExp() { this->savedExp->print(); }
 NumExp* NumSolver::getSavedExp() { return this->savedExp; }
 void NumSolver::setSavedExp(NumExp* exp) { this->savedExp = exp; };
 
+std::string NumSolver::parseCommandFromLine(std::string* line) {
+    std::string command;
+
+    // encontra a posicao do primeiro espaço
+    unsigned int index = line->find(" ");
+
+    if (index != std::string::npos) {
+        command = line->substr(0, index);
+
+        // remove o comando da linha
+        line->erase(0, index);
+    } else {
+        // nesse caso, o comando é a linha inteira
+        command = *line;
+    }
+
+    return command;
+}
+
 void NumSolver::save(std::string line) {
-    if (line.find(INPUT_INFIX_LABEL) != std::string::npos) {
-        // remove o label da linha
-        int index = line.find(INPUT_INFIX_LABEL);
-        line.erase(index, INPUT_INFIX_LABEL.length());
+    // verifica se precisa ler infixa ou posfixa
+    if (line.find(INPUT_INFIX_COMMAND) != std::string::npos) {
+        // remove o comando da linha
+        int index = line.find(INPUT_INFIX_COMMAND);
+        line.erase(index, INPUT_INFIX_COMMAND.length() + 1);
 
         // gera uma expressao
         NumExp* numExp = new NumExp(line, ExpType::INFIX);
@@ -24,12 +45,10 @@ void NumSolver::save(std::string line) {
         if (numExp->isValid()) {
             this->setSavedExp(numExp);
         }
-
-        delete numExp;
-    } else if (line.find(INPUT_POSTFIX_LABEL) != std::string::npos) {
-        // remove o label da linha
-        int index = line.find(INPUT_POSTFIX_LABEL);
-        line.erase(index, INPUT_POSTFIX_LABEL.length());
+    } else if (line.find(INPUT_POSTFIX_COMMAND) != std::string::npos) {
+        // remove o comando da linha
+        int index = line.find(INPUT_POSTFIX_COMMAND);
+        line.erase(index, INPUT_POSTFIX_COMMAND.length() + 1);
 
         // gera uma expressao
         NumExp* numExp = new NumExp(line, ExpType::POSTFIX);
@@ -38,13 +57,12 @@ void NumSolver::save(std::string line) {
         if (numExp->isValid()) {
             this->setSavedExp(numExp);
         }
-        
-        delete numExp;
     }
 }
 
 void NumSolver::convertToInfix() {
-    if (this->getSavedExp() == NULL || this->savedExp->getExpType() == ExpType::INFIX) {
+    if (this->getSavedExp() == NULL ||
+        this->savedExp->getExpType() == ExpType::INFIX) {
         return;
     }
 
@@ -53,7 +71,8 @@ void NumSolver::convertToInfix() {
 }
 
 void NumSolver::convertToPostfix() {
-    if (this->getSavedExp() == NULL || this->savedExp->getExpType() == ExpType::POSTFIX) {
+    if (this->getSavedExp() == NULL ||
+        this->savedExp->getExpType() == ExpType::POSTFIX) {
         return;
     }
 
@@ -63,7 +82,8 @@ void NumSolver::convertToPostfix() {
 
 double NumSolver::solve() {
     if (this->getSavedExp() == NULL) {
-        throw std::invalid_argument("Unbale to solve expression: savedExp is null!");;
+        throw std::invalid_argument(
+            "Unable to solve expression: savedExp is null!");
     }
 
     // pega a expressao salva
@@ -76,6 +96,5 @@ double NumSolver::solve() {
 
     double result = expressionToCompute->computeExpression();
 
-    delete expressionToCompute;
     return result;
 }

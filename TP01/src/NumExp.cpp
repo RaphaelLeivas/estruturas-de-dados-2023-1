@@ -191,6 +191,8 @@ bool NumExp::isValid() {
     catch(...) {
         isValid = false;
     }
+
+    return true; // temporario ate ter o algorimo correto de validar a string
     
     return isValid;
 }

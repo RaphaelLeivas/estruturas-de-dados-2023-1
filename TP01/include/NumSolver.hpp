@@ -8,8 +8,10 @@
 
 #include "NumExp.hpp"
 
-const std::string INPUT_INFIX_LABEL = "INFIXA";
-const std::string INPUT_POSTFIX_LABEL = "POSFIXA";
+const std::string INPUT_INFIX_COMMAND = "INFIXA";
+const std::string INPUT_POSTFIX_COMMAND = "POSFIXA";
+const std::string INPUT_READ_COMMAND = "LER";
+const std::string INPUT_SOLVE_COMMAND = "RESOLVE";
 
 class NumSolver {
    public:
@@ -19,9 +21,11 @@ class NumSolver {
     void convertToInfix();
     void convertToPostfix();
     void save(std::string);
-    void print();
+    std::string parseCommandFromLine(std::string*);
+
     NumExp* getSavedExp();
     void setSavedExp(NumExp*);
+    void printSavedExp();
 
    private:
     NumExp* savedExp;

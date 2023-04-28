@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <string>
 
 // file management
@@ -11,37 +11,33 @@
 #include "../include/NumSolver.hpp"
 
 int main(int argc, char** argv) {
-    // std::ifstream input("/mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s1.n5.i.in");
-    // std::ifstream input("/mnt/c/dev/estruturas-de-dados-2023-1/TP01/input.txt");
-    // std::string line;
-
-    // while (std::getline(input, line)) {
-    //     NumExp* exp = new NumExp(line);
-    //     float result = exp->computeExpression();
-
-    //     std::cout << result << std::endl;
-
-    //     delete exp;
-    // }
-
+    std::cout << std::fixed;
+    std::cout.precision(6);
     NumSolver* numSolver = new NumSolver();
-    numSolver->save("INFIXA 3 + 4");
 
-    // NumExp* exp = new NumExp("3 4 + +", ExpType::INFIX);
-    // NumExp* exp = new NumExp("10 20 *" );
-    // NumExp* exp = new NumExp("4 + 8 * 5 - 44 / 11" );
+    std::ifstream input(
+        "/mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/"
+        "entdouble.s2.n5.p.in");
 
-    // exp->getInfix();
-    // exp->print();
-    // exp->getInfix();
-    // numSolver->print();
+    std::string line;
 
-    // std::cout << std::fixed;
-    // std::cout.precision(6);
-    // std::cout << numSolver->solve() << std::endl;
+    while (std::getline(input, line)) {
+        std::string command = numSolver->parseCommandFromLine(&line);
 
-    // delete exp;
+        if (command == INPUT_READ_COMMAND) {
+            numSolver->save(line); // salva o restante que esta na linha
+        } else if (command == INPUT_POSTFIX_COMMAND) {
+            numSolver->convertToPostfix();
+        } else if (command == INPUT_INFIX_COMMAND) {
+            numSolver->convertToInfix();
+        } else if (command == INPUT_SOLVE_COMMAND) {
+            std::cout << numSolver->solve() << std::endl;
+        } else {
+            throw std::invalid_argument(
+                "Unable to execute operation: command is invalid!");
+        }
+    }
+
     delete numSolver;
-
     return 0;
 }
