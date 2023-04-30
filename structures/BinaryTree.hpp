@@ -4,13 +4,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <cctype>
-#include <random>
 
 #include "Node.hpp"
 #include "CircularQueue.hpp"
-
-#define RANDOM_TREE_SIZE 10
 
 enum class WALK_TYPES { PRE_ORDER, POST_ORDER, IN_ORDER, BY_LEVEL };
 
@@ -19,18 +15,17 @@ class BinaryTree {
     BinaryTree();
     ~BinaryTree();
     void insert(int);
-    CircularQueue<int>* walk(WALK_TYPES);
+    void walk(WALK_TYPES);
     void erase();
-    void fillWithRandom();
 
    private:
     Node* root;
     
     void insertRecursive(Node* &node, int item);
     void eraseRecursive(Node* node);
-    void preOrder(Node* node, CircularQueue<int>* &q);
-    void postOrder(Node* node, CircularQueue<int>*& q);
-    void inOrder(Node* node, CircularQueue<int>*& q);
+    void preOrder(Node* node);
+    void postOrder(Node* node);
+    void inOrder(Node* node);
     void byLevel();
 };
 

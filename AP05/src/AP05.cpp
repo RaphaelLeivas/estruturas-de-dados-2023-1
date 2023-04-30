@@ -9,6 +9,7 @@
 #include <getopt.h>
 
 #include "../include/BinaryTree.hpp"
+#include "../include/CircularQueue.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
@@ -19,24 +20,19 @@ void parse_args(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-    // parse_args(argc, argv);
-
+    // gera arvore aleatoria com 10 elementos inteiros
     BinaryTree* tree = new BinaryTree();
+    tree->fillWithRandom();
 
-    tree->insert(5);
-
-    tree->insert(3);
-    tree->insert(2);
-    tree->insert(1);
-
-    tree->insert(4);
-
-    tree->insert(7);
-    tree->insert(6);
-
-    tree->walk(WALK_TYPES::PRE_ORDER);
+    // extrai as filas dos caminhos percorridos
+    CircularQueue<int>* preOrderQueue = tree->walk(WALK_TYPES::PRE_ORDER);
+    CircularQueue<int>* postOrderQueue = tree->walk(WALK_TYPES::POST_ORDER);
+    CircularQueue<int>* inOrderQueue = tree->walk(WALK_TYPES::IN_ORDER);
 
     delete tree;
+    delete preOrderQueue;
+    delete postOrderQueue;
+    delete inOrderQueue;
 
     return 0;
 }

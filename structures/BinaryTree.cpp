@@ -1,17 +1,5 @@
 #include "../include/BinaryTree.hpp"
 
-int getRandomInteger() {
-    using u32 = uint_least32_t;
-    using engine = std::mt19937;
-    std::random_device os_seed;
-    const u32 seed = os_seed();
-
-    engine generator(seed);
-    std::uniform_int_distribution<u32> distribute(1, 100);
-
-    return distribute(generator);
-}
-
 BinaryTree::BinaryTree() { this->root = NULL; }
 
 BinaryTree::~BinaryTree() { this->erase(); }
@@ -21,12 +9,6 @@ void BinaryTree::insert(int item) { this->insertRecursive(this->root, item); }
 void BinaryTree::erase() {
     this->eraseRecursive(this->root);
     this->root = NULL;
-}
-
-void BinaryTree::fillWithRandom() {
-    for (int i = 0; i < RANDOM_TREE_SIZE; ++i) {
-        this->insert(getRandomInteger());
-    }
 }
 
 void BinaryTree::insertRecursive(Node*& node, int item) {
@@ -41,21 +23,18 @@ void BinaryTree::insertRecursive(Node*& node, int item) {
     }
 }
 
-CircularQueue<int>* BinaryTree::walk(WALK_TYPES type) {
-    // fila para salvar a ordem de percurso
-    CircularQueue<int>* q = new CircularQueue<int>(RANDOM_TREE_SIZE);
-
+void BinaryTree::walk(WALK_TYPES type) {
     switch (type) {
         case WALK_TYPES::IN_ORDER:
-            this->inOrder(this->root, q);
+            this->inOrder(this->root);
             break;
 
         case WALK_TYPES::PRE_ORDER:
-            this->preOrder(this->root, q);
+            this->preOrder(this->root);
             break;
 
         case WALK_TYPES::POST_ORDER:
-            this->postOrder(this->root, q);
+            this->postOrder(this->root);
             break;
 
         case WALK_TYPES::BY_LEVEL:
@@ -63,40 +42,38 @@ CircularQueue<int>* BinaryTree::walk(WALK_TYPES type) {
             break;
 
         default:
-            this->inOrder(this->root, q);
+            this->inOrder(this->root);
             break;
     }
-
-    return q;
 }
 
-void BinaryTree::preOrder(Node* node, CircularQueue<int>*& q) {
+void BinaryTree::preOrder(Node* node) {
     if (node != NULL) {
-        q->add(node->getItem());
-        this->preOrder(node->left, q);
-        this->preOrder(node->right, q);
+        node->print();
+        this->preOrder(node->left);
+        this->preOrder(node->right);
     }
 }
 
-void BinaryTree::postOrder(Node* node, CircularQueue<int>*& q) {
+void BinaryTree::postOrder(Node* node) {
     if (node != NULL) {
-        this->postOrder(node->left, q);
-        this->postOrder(node->right, q);
-        q->add(node->getItem());
+        this->postOrder(node->left);
+        this->postOrder(node->right);
+        node->print();
     }
 }
 
-void BinaryTree::inOrder(Node* node, CircularQueue<int>*& q) {
+void BinaryTree::inOrder(Node* node) {
     if (node != NULL) {
-        this->inOrder(node->left, q);
-        q->add(node->getItem());
-        this->inOrder(node->right, q);
+        this->inOrder(node->left);
+        node->print();
+        this->inOrder(node->right);
     }
 }
 
 void BinaryTree::byLevel() {
     // usa fila auxiliar
-    CircularQueue<Node*>* queue = new CircularQueue<Node*>(RANDOM_TREE_SIZE);
+    CircularQueue<Node*>* queue = new CircularQueue<Node*>(100);
     queue->add(this->root);
 
     while (!queue->isEmpty()) {

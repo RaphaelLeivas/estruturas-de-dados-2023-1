@@ -61,7 +61,7 @@ T CircularQueue<T>::remove() {
     }
 
     T data = this->queue[front];
-    this->queue[front] = T();
+    this->queue[front] = NULL;
 
     if (front == rear) {
         this->setFront(-1);
@@ -84,9 +84,8 @@ void CircularQueue<T>::print() {
 template <typename T>
 void CircularQueue<T>::empty() {
     for (int i = 0; i < size; ++i) {
-        this->queue[i] = T();
+        this->queue[i] = NULL;
     }
 }
 
 template class CircularQueue<Node*>;
-template class CircularQueue<int>;
