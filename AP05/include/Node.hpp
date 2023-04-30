@@ -3,15 +3,19 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <string>
+
+#include "Item.hpp"
 
 template <typename T>
 class Node {
    public:
-    Node(T item);
+    Node();
     ~Node();
+    Item<T>* getItem();
 
    private:
-    T item;
+    Item<T>* item;
     Node* left;
     Node* right;
 

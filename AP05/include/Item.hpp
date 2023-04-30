@@ -2,6 +2,7 @@
 #define ITEM_HPP
 
 #include <iostream>
+#include <string>
 
 template <typename T>
 class Item {

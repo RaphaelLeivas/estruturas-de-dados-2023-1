@@ -1,6 +1,9 @@
 #include "../include/Item.hpp"
 
 template <typename T>
+Item<T>::Item() {}
+
+template <typename T>
 Item<T>::Item(int key, T value) {
     this->key = key;
     this->value = value;

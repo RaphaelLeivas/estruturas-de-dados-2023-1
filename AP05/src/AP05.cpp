@@ -9,6 +9,7 @@
 #include <getopt.h>
 
 #include "../include/Item.hpp"
+#include "../include/Node.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
@@ -21,14 +22,13 @@ void parse_args(int argc, char** argv) {
 int main(int argc, char** argv) {
     // parse_args(argc, argv);
 
-    Item<double>* item1 = new Item<double>(0, 52.2);
-    Item<double>* item2 = new Item<double>(1, 65.3);
+    Node<double>* node1 = new Node<double>();
 
-    item1->print();
-    item2->print();
+    node1->getItem()->print();
+    node1->getItem()->setValue(10.552);
+    node1->getItem()->print();
 
-    delete item1;
-    delete item2;
+    delete node1;
 
     return 0;
 }

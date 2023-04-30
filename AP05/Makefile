@@ -4,8 +4,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/Item.o $(OBJ)/AP05.o
-HDRS = $(INC)/Item.hpp
+OBJS = $(OBJ)/Item.o $(OBJ)/Node.o $(OBJ)/AP05.o
+HDRS = $(INC)/Item.hpp $(INC)/Node.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
@@ -30,6 +30,9 @@ $(OBJ)/AP05.o: $(HDRS) $(SRC)/AP05.cpp
 
 $(OBJ)/Item.o: $(HDRS) $(SRC)/Item.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Item.o $(SRC)/Item.cpp
+
+$(OBJ)/Node.o: $(HDRS) $(SRC)/Node.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Node.o $(SRC)/Node.cpp
 
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out
