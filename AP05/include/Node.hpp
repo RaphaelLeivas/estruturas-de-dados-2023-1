@@ -13,13 +13,12 @@ class Node {
     Node();
     ~Node();
     Item<T>* getItem();
+    void setItem(Item<T>*);
 
    private:
     Item<T>* item;
     Node* left;
     Node* right;
-
-    friend class BinaryTree;
 };
 
 #endif

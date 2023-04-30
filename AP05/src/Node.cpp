@@ -18,6 +18,11 @@ Item<T>* Node<T>::getItem() {
     return this->item;
 }
 
+template <typename T>
+void Node<T>::setItem(Item<T>* item) {
+    this->item = item;
+}
+
 template class Node<double>;
 template class Node<std::string>;
 template class Node<int>;
