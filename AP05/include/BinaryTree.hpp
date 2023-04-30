@@ -5,28 +5,26 @@
 #include <stdexcept>
 #include <string>
 
-#include "Item.hpp"
 #include "Node.hpp"
 
 enum class WALK_TYPES { PRE_ORDER, POST_ORDER, IN_ORDER, BY_LEVEL };
 
-template <typename T>
 class BinaryTree {
    public:
     BinaryTree();
     ~BinaryTree();
-    void insert(Item<T>);
+    void insert(int);
     void walk(WALK_TYPES);
     void erase();
 
    private:
-    Node<T>* root;
+    Node* root;
     
-    void insertRecursive(Node<T>* node, Item<T> item);
-    void eraseRecursive(Node<T>* node);
-    void preOrder(Node<T>* node);
-    void postOrder(Node<T>* node);
-    void inOrder(Node<T>* node);
+    void insertRecursive(Node* &node, int item);
+    void eraseRecursive(Node* node);
+    void preOrder(Node* node);
+    void postOrder(Node* node);
+    void inOrder(Node* node);
     void byLevel();
 };
 

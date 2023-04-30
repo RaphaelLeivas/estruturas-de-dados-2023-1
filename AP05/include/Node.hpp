@@ -5,20 +5,18 @@
 #include <stdexcept>
 #include <string>
 
-#include "Item.hpp"
-
-template <typename T>
 class Node {
    public:
     Node();
     ~Node();
-    Item<T>* getItem();
-    void setItem(Item<T>*);
-
-   private:
-    Item<T>* item;
+    int getItem();
+    void setItem(int);
+    void print();
     Node* left;
     Node* right;
+
+   private:
+    int item;
 };
 
 #endif

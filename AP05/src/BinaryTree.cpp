@@ -1,41 +1,35 @@
 #include "../include/BinaryTree.hpp"
 
-template <typename T>
-BinaryTree<T>::BinaryTree() {
-    this->root = NULL
+BinaryTree::BinaryTree() {
+    this->root = NULL;
 }
 
-template <typename T>
-BinaryTree<T>::~BinaryTree() {
+BinaryTree::~BinaryTree() {
     this->erase();
 }
 
-template <typename T>
-void BinaryTree<T>::insert(Item<T> item) {
+void BinaryTree::insert(int item) {
     this->insertRecursive(this->root, item);
 }
 
-template <typename T>
-void BinaryTree<T>::erase() {
+void BinaryTree::erase() {
     this->eraseRecursive(this->root);
     this->root = NULL;
 }
 
-template <typename T>
-void BinaryTree<T>::insertRecursive(Node<T>* node, Item<T> item) {
+void BinaryTree::insertRecursive(Node* &node, int item) {
     if (node == NULL) {
-        node = new Node<T>();
+        node = new Node();
         node->setItem(item);
     } else {
-        if (item.getKey() < node->item.getKey())
+        if (item < node->getItem())
             this->insertRecursive(node->left, item);
         else
             this->insertRecursive(node->right, item);
     }
 }
 
-template <typename T>
-void BinaryTree<T>::walk(WALK_TYPES type) {
+void BinaryTree::walk(WALK_TYPES type) {
     switch (type) {
         case WALK_TYPES::IN_ORDER:
             this->inOrder(this->root);
@@ -59,35 +53,35 @@ void BinaryTree<T>::walk(WALK_TYPES type) {
     }
 }
 
-template <typename T>
-void BinaryTree<T>::preOrder(Node<T>* node) {
+void BinaryTree::preOrder(Node* node) {
     if (node != NULL) {
-        node->getItem()->print();
+        node->print();
         this->preOrder(node->left);
         this->preOrder(node->right);
     }
 }
 
-template <typename T>
-void BinaryTree<T>::postOrder(Node<T>* node) {
+void BinaryTree::postOrder(Node* node) {
     if (node != NULL) {
         this->postOrder(node->left);
         this->postOrder(node->right);
-        node->getItem()->print();
+        node->print();
     }
 }
 
-template <typename T>
-void BinaryTree<T>::inOrder(Node<T>* node) {
+void BinaryTree::inOrder(Node* node) {
     if (node != NULL) {
         this->inOrder(node->left);
-        node->getItem()->print();
+        node->print();
         this->inOrder(node->right);
     }
 }
 
-template <typename T>
-void BinaryTree<T>::eraseRecursive(Node<T>* node) {
+void BinaryTree::byLevel() {
+    return;
+}
+
+void BinaryTree::eraseRecursive(Node* node) {
     if (node != NULL) {
         this->eraseRecursive(node->left);
         this->eraseRecursive(node->right);
@@ -95,9 +89,3 @@ void BinaryTree<T>::eraseRecursive(Node<T>* node) {
         delete node;
     }
 }
-
-
-template class BinaryTree<double>;
-template class BinaryTree<std::string>;
-template class BinaryTree<int>;
-template class BinaryTree<char>;

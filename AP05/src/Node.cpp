@@ -1,29 +1,20 @@
 #include "../include/Node.hpp"
 
-template <typename T>
-Node<T>::Node() {
-    Item<T>* item = new Item<T>();
-    item->setKey(-1);
-
-    this->item = item;
+Node::Node() {
     this->left = NULL;
     this->right = NULL;
 }
 
-template <typename T>
-Node<T>::~Node() {}
+Node::~Node() {}
 
-template <typename T>
-Item<T>* Node<T>::getItem() {
+int Node::getItem() {
     return this->item;
 }
 
-template <typename T>
-void Node<T>::setItem(Item<T>* item) {
+void Node::setItem(int item) {
     this->item = item;
 }
 
-template class Node<double>;
-template class Node<std::string>;
-template class Node<int>;
-template class Node<char>;
+void Node::print() {
+    std::cout << this->item << std::endl;
+}
