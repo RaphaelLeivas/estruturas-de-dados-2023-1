@@ -1,23 +1,17 @@
 #include "../include/BinaryTree.hpp"
 
-BinaryTree::BinaryTree() {
-    this->root = NULL;
-}
+BinaryTree::BinaryTree() { this->root = NULL; }
 
-BinaryTree::~BinaryTree() {
-    this->erase();
-}
+BinaryTree::~BinaryTree() { this->erase(); }
 
-void BinaryTree::insert(int item) {
-    this->insertRecursive(this->root, item);
-}
+void BinaryTree::insert(int item) { this->insertRecursive(this->root, item); }
 
 void BinaryTree::erase() {
     this->eraseRecursive(this->root);
     this->root = NULL;
 }
 
-void BinaryTree::insertRecursive(Node* &node, int item) {
+void BinaryTree::insertRecursive(Node*& node, int item) {
     if (node == NULL) {
         node = new Node();
         node->setItem(item);
@@ -78,7 +72,20 @@ void BinaryTree::inOrder(Node* node) {
 }
 
 void BinaryTree::byLevel() {
-    return;
+    // usa fila auxiliar
+    CircularQueue<Node*>* queue = new CircularQueue<Node*>(100);
+    queue->add(this->root);
+
+    while (!queue->isEmpty()) {
+        Node* node = queue->remove();
+        if (node != NULL) {
+            node->print();
+            queue->add(node->left);
+            queue->add(node->right);
+        }
+    }
+
+    delete queue;
 }
 
 void BinaryTree::eraseRecursive(Node* node) {

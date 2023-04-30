@@ -4,8 +4,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/Item.o $(OBJ)/Node.o $(OBJ)/BinaryTree.o $(OBJ)/AP05.o
-HDRS = $(INC)/Item.hpp $(INC)/Node.hpp $(INC)/BinaryTree.hpp
+OBJS = $(OBJ)/Item.o $(OBJ)/Node.o $(OBJ)/CircularQueue.o $(OBJ)/BinaryTree.o $(OBJ)/AP05.o
+HDRS = $(INC)/Item.hpp $(INC)/Node.hpp  $(INC)/CircularQueue.hpp $(INC)/BinaryTree.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
@@ -33,6 +33,9 @@ $(OBJ)/Item.o: $(HDRS) $(SRC)/Item.cpp
 
 $(OBJ)/Node.o: $(HDRS) $(SRC)/Node.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Node.o $(SRC)/Node.cpp
+
+$(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
 
 $(OBJ)/BinaryTree.o: $(HDRS) $(SRC)/BinaryTree.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/BinaryTree.o $(SRC)/BinaryTree.cpp

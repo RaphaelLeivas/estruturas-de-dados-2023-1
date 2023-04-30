@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Node.hpp"
+#include "CircularQueue.hpp"
 
 enum class WALK_TYPES { PRE_ORDER, POST_ORDER, IN_ORDER, BY_LEVEL };
 
