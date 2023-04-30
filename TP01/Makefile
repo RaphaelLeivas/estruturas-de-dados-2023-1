@@ -9,7 +9,7 @@ HDRS = $(INC)/Stack.hpp $(INC)/NumExp.hpp $(INC)/NumSolver.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
-CFLAGS = $(CFLAGS_DEBUG)
+CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/TP01
 
