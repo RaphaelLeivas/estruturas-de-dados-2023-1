@@ -8,7 +8,7 @@
 // file management
 #include <getopt.h>
 
-#include "../include/Stack.hpp"
+#include "../include/Item.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
@@ -19,24 +19,16 @@ void parse_args(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-    parse_args(argc, argv);
+    // parse_args(argc, argv);
 
-    int number = 10;
+    Item<double>* item1 = new Item<double>(0, 52.2);
+    Item<double>* item2 = new Item<double>(1, 65.3);
 
-    debug(number);
+    item1->print();
+    item2->print();
 
-    Stack<int>* s = new Stack<int>(10);
-
-    s->push(10);
-    s->push(100);
-    s->push(1000);
-
-    debug(s->pop());
-    debug(s->pop());
-    debug(s->pop());
-    // debug(s->pop());
-
-    delete s;
+    delete item1;
+    delete item2;
 
     return 0;
 }
