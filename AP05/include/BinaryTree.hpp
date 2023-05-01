@@ -10,7 +10,7 @@
 #include "Node.hpp"
 #include "CircularQueue.hpp"
 
-#define RANDOM_TREE_SIZE 10
+#define AUX_QUEUE_SIZE 10
 
 enum class WALK_TYPES { PRE_ORDER, POST_ORDER, IN_ORDER, BY_LEVEL };
 
@@ -21,7 +21,7 @@ class BinaryTree {
     void insert(int);
     CircularQueue<int>* walk(WALK_TYPES);
     void erase();
-    void fillWithRandom();
+    void fillWithRandom(int n);
 
    private:
     Node* root;
