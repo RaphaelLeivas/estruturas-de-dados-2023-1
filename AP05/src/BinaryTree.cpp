@@ -1,17 +1,5 @@
 #include "../include/BinaryTree.hpp"
 
-int getRandomInteger() {
-    using u32 = uint_least32_t;
-    using engine = std::mt19937;
-    std::random_device os_seed;
-    const u32 seed = os_seed();
-
-    engine generator(seed);
-    std::uniform_int_distribution<u32> distribute(0, 9);
-
-    return distribute(generator);
-}
-
 BinaryTree::BinaryTree() { this->root = NULL; }
 
 BinaryTree::~BinaryTree() { this->erase(); }
@@ -24,33 +12,12 @@ void BinaryTree::erase() {
 }
 
 void BinaryTree::fillWithRandom(int n) {
-    // int* array = new int[n];
-
-    // // gera um array contendo 0 a n - 1
-    // for (int i = 0; i < n; ++i) {
-    //     array[i] = i;
-    // }
-
-    // // reorganiza aleatoriamente o array
-    // for (int i = 0; i < n; ++i) {
-    //     int r = getRandomInteger();
-
-    //     // troca eles
-    //     int tmp = array[r];
-    //     array[i] = tmp;
-    //     array[r] = array[i];
-    // }
-
-    // for (int i = 0; i < n; i++) {
-    //     std::cout << array[i] << " ";
-    // }
-    // std::cout << std::endl;
-
     // gera array aleatorio comn as chaves de 0 a n - 1
-    int array[n] = {2, 0, 9, 5, 4, 3, 7, 6, 8, 1};
+    // idealmente faria isso de forma programatica, mas nao consegui
+    // ai deixei hard coded para testar o algoritmo do ancestral
+    int array[n] = {5, 3, 1, 8, 4, 2, 9, 7, 6, 0};
 
     // prenche a arvore com essas chaves
-
     for (int i = 0; i < n; i++) {
         this->insert(array[i]);
     }

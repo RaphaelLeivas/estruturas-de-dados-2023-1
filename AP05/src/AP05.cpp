@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <cctype>
 #include <iomanip>
 #include <iostream>
+#include <random>
 #include <string>
 
 // file management
@@ -26,6 +28,18 @@ void initializeArray(int* arr) {
     for (int k = 0; k < TREE_SIZE; ++k) {
         arr[k] = -1;
     }
+}
+
+int getRandomInteger() {
+    using u32 = uint_least32_t;
+    using engine = std::mt19937;
+    std::random_device os_seed;
+    const u32 seed = os_seed();
+
+    engine generator(seed);
+    std::uniform_int_distribution<u32> distribute(0, 9);
+
+    return distribute(generator);
 }
 
 bool ancestral(int i, int j, int* pre, int* post, int* in) {
@@ -64,8 +78,10 @@ bool ancestral(int i, int j, int* pre, int* post, int* in) {
 
     // quebra o vetor de inordem em dois, um a esquerda da raiz e outro a
     // direita, e verifica se eles estao no memso lado
-    int inorderLeft[TREE_SIZE]; initializeArray(inorderLeft);
-    int inorderRight[TREE_SIZE]; initializeArray(inorderRight);
+    int inorderLeft[TREE_SIZE];
+    initializeArray(inorderLeft);
+    int inorderRight[TREE_SIZE];
+    initializeArray(inorderRight);
 
     for (int k = 0; k < TREE_SIZE; ++k) {
         if (in[k] != root) {
@@ -111,9 +127,12 @@ int main(int argc, char** argv) {
     CircularQueue<int>* inOrderQueue = tree->walk(WALK_TYPES::IN_ORDER);
 
     // converte as filas para vetores, para facilitar o uso
-    int preOrder[TREE_SIZE]; initializeArray(preOrder);
-    int postOrder[TREE_SIZE]; initializeArray(postOrder);
-    int inOrder[TREE_SIZE]; initializeArray(inOrder);
+    int preOrder[TREE_SIZE];
+    initializeArray(preOrder);
+    int postOrder[TREE_SIZE];
+    initializeArray(postOrder);
+    int inOrder[TREE_SIZE];
+    initializeArray(inOrder);
 
     int it = 0;
     while (!preOrderQueue->isEmpty()) {
@@ -136,8 +155,8 @@ int main(int argc, char** argv) {
         int j = 0;
 
         while (i == j) {
-            i = (int)(drand48() * TREE_SIZE);
-            j = (int)(drand48() * TREE_SIZE);
+            i = getRandomInteger();
+            j = getRandomInteger();
         }
 
         std::cout << "Testando ancestral: "

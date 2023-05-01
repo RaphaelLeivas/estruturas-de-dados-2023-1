@@ -4,8 +4,6 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <cctype>
-#include <random>
 
 #include "Node.hpp"
 #include "CircularQueue.hpp"
