@@ -96,5 +96,7 @@ double NumSolver::solve() {
 
     double result = expressionToCompute->computeExpression();
 
+    // delete expressionToCompute;
+
     return result;
 }

@@ -57,10 +57,11 @@ double NumExp::computeExpression() {
 // converte a string argumento para posfixa, e retorna essa nova string
 void NumExp::toPostfix() {
     Stack<std::string>* stack = new Stack<std::string>(this->exp.length());
+    CircularQueue<std::string>* resultQueue =
+        new CircularQueue<std::string>(this->exp.length());
 
     std::istringstream iss(this->exp);
     std::string item;
-    std::string result;
     char delimiter = ' ';
 
     while (std::getline(iss, item, delimiter)) {
@@ -81,7 +82,7 @@ void NumExp::toPostfix() {
                     break;
                 }
 
-                result.append(op + " ");
+                resultQueue->add(op + " ");
             }
         } else if (item == "(") {
             // se é abre parenteses joga ele para a stack
@@ -110,24 +111,33 @@ void NumExp::toPostfix() {
                 stack->push(topOperator);
                 stack->push(item);
             } else {  // se tem precendencia menor ou igual ao operador do topo
-                // joga direto para a string o operador do topo
+                // joga direto para a fila de resultado o operador do topo
                 stack->push(item);
-                result.append(topOperator + " ");
+                resultQueue->add(topOperator + " ");
             }
         } else {
             // se não é operador, nem parenteses, é um número e
-            // joga ele para a string resultado
-            result.append(item + " ");
+            // joga ele para a fila resultado
+            resultQueue->add(item + " ");
         }
     }
 
     // vai tirando o que sobrou na stack e jogando na string resultado
     while (!stack->isEmpty()) {
         std::string op = stack->pop();
-        result.append(op + " ");
+        resultQueue->add(op + " ");
+    }
+
+    std::string result = "";
+
+    // concantena todo o conteudo da fila de resultado como string
+    while (!resultQueue->isEmpty()) {
+        result = result + resultQueue->remove();
     }
 
     delete stack;
+    delete resultQueue;
+
     this->setExp(result);
     this->setExpType(ExpType::POSTFIX);
 }
@@ -186,14 +196,13 @@ bool NumExp::isValid() {
     bool isValid = true;
 
     try {
-       this->computeExpression();
-    }
-    catch(...) {
+        this->computeExpression();
+    } catch (...) {
         isValid = false;
     }
 
-    return true; // temporario ate ter o algorimo correto de validar a string
-    
+    return true;  // temporario ate ter o algorimo correto de validar a string
+
     return isValid;
 }
 
