@@ -7,6 +7,7 @@
 #include <string>
 
 #include "Stack.hpp"
+#include "CircularQueue.hpp"
 
 #define debug(a) std::cout << a << std::endl
 

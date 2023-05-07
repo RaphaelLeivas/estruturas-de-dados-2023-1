@@ -57,10 +57,11 @@ double NumExp::computeExpression() {
 // converte a string argumento para posfixa, e retorna essa nova string
 void NumExp::toPostfix() {
     Stack<std::string>* stack = new Stack<std::string>(this->exp.length());
+    CircularQueue<std::string>* resultQueue =
+        new CircularQueue<std::string>(this->exp.length());
 
     std::istringstream iss(this->exp);
     std::string item;
-    std::string result;
     char delimiter = ' ';
 
     while (std::getline(iss, item, delimiter)) {
@@ -81,7 +82,7 @@ void NumExp::toPostfix() {
                     break;
                 }
 
-                result.append(op + " ");
+                resultQueue->add(op + " ");
             }
         } else if (item == "(") {
             // se é abre parenteses joga ele para a stack
@@ -110,24 +111,33 @@ void NumExp::toPostfix() {
                 stack->push(topOperator);
                 stack->push(item);
             } else {  // se tem precendencia menor ou igual ao operador do topo
-                // joga direto para a string o operador do topo
+                // joga direto para a fila de resultado o operador do topo
                 stack->push(item);
-                result.append(topOperator + " ");
+                resultQueue->add(topOperator + " ");
             }
         } else {
             // se não é operador, nem parenteses, é um número e
-            // joga ele para a string resultado
-            result.append(item + " ");
+            // joga ele para a fila resultado
+            resultQueue->add(item + " ");
         }
     }
 
     // vai tirando o que sobrou na stack e jogando na string resultado
     while (!stack->isEmpty()) {
         std::string op = stack->pop();
-        result.append(op + " ");
+        resultQueue->add(op + " ");
+    }
+
+    std::string result = "";
+
+    // concantena todo o conteudo da fila de resultado como string
+    while (!resultQueue->isEmpty()) {
+        result = result + resultQueue->remove();
     }
 
     delete stack;
+    delete resultQueue;
+
     this->setExp(result);
     this->setExpType(ExpType::POSTFIX);
 }
@@ -172,29 +182,49 @@ void NumExp::toInfix() {
 }
 
 bool NumExp::isValid() {
-    // a expressao so é valida se ela conseguir calcular um numero
+    if (this->getExpType() == ExpType::POSTFIX) {
+        // usa um contador para simular quantas coisas tem na stack
+        // no final ele deve ser = 1 e nao pode nunca ter ido para negativo
+        // (seria underflow na stack)
+        int stackCounter = 0;
 
-    // seria melhor ver um algortimo que verifique a string em vez de calcular,
-    // pois assim vou estar calculando a string inteira a toa, sem salvar e sem
-    // o usuario pedir
+        // percorre a string
+        std::istringstream iss(this->exp);
+        std::string item;
+        char delimiter = ' ';
 
-    // faz calculando direto mesmo, para nao gastar muito tempo
+        while (std::getline(iss, item, delimiter)) {
+            // protecao espaços duplos
+            if (item == "" || item == " ") {
+                continue;
+            }
 
-    // na consigo diferenciar infixa invalida de posfixa valida
-    // ex: 3 4 + é valida posfixa, mas invalida infixa: melhorar no futuro
+            if (this->isOperator(item)) {
+                // se é operador, puxa os dois ultimos da stack, remove dois e
+                // adiciona um que seria o resultado da operação
+                stackCounter = stackCounter - 2;
 
-    bool isValid = true;
+                if (stackCounter < 0) {
+                    return false;
+                }
 
-    try {
-       this->computeExpression();
-    }
-    catch(...) {
-        isValid = false;
-    }
+                stackCounter = stackCounter + 1;
+            } else {
+                // se não é operador, é um número e puxa ele para a stack
+                // logo só add 1 
+                stackCounter = stackCounter + 1;
+            }
+        }
 
-    return true; // temporario ate ter o algorimo correto de validar a string
-    
-    return isValid;
+        if (stackCounter != 1) {
+            return false;
+        }
+
+        // se chegou ate aqui, e valida
+        return true;
+    } else {
+        return true;
+    }   
 }
 
 bool NumExp::isOperator(std::string op) {
