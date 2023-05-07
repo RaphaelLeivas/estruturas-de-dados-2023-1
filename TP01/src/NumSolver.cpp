@@ -86,17 +86,15 @@ double NumSolver::solve() {
             "Unable to solve expression: savedExp is null!");
     }
 
-    // pega a expressao salva
-    NumExp* expressionToCompute = this->getSavedExp();
+    // pega o conteudo da expressao salva
+    NumExp expressionToCompute = *this->getSavedExp();
 
     // se for infixa, converte para posfixa antes
-    if (expressionToCompute->getExpType() == ExpType::INFIX) {
-        expressionToCompute->toPostfix();
+    if (expressionToCompute.getExpType() == ExpType::INFIX) {
+        expressionToCompute.toPostfix();
     }
 
-    double result = expressionToCompute->computeExpression();
-
-    // delete expressionToCompute;
+    double result = expressionToCompute.computeExpression();
 
     return result;
 }
