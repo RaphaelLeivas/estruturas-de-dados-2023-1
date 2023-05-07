@@ -17,7 +17,7 @@ class NumSolver {
    public:
     NumSolver();
     ~NumSolver();
-    double solve();
+    void solve();
     void convertToInfix();
     void convertToPostfix();
     void save(std::string);

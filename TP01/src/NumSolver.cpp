@@ -32,6 +32,8 @@ std::string NumSolver::parseCommandFromLine(std::string* line) {
 }
 
 void NumSolver::save(std::string line) {
+    NumExp* numExp = NULL;
+
     // verifica se precisa ler infixa ou posfixa
     if (line.find(INPUT_INFIX_COMMAND) != std::string::npos) {
         // remove o comando da linha
@@ -39,51 +41,63 @@ void NumSolver::save(std::string line) {
         line.erase(index, INPUT_INFIX_COMMAND.length() + 1);
 
         // gera uma expressao
-        NumExp* numExp = new NumExp(line, ExpType::INFIX);
-
-        // se for valida, salva
-        if (numExp->isValid()) {
-            this->setSavedExp(numExp);
-        }
+        numExp = new NumExp(line, ExpType::INFIX);
     } else if (line.find(INPUT_POSTFIX_COMMAND) != std::string::npos) {
         // remove o comando da linha
         int index = line.find(INPUT_POSTFIX_COMMAND);
         line.erase(index, INPUT_POSTFIX_COMMAND.length() + 1);
 
         // gera uma expressao
-        NumExp* numExp = new NumExp(line, ExpType::POSTFIX);
+        numExp = new NumExp(line, ExpType::POSTFIX);
+    }
 
-        // se for valida, salva
-        if (numExp->isValid()) {
-            this->setSavedExp(numExp);
-        }
+    if (numExp == NULL) {
+        std::cout << "ERRO: TIPOEXP INVALIDO OU NAO INFORMADO" << std::endl;
+        return;
+    }
+
+    // se for valida, salva
+    if (numExp->isValid()) {
+        this->setSavedExp(numExp);
+        std::cout << "EXPRESSAO OK: " << this->getSavedExp()->getExp()
+                  << std::endl;
+    } else {
+        std::cout << "ERRO: " << line << " NAO VALIDA" << std::endl;
     }
 }
 
 void NumSolver::convertToInfix() {
-    if (this->getSavedExp() == NULL ||
-        this->savedExp->getExpType() == ExpType::INFIX) {
+    if (this->getSavedExp() == NULL) {
+        std::cout << "ERRO: EXP NAO EXISTE" << std::endl;
         return;
     }
 
-    // converte para infixa
-    this->getSavedExp()->toInfix();
+    if (this->savedExp->getExpType() != ExpType::INFIX) {
+        // converte para infixa somente se nao estiver em infixa inicialmente
+        this->getSavedExp()->toInfix();
+    }
+
+    std::cout << "INFIXA: " << this->getSavedExp()->getExp() << std::endl;
 }
 
 void NumSolver::convertToPostfix() {
-    if (this->getSavedExp() == NULL ||
-        this->savedExp->getExpType() == ExpType::POSTFIX) {
+    if (this->getSavedExp() == NULL) {
+        std::cout << "ERRO: EXP NAO EXISTE" << std::endl;
         return;
     }
 
-    // converte para posfixa
-    this->getSavedExp()->toPostfix();
+    if (this->savedExp->getExpType() != ExpType::POSTFIX) {
+        // converte para posfixa somente se nao estiver em posfixa inicialmente
+        this->getSavedExp()->toPostfix();
+    }
+
+    std::cout << "POSFIXA: " << this->getSavedExp()->getExp() << std::endl;
 }
 
-double NumSolver::solve() {
+void NumSolver::solve() {
     if (this->getSavedExp() == NULL) {
-        throw std::invalid_argument(
-            "Unable to solve expression: savedExp is null!");
+        std::cout << "ERRO: EXP NAO EXISTE" << std::endl;
+        return;
     }
 
     // pega o conteudo da expressao salva
@@ -96,5 +110,7 @@ double NumSolver::solve() {
 
     double result = expressionToCompute.computeExpression();
 
-    return result;
+    std::cout << std::fixed;
+    std::cout.precision(6);
+    std::cout << "VAL: " << result << std::endl;
 }
