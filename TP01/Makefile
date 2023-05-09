@@ -13,7 +13,7 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/TP01
 
-# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s1.n5.i.in
+INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s1.n5.i.in
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s2.n5.p.in
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s3.n5.i.in
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s4.n5.p.in
@@ -26,7 +26,7 @@ EXE = $(BIN)/TP01
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s12.n10.p.in
 
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s35.n50.i.in
-INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s36.n50.p.in
+# INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s36.n50.p.in
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s37.n50.i.in
 # INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP01/TP1entrada/entdouble.s38.n50.p.in
 

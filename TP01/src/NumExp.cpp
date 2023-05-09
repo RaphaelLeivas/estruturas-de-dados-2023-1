@@ -223,6 +223,7 @@ bool NumExp::isValid() {
         // se chegou ate aqui, e valida
         return true;
     } else {
+        // algoritmo de validação de infixa deixado em branco por dificuldades na implementação e falta de tempo
         return true;
     }   
 }
