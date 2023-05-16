@@ -3,11 +3,13 @@
 Stack::Stack(unsigned int size) {
     this->size = size;
     this->queue = new CircularQueue(size);
+    this->auxQueue = new CircularQueue(size);
 }
 
 Stack::~Stack() {
     this->queue->empty();
     delete this->queue;
+    delete this->auxQueue;
 }
 
 unsigned int Stack::getSize() { return this->size; }
@@ -26,8 +28,6 @@ int Stack::pop() {
         throw std::invalid_argument(
             "Unable to pop from stack: Stack is empty!");
     }
-
-    this->auxQueue = new CircularQueue(size);
 
     int result = -1;
 
@@ -51,7 +51,7 @@ int Stack::pop() {
         this->queue->add(this->auxQueue->remove());
     }
 
-    delete this->auxQueue;
+    this->auxQueue->empty();
 
     std::cout << "Popped from stack: " << result << std::endl;
 

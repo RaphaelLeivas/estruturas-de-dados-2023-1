@@ -19,12 +19,13 @@ HDRS = $(INC)/CircularQueue.hpp $(INC)/Stack.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
-CFLAGS = $(CFLAGS_PROD)
+CFLAGS = $(CFLAGS_DEBUG)
 
 EXE = $(BIN)/AP04
 
 run:  $(EXE)
 	$(EXE)
+	valgrind --tool=cachegrind ./$(BIN)/AP04
 
 dev:  $(EXE)
 	$(EXE)
