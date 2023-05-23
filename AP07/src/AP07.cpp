@@ -1,6 +1,7 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <iostream>
 #include <string>
@@ -59,24 +60,41 @@ void printArray(int arr[], int n) {
     std::cout << "\n";
 }
 
-int main(int argc, char** argv) {
-    int arr[] = {60, 20, 40, 70, 30, 10};
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-    for (int i = n / 2 - 1; i >= 0; i--) {
-        heapify(arr, n, i);
+void fillArrayWithRandom(int arr[], int n) {
+    srand(time(NULL));
+    for (int i = 0; i < n; ++i) {
+        arr[i] = rand() % 100;
     }
+}
 
-    printArray(arr, n);
+int main(int argc, char** argv) {
+    int Nlist[] = {10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 200000};
 
-    int64_t before = getUnixTimestamp(NANOSECONDS_OPTION);
-    heapSort(arr, n);
-    int64_t after = getUnixTimestamp(NANOSECONDS_OPTION);
-    printf("Diff = %" PRId64 "", after - before);
-    printf("\n");
+    for (int k = 0; k < sizeof(Nlist) / sizeof(Nlist[0]); ++k) {
+        int currentN = Nlist[k];
 
-    std::cout << "Sorted array is \n";
-    printArray(arr, n);
+        int* arr = new int[currentN];
+        fillArrayWithRandom(arr, currentN);
+
+        int* copyForShellSort = arr;
+        int* copyForHeapSort = arr;
+
+        int64_t before = getUnixTimestamp(MICROSECONDS_OPTION);
+        shellSort(copyForShellSort, currentN);
+        int64_t after = getUnixTimestamp(MICROSECONDS_OPTION);
+
+        printf("N = %d : ", currentN);
+        printf("ShellSort = %" PRId64 " us", after - before);
+
+        before = getUnixTimestamp(MICROSECONDS_OPTION);
+        heapSort(copyForHeapSort, currentN);
+        after = getUnixTimestamp(MICROSECONDS_OPTION);
+
+        printf(" -- ");
+        printf("HeapSort = %" PRId64 " us", after - before);
+
+        printf("\n");
+    }
 
     return 0;
 }
