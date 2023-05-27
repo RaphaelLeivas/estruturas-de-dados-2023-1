@@ -4,35 +4,24 @@
 #include <iostream>
 
 #include "../include/Stack.hpp"
+#include "../include/memlog.h"
 
 #define STACK_SIZE 10
 
 int main(int argc, char** argv) {
-    int RANDOM_NUMBERS[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    Stack* s = new Stack(STACK_SIZE);
+    int num = 100;
+    char* filename =  "/mnt/c/dev/estruturas-de-dados-2023-1/AP04/tmp/log.out";
 
-    s->push(RANDOM_NUMBERS[0]);
-    s->push(RANDOM_NUMBERS[1]);
-    s->push(RANDOM_NUMBERS[2]);
+    // iniciar registro de acesso
+    iniciaMemLog(filename);
+    ativaMemLog();
 
-    s->pop();
-    s->pop();
+    ESCREVEMEMLOG((long int)(&(num)),sizeof(int),123);
 
-    s->push(RANDOM_NUMBERS[7]);
-    s->push(RANDOM_NUMBERS[8]);
-    s->push(RANDOM_NUMBERS[9]);
+    finalizaMemLog();
+    desativaMemLog();
 
-    s->pop();
-    s->pop();
-    s->pop();
-    s->pop();
+    std::cout << num << std::endl;
 
-    s->push(RANDOM_NUMBERS[4]);
-    s->push(RANDOM_NUMBERS[5]);
-
-    s->pop();
-    s->pop();
-
-    delete s;
     return 0;
 }

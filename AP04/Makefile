@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/AP04.o
-HDRS = $(INC)/CircularQueue.hpp $(INC)/Stack.hpp
+OBJS = $(OBJ)/CircularQueue.o $(OBJ)/memlog.o $(OBJ)/Stack.o $(OBJ)/AP04.o
+HDRS = $(INC)/CircularQueue.hpp $(INC)/memlog.h $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -25,7 +25,6 @@ EXE = $(BIN)/AP04
 
 run:  $(EXE)
 	$(EXE)
-	valgrind --tool=cachegrind ./$(BIN)/AP04
 
 dev:  $(EXE)
 	$(EXE)
@@ -39,6 +38,9 @@ $(OBJ)/AP04.o: $(HDRS) $(SRC)/AP04.cpp
 
 $(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
+
+$(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
+	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c
 
 $(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp
