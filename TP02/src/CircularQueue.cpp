@@ -88,5 +88,6 @@ void CircularQueue<T>::empty() {
     }
 }
 
+template class CircularQueue<int>;
 template class CircularQueue<char>;
 template class CircularQueue<std::string>;
