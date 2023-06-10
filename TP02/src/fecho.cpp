@@ -38,9 +38,12 @@ void parse_args(int argc, char** argv) {
 
 int main(int argc, char** argv) {
     parse_args(argc, argv);
+    MyAlgorithms* myAlgorithms = new MyAlgorithms();
 
     std::ifstream input(inputFilePath);
     std::string line;
+
+    LinkedList pointsList;
 
     while (std::getline(input, line)) {
         std::istringstream iss(line);
@@ -57,36 +60,41 @@ int main(int argc, char** argv) {
         int x = queue->remove();
         int y = queue->remove();
 
-        Point* point = new Point(x, y);
+        Point point;
+        point.setX(x);
+        point.setY(y);
 
-        point->print();
+        // insere o ponto na lista encadeada de pontos
+        pointsList.insertEnd(point);
 
         delete queue;
     }
 
-    // Point* p1 = new Point(0, 0);
-    // Point* p2 = new Point(10, 5);
+    pointsList.printList();
 
-    // Line* l1 = new Line(*p1, *p2);
-    // Line* l2 = new Line(*p2, *p1);
+    // com a lista de pontos pronta, chama o algoritmo do Jarvis
+    LinkedList convexHull = myAlgorithms->getConvexHullByJarvis(pointsList);
+
+    convexHull.printList();
+
+    // Point* p1 = new Point(0, 1);
+    // Point* p2 = new Point(12, 25);
 
     // LinkedList list;
 
-    // list.insertEnd(*l1);
-    // list.insertEnd(*l2);
+    // list.insertEnd(*p1);
+    // list.insertEnd(*p2);
 
     // list.getByIndex(1).print();
     // list.removeEnd();
     // list.getByIndex(0).print();
     // list.removeEnd();
 
-    // delete l1;
     // delete p1;
     // delete p2;
 
     return 0;
 
-    // MyAlgorithms* myAlgorithms = new MyAlgorithms();
     // int N = 10;
 
     // int* arr = new int[N];

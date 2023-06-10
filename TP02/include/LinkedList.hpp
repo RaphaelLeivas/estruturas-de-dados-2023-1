@@ -4,12 +4,12 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "Line.hpp"
+#include "Point.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
 struct Node {
-    Line value;
+    Point value;
     struct Node *next;
     Node() = default;
 };
@@ -19,12 +19,12 @@ class LinkedList {
     LinkedList();
     ~LinkedList();
     void printList();
-    void insertEnd(Line);
-    void insertStart(Line);
-    Line getEnd();
-    Line getStart();
-    Line getByIndex(int);
-    Line removeEnd();
+    void insertEnd(Point);
+    void insertStart(Point);
+    Point getEnd();
+    Point getStart();
+    Point getByIndex(int);
+    Point removeEnd();
     bool isEmpty();
     int getSize();
 

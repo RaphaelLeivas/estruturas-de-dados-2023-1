@@ -17,7 +17,7 @@ LinkedList::~LinkedList() {
     delete this->head;
 }
 
-void LinkedList::insertEnd(Line value) {
+void LinkedList::insertEnd(Point value) {
     Node* newNode = new Node;
     newNode->value = value;
     newNode->next = nullptr;
@@ -33,7 +33,7 @@ void LinkedList::insertEnd(Line value) {
     this->size = this->size + 1;
 }
 
-void LinkedList::insertStart(Line value) {
+void LinkedList::insertStart(Point value) {
     Node* newNode = new Node;
     newNode->value = value;
     newNode->next = nullptr;
@@ -49,7 +49,7 @@ void LinkedList::insertStart(Line value) {
     this->size = this->size + 1;
 }
 
-Line LinkedList::getStart() {
+Point LinkedList::getStart() {
     if (!this->isEmpty()) {
         return this->head->value;
     } else {
@@ -58,7 +58,7 @@ Line LinkedList::getStart() {
     }
 }
 
-Line LinkedList::getEnd() {
+Point LinkedList::getEnd() {
     if (!this->isEmpty()) {
         return this->tail->value;
     } else {
@@ -67,7 +67,7 @@ Line LinkedList::getEnd() {
     }
 }
 
-Line LinkedList::getByIndex(int index) {
+Point LinkedList::getByIndex(int index) {
     if (!this->isEmpty()) {
         Node* current = this->head;
         for (int i = 0; i < this->size; ++i) {
@@ -87,13 +87,13 @@ Line LinkedList::getByIndex(int index) {
     }
 }
 
-Line LinkedList::removeEnd() {
+Point LinkedList::removeEnd() {
     if (this->isEmpty()) {
         throw std::invalid_argument(
             "Unable to removeEnd from LinkedList: LinkedList is empty!");
     }
 
-    Line aux;
+    Point aux;
 
     // se so tem um elemento na lista, remove ele de uma vez
     if (head->next == nullptr) {

@@ -44,7 +44,8 @@ void MyAlgorithms::mergeSort(int* arr, int l, int r) {
 void MyAlgorithms::radixSort(int* arr, int n) {
     int maxValue = this->getMaxInArray(arr, n);
 
-    for (int exp = 1; maxValue / exp > 0; exp *= 10) this->countingSort(arr, n, exp);
+    for (int exp = 1; maxValue / exp > 0; exp *= 10)
+        this->countingSort(arr, n, exp);
 }
 
 void MyAlgorithms::printArray(int* arr, int n) {
@@ -57,6 +58,43 @@ void MyAlgorithms::fillArrayWithRandom(int* arr, int n) {
     for (int i = 0; i < n; ++i) {
         arr[i] = rand() % 1000;
     }
+}
+
+LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList pointsList) {
+    int size = pointsList.getSize();
+
+    // Se tiver menos que 3 pontos, retorna erro
+    if (size < 3) {
+        throw std::invalid_argument(
+            "Unable to getConvexHullByJarvis with less than 3 points!");
+    };
+
+    // lista com os pontos que achar do fecho convexo
+    LinkedList result;
+
+    // Busca o ponto com menor coordenada X
+    int l = 0;
+    for (int i = 0; i < size; i++) {
+        if (pointsList.getByIndex(i).getX() < pointsList.getByIndex(l).getX()) {
+            l = i;
+        };
+    }
+
+    int p = l, q;
+    do {
+        result.insertEnd(pointsList.getByIndex(p));
+
+        q = (p + 1) % size;
+        for (int i = 0; i < size; i++) {
+            if (orientation(pointsList.getByIndex(p), pointsList.getByIndex(i),
+                            pointsList.getByIndex(q)) == 2) {
+                q = i;
+            };
+        }
+        p = q;
+    } while (p != l);
+
+    return result;
 }
 
 // funcoes auxiliares
@@ -117,8 +155,8 @@ int MyAlgorithms::getMaxInArray(int* arr, int n) {
 }
 
 void MyAlgorithms::countingSort(int* arr, int n, int exp) {
-    int* output =  new int[n];
-    int i, count[10] = {0}; // maximo: 10^10
+    int* output = new int[n];
+    int i, count[10] = {0};  // maximo: 10^10
 
     for (i = 0; i < n; i++) count[(arr[i] / exp) % 10]++;
 
@@ -132,4 +170,12 @@ void MyAlgorithms::countingSort(int* arr, int n, int exp) {
     for (i = 0; i < n; i++) arr[i] = output[i];
 
     delete[] output;
+}
+
+int MyAlgorithms::orientation(Point p, Point q, Point r) {
+    int val = (q.getY() - p.getY()) * (r.getX() - q.getX()) -
+              (q.getX() - p.getX()) * (r.getY() - q.getY());
+
+    if (val == 0) return 0;    // colieanres
+    return (val > 0) ? 1 : 2;  // horario ou anti-horario
 }
