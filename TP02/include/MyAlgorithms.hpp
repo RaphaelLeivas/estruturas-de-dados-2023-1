@@ -8,6 +8,7 @@ class MyAlgorithms {
         MyAlgorithms(); 
         ~MyAlgorithms();
         void insertionSort(int*, int);
+        void radixSort(int*, int);
         void mergeSort(int*, int, int);
         void printArray(int*, int);
         void fillArrayWithRandom(int*, int);
@@ -15,4 +16,6 @@ class MyAlgorithms {
     private:
         // funcoes auxiliares
         void merge(int*, int, int, int);
+        void countingSort(int*, int, int);
+        int getMaxInArray(int*, int);
 };

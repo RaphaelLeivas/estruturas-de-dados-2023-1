@@ -7,16 +7,12 @@
 
 int main(int argc, char** argv) {
     MyAlgorithms* myAlgorithms = new MyAlgorithms();
-
-    int num = 100;
-    int N = 12;
+    int N = 10;
 
     int* arr = new int[N];
     myAlgorithms->fillArrayWithRandom(arr, N);
 
-    std::cout << num << std::endl;
-
-    myAlgorithms->mergeSort(arr, 0, N - 1);
+    myAlgorithms->insertionSort(arr, N);
 
     myAlgorithms->printArray(arr, N);
 
