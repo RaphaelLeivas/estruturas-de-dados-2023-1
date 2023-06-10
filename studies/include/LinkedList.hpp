@@ -17,11 +17,13 @@ class LinkedList {
     void insertStart(int);
     int getEnd();
     int getStart();
+    int getByIndex(int);
     int removeEnd();
-    int removeStart();
     bool isEmpty();
+    int getSize();
 
    private:
     Node *head;
     Node *tail;
+    int size;
 };

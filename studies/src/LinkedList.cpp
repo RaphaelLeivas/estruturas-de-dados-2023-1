@@ -3,6 +3,7 @@
 LinkedList::LinkedList() {
     this->head = nullptr;
     this->tail = nullptr;
+    this->size = 0;
 }
 
 LinkedList::~LinkedList() {
@@ -28,6 +29,8 @@ void LinkedList::insertEnd(int value) {
         this->tail->next = newNode;
         this->tail = newNode;
     }
+
+    this->size = this->size + 1;
 }
 
 void LinkedList::insertStart(int value) {
@@ -42,6 +45,8 @@ void LinkedList::insertStart(int value) {
         newNode->next = this->head;
         this->head = newNode;
     }
+
+    this->size = this->size + 1;
 }
 
 int LinkedList::getStart() {
@@ -62,18 +67,24 @@ int LinkedList::getEnd() {
     }
 }
 
-int LinkedList::removeStart() {
-    if (this->isEmpty()) {
+int LinkedList::getByIndex(int index) {
+    if (!this->isEmpty()) {
+        Node* current = this->head;
+        for (int i = 0; i < this->size; ++i) {
+            if (i == index) {
+                return current->value;
+            }
+
+            current = current->next;
+        }
+
+        // se chegou ate aqui, index esta fora da lista
         throw std::invalid_argument(
-            "Unable to removeStart from LinkedList: LinkedList is empty!");
+            "Unable to getByIndex from LinkedList: index is outside the list!");
+    } else {
+        throw std::invalid_argument(
+            "Unable to getByIndex from LinkedList: LinkedList is empty!");
     }
-
-    int aux = this->head->value;
-    Node* nextNode = this->head->next;
-    delete this->head;
-    this->head = nextNode;
-
-    return aux;
 }
 
 int LinkedList::removeEnd() {
@@ -87,15 +98,17 @@ int LinkedList::removeEnd() {
     // se so tem um elemento na lista, remove ele de uma vez
     if (head->next == nullptr) {
         aux = head->value;
-        
+        debug(aux);
+
         delete this->head;
 
         this->head = nullptr;
         this->tail = nullptr;
-        
+
+        this->size = this->size - 1;
+
         return aux;
     }
-
 
     Node* current = head;
     while (current->next->next != nullptr) {
@@ -108,6 +121,7 @@ int LinkedList::removeEnd() {
     delete this->tail;
     this->tail = current;
 
+    this->size = this->size - 1;
     return aux;
 }
 
@@ -122,5 +136,7 @@ void LinkedList::printList() {
 }
 
 bool LinkedList::isEmpty() {
-    return (this->head == nullptr) && (this->tail == nullptr);
+    return this->size == 0;
 }
+
+int LinkedList::getSize() { return this->size; }
