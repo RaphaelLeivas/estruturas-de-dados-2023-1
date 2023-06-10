@@ -2,6 +2,7 @@
 
 Line::Line(Point start, Point end) : start(start), end(end) {}
 
+Line::Line() {};
 Line::~Line() = default;
 
 void Line::print() {

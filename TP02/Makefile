@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/CircularQueue.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/LinkedList.o $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/fecho.o
+HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/LinkedList.hpp $(INC)/CircularQueue.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -53,6 +53,9 @@ $(OBJ)/Point.o: $(HDRS) $(SRC)/Point.cpp
 
 $(OBJ)/Line.o: $(HDRS) $(SRC)/Line.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Line.o $(SRC)/Line.cpp
+
+$(OBJ)/LinkedList.o: $(HDRS) $(SRC)/LinkedList.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/LinkedList.o $(SRC)/LinkedList.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

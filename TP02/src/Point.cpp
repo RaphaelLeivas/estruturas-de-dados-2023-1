@@ -2,6 +2,7 @@
 
 Point::Point(int x, int y) : x(x), y(y) {}
 
+Point::Point() {};
 Point::~Point() = default;
 
 void Point::print() { std::cout << "(" << x << ", " << y << ")" << std::endl; }

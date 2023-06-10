@@ -8,6 +8,7 @@
 class Line {
    public:
     Line(Point, Point);
+    Line(); // construtor padrao
     ~Line();
     void print();
     Point getStart();

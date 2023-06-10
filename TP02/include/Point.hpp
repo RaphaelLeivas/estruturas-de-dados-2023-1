@@ -6,6 +6,7 @@
 class Point {
    public:
     Point(int, int);
+    Point(); // construtor padrao
     ~Point();
     void print();
     int getX();
