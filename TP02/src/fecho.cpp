@@ -74,11 +74,11 @@ int main(int argc, char** argv) {
         delete queue;
     }
 
-    // com a lista de pontos pronta, chama o algoritmo do Jarvis
-    LinkedList convexHull = myAlgorithms.getConvexHullByJarvis(&pointsList);
-    convexHull.printList();
+    // LinkedList convexHull = myAlgorithms.getConvexHullByJarvis(&pointsList);
+    // convexHull.printList();
 
-    // myAlgorithms.getConvexHullByGraham(points, pointsList.getSize());
+    LinkedList convexHull = myAlgorithms.getConvexHullByGraham(&pointsList);
+    convexHull.printList();
 
     return 0;
 }

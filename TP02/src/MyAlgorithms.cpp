@@ -97,7 +97,9 @@ LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList* pointsList) {
     return result;
 }
 
-void MyAlgorithms::getConvexHullByGraham(Point* points, int size) {
+LinkedList MyAlgorithms::getConvexHullByGraham(LinkedList* points) {
+    int size = points->getSize();
+
     // Se tiver menos que 3 pontos, retorna erro
     if (size < 3) {
         throw std::invalid_argument(
@@ -105,22 +107,24 @@ void MyAlgorithms::getConvexHullByGraham(Point* points, int size) {
     };
 
     // acha o ponto com menor coordenada Y
-    int ymin = points[0].getY(), min = 0;
+    int ymin = points->getByIndex(0).getY(), min = 0;
     for (int i = 0; i < size; i++) {
-        int y = points[i].getY();
+        int y = points->getByIndex(i).getY();
         if ((y < ymin) ||
-            (ymin == y && points[i].getX() < points[min].getX())) {
-            ymin = points[i].getY();
+            (ymin == y && points->getByIndex(i).getX() < points->getByIndex(min).getX())) {
+            ymin = points->getByIndex(i).getY();
             min = i;
         }
     }
 
-    Point lowestPoint = points[min];
+    Point lowestPoint = points->getByIndex(min);
+
+    Point* newPoints = new Point[size];
 
     // calcula os angulos polares em relacao ao lowestPoint, salvando no
-    // attributo angle
+    // attributo angle e na nova lista
     for (int i = 0; i < size; i++) {
-        Point currentPoint = points[i];
+        Point currentPoint = points->getByIndex(i);
 
         if (currentPoint.getX() == lowestPoint.getX() &&
             currentPoint.getY() == lowestPoint.getY()) {
@@ -131,18 +135,13 @@ void MyAlgorithms::getConvexHullByGraham(Point* points, int size) {
                      this->getDistanceBetween(lowestPoint, currentPoint)));
         }
 
-        points[i] = currentPoint;  // atualiza o valor no final
+        newPoints[i] = currentPoint;
     }
 
-    this->sortByAngleMergeSort(points, 0, size - 1);
+    this->sortByAngleMergeSort(newPoints, 0, size - 1);
 
-    LinkedList newPoints = this->checkSameAngles(points, size);
-    int newSize = newPoints.getSize();
-
-    // points agora recebe a nova lista checada
-    for (int i = 0; i < newSize; ++i) {
-        points[i] = newPoints.getByIndex(i);
-    }
+    LinkedList newPointsList = this->checkSameAngles(newPoints, size);
+    int newSize = newPointsList.getSize();
 
     if (newSize < 3) {
         throw std::invalid_argument(
@@ -151,29 +150,32 @@ void MyAlgorithms::getConvexHullByGraham(Point* points, int size) {
 
     Stack<Point>* stack = new Stack<Point>(newSize);
 
-    stack->push(points[0]);
-    stack->push(points[1]);
-    stack->push(points[2]);
+    stack->push(newPointsList.getByIndex(0));
+    stack->push(newPointsList.getByIndex(1));
+    stack->push(newPointsList.getByIndex(2));
 
     for (int i = 3; i < newSize; i++) {
         while (!stack->isEmpty() &&
                this->orientation(this->getNextToTop(*stack), stack->getTop(),
-                                 points[i]) != 2) {
+                                 newPointsList.getByIndex(i)) != 2) {
             stack->pop();
         }
 
-        stack->push(points[i]);
+        stack->push(newPointsList.getByIndex(i));
     }
+
+    LinkedList finalResult;
 
     while (!stack->isEmpty()) {
         Point p = stack->getTop();
-        std::cout << "(" << p.getX() << ", " << p.getY() << ")" << std::endl;
+        finalResult.insertEnd(p);
         stack->pop();
     }
 
     delete stack;
+    delete[] newPoints;
 
-    return;
+    return finalResult;
 }
 
 // funcoes auxiliares
@@ -297,7 +299,6 @@ LinkedList MyAlgorithms::checkSameAngles(Point* points, int size) {
     LinkedList newPoints;
     newPoints.insertEnd(initial);
 
-    debug("before");
     LinkedList aux;
 
     for (int i = 1; i < size - 1; ++i) {
@@ -328,8 +329,6 @@ LinkedList MyAlgorithms::checkSameAngles(Point* points, int size) {
             newPoints.insertEnd(farthestPoint);
         }
     }
-
-    debug("after");
 
     return newPoints;
 }

@@ -24,7 +24,7 @@ class MyAlgorithms {
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
     LinkedList getConvexHullByJarvis(LinkedList*);
-    void getConvexHullByGraham(Point*, int);
+    LinkedList getConvexHullByGraham(LinkedList*);
 
    private:
     // funcoes auxiliares
