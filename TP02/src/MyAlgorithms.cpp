@@ -97,6 +97,51 @@ LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList pointsList) {
     return result;
 }
 
+void MyAlgorithms::getConvexHullByGraham(LinkedList pointsList) {
+    // pointsList.printList();
+    // debug("HEERE");
+
+    // return;
+
+    // int size = pointsList.getSize();
+
+    // lista com os pontos que achar do fecho convexo
+    // LinkedList result;
+
+    // // acha o ponto com menor coordenada Y
+    // int ymin = pointsList.getByIndex(0).getY(), min = 0;
+    // for (int i = 0; i < size; i++) {
+    //     int y = pointsList.getByIndex(i).getY();
+    //     if ((y < ymin) ||
+    //         (ymin == y && pointsList.getByIndex(i).getX() <
+    //                           pointsList.getByIndex(min).getX())) {
+    //         ymin = pointsList.getByIndex(i).getY();
+    //         min = i;
+    //     }
+    // }
+
+    // Point lowestPoint = pointsList.getByIndex(min);
+
+    // calcula os angulos polares em relacao ao lowestPoint, salvando no
+    // attributo angle
+    // for (int i = 0; i < size; i++) {
+    //     Point currentPoint = pointsList.getByIndex(i);
+
+    //     if (currentPoint.getX() == lowestPoint.getX() &&
+    //         currentPoint.getY() == lowestPoint.getY()) {
+    //         currentPoint.setAngle(0);
+    //     } else {
+    //         currentPoint.setAngle(
+    //             acos((currentPoint.getX() - lowestPoint.getX()) /
+    //                  this->getDistanceBetween(lowestPoint, currentPoint)));
+    //     }
+    // }
+
+    // pointsList.printList();
+
+    // return result;
+}
+
 // funcoes auxiliares
 void MyAlgorithms::merge(int* arr, int l, int m, int r) {
     int i, j, k;
@@ -178,4 +223,17 @@ int MyAlgorithms::orientation(Point p, Point q, Point r) {
 
     if (val == 0) return 0;    // colieanres
     return (val > 0) ? 1 : 2;  // horario ou anti-horario
+}
+
+double MyAlgorithms::getPolarAngle(Point p1, Point p2) {
+    double dx = p2.getX() - p1.getX();
+    double dy = p2.getY() - p1.getY();
+    return std::atan2(dy, dx);
+}
+
+double MyAlgorithms::getDistanceBetween(Point p1, Point p2) {
+    double nx = p1.getX() - p2.getX();
+    double ny = p1.getY() - p2.getY();
+    double h2 = pow(nx,2)+pow(ny,2);
+    return pow(h2, 0.5);
 }

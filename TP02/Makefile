@@ -32,6 +32,9 @@ dev:  $(EXE)
 	$(EXE)
 	valgrind -s --leak-check=full ./$(BIN)/fecho
 
+debug:  $(EXE)
+	gdb --args $(EXE) $(INPUTFILE)
+
 $(BIN)/fecho: $(OBJS)
 	$(CC) -pg -o $(BIN)/fecho $(OBJS) $(LIBS)
 
