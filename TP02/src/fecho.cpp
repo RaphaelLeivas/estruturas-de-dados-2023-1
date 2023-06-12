@@ -74,11 +74,11 @@ int main(int argc, char** argv) {
         delete queue;
     }
 
-    // LinkedList convexHull = myAlgorithms.getConvexHullByJarvis(&pointsList);
-    // convexHull.printList();
-
-    LinkedList convexHull = myAlgorithms.getConvexHullByGraham(&pointsList);
+    LinkedList convexHull = myAlgorithms.getConvexHullByJarvis(&pointsList);
     convexHull.printList();
+
+    // LinkedList convexHull = myAlgorithms.getConvexHullByGraham(&pointsList);
+    // convexHull.printList();
 
     return 0;
 }
