@@ -136,16 +136,29 @@ void MyAlgorithms::getConvexHullByGraham(Point* points, int size) {
 
     this->sortByAngleMergeSort(points, 0, size - 1);
 
-    Stack<Point>* stack = new Stack<Point>(size);
+    LinkedList newPoints = this->checkSameAngles(points, size);
+    int newSize = newPoints.getSize();
+
+    // points agora recebe a nova lista checada
+    for (int i = 0; i < newSize; ++i) {
+        points[i] = newPoints.getByIndex(i);
+    }
+
+    if (newSize < 3) {
+        throw std::invalid_argument(
+            "Unable to getConvexHullByGraham with newSize less than 3 points!");
+    }
+
+    Stack<Point>* stack = new Stack<Point>(newSize);
 
     stack->push(points[0]);
     stack->push(points[1]);
     stack->push(points[2]);
 
-    for (int i = 3; i < size; i++) {
+    for (int i = 3; i < newSize; i++) {
         while (!stack->isEmpty() &&
                this->orientation(this->getNextToTop(*stack), stack->getTop(),
-                           points[i]) != 2) {
+                                 points[i]) != 2) {
             stack->pop();
         }
 
@@ -273,6 +286,52 @@ void MyAlgorithms::sortByAngleMergeSort(Point* points, int left, int right) {
 
         this->mergeHalves(points, left, center, right);
     }
+}
+
+// se dois pontos tem o mesmo angulo polar, mantem apenas o que é mais longe do
+// inicial
+LinkedList MyAlgorithms::checkSameAngles(Point* points, int size) {
+    Point initial = points[0];
+
+    // usa lista encadeada, pois nao sei o tamanho final dela
+    LinkedList newPoints;
+    newPoints.insertEnd(initial);
+
+    debug("before");
+    LinkedList aux;
+
+    for (int i = 1; i < size - 1; ++i) {
+        while (points[i].getAngle() == points[i + 1].getAngle() ||
+               points[i].getAngle() == points[i - 1].getAngle()) {
+            // vai jogando para a lista auxiliar
+            aux.insertEnd(points[i]);
+            ++i;  // pula o proximo
+        }
+
+        // na lista auxiliar, busca o que tem maior distancia ao inicial
+        double maxDistance = 0;
+        Point farthestPoint;
+        farthestPoint.setAngle(-1);  // indica que nao foi setado aindo
+        for (int j = 0; j < aux.getSize(); ++j) {
+            // calcula a distancia
+            double distance =
+                this->getDistanceBetween(aux.getByIndex(j), initial);
+            if (distance > maxDistance) {
+                maxDistance = distance;
+                farthestPoint = aux.getByIndex(j);
+            }
+        }
+
+        if (farthestPoint.getAngle() == -1) {
+            newPoints.insertEnd(points[i]);
+        } else {
+            newPoints.insertEnd(farthestPoint);
+        }
+    }
+
+    debug("after");
+
+    return newPoints;
 }
 
 void MyAlgorithms::mergeHalves(Point* points, int left, int center, int right) {

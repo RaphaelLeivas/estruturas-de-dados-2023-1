@@ -38,6 +38,7 @@ class MyAlgorithms {
     void sortByAngleMergeSort(Point*, int, int);
     void mergeHalves(Point*, int, int, int);
     Point getNextToTop(Stack<Point>&);
+    LinkedList checkSameAngles(Point*, int);
 };
 
 #endif
