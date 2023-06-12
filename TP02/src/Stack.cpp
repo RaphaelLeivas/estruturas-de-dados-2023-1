@@ -31,13 +31,17 @@ template <typename T> T Stack<T>::pop() {
     return result;
 }
 
+template <typename T> T Stack<T>::getTop() {
+    return this->stack[top];
+}
+
 template <typename T> bool Stack<T>::isEmpty() { return top == -1; }
 template <typename T> bool Stack<T>::isFull() { return top == size - 1; }
 
 template <typename T> void Stack<T>::print() {
     std::cout << "Top" << std::endl << "------" << std::endl;
     for (int i = top; i >= 0; --i) {
-        std::cout << this->stack[i] << std::endl;
+        // std::cout << this->stack[i] << std::endl;
     }
     std::cout << "------" << std::endl << "Bottom" << std::endl;
 }
@@ -46,5 +50,6 @@ template <typename T> void Stack<T>::print() {
 // assim fica mais limpo e modularizado entre .cpp e .hpp, pois nao precisa
 // modificar as funções para deixar o template genérico
 
+template class Stack<Point>; // TP 02
 template class Stack<double>;
 template class Stack<std::string>;

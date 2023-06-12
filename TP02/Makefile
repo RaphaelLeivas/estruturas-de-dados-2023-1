@@ -29,7 +29,7 @@ run:  $(EXE)
 	$(EXE) $(INPUTFILE)
 
 dev:  $(EXE)
-	$(EXE)
+	$(EXE) $(INPUTFILE)
 	valgrind -s --leak-check=full ./$(BIN)/fecho
 
 debug:  $(EXE)

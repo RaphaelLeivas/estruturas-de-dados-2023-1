@@ -97,49 +97,70 @@ LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList pointsList) {
     return result;
 }
 
-void MyAlgorithms::getConvexHullByGraham(LinkedList pointsList) {
-    // pointsList.printList();
-    // debug("HEERE");
+void MyAlgorithms::getConvexHullByGraham(Point* points, int size) {
+    // Se tiver menos que 3 pontos, retorna erro
+    if (size < 3) {
+        throw std::invalid_argument(
+            "Unable to getConvexHullByGraham with less than 3 points!");
+    };
 
-    // return;
+    // acha o ponto com menor coordenada Y
+    int ymin = points[0].getY(), min = 0;
+    for (int i = 0; i < size; i++) {
+        int y = points[i].getY();
+        if ((y < ymin) ||
+            (ymin == y && points[i].getX() < points[min].getX())) {
+            ymin = points[i].getY();
+            min = i;
+        }
+    }
 
-    // int size = pointsList.getSize();
-
-    // lista com os pontos que achar do fecho convexo
-    // LinkedList result;
-
-    // // acha o ponto com menor coordenada Y
-    // int ymin = pointsList.getByIndex(0).getY(), min = 0;
-    // for (int i = 0; i < size; i++) {
-    //     int y = pointsList.getByIndex(i).getY();
-    //     if ((y < ymin) ||
-    //         (ymin == y && pointsList.getByIndex(i).getX() <
-    //                           pointsList.getByIndex(min).getX())) {
-    //         ymin = pointsList.getByIndex(i).getY();
-    //         min = i;
-    //     }
-    // }
-
-    // Point lowestPoint = pointsList.getByIndex(min);
+    Point lowestPoint = points[min];
 
     // calcula os angulos polares em relacao ao lowestPoint, salvando no
     // attributo angle
-    // for (int i = 0; i < size; i++) {
-    //     Point currentPoint = pointsList.getByIndex(i);
+    for (int i = 0; i < size; i++) {
+        Point currentPoint = points[i];
 
-    //     if (currentPoint.getX() == lowestPoint.getX() &&
-    //         currentPoint.getY() == lowestPoint.getY()) {
-    //         currentPoint.setAngle(0);
-    //     } else {
-    //         currentPoint.setAngle(
-    //             acos((currentPoint.getX() - lowestPoint.getX()) /
-    //                  this->getDistanceBetween(lowestPoint, currentPoint)));
-    //     }
-    // }
+        if (currentPoint.getX() == lowestPoint.getX() &&
+            currentPoint.getY() == lowestPoint.getY()) {
+            currentPoint.setAngle(-1);
+        } else {
+            currentPoint.setAngle(
+                acos((currentPoint.getX() - lowestPoint.getX()) /
+                     this->getDistanceBetween(lowestPoint, currentPoint)));
+        }
 
-    // pointsList.printList();
+        points[i] = currentPoint;  // atualiza o valor no final
+    }
 
-    // return result;
+    this->sortByAngleMergeSort(points, 0, size - 1);
+
+    Stack<Point>* stack = new Stack<Point>(size);
+
+    stack->push(points[0]);
+    stack->push(points[1]);
+    stack->push(points[2]);
+
+    for (int i = 3; i < size; i++) {
+        while (!stack->isEmpty() &&
+               this->orientation(this->getNextToTop(*stack), stack->getTop(),
+                           points[i]) != 2) {
+            stack->pop();
+        }
+
+        stack->push(points[i]);
+    }
+
+    while (!stack->isEmpty()) {
+        Point p = stack->getTop();
+        std::cout << "(" << p.getX() << ", " << p.getY() << ")" << std::endl;
+        stack->pop();
+    }
+
+    delete stack;
+
+    return;
 }
 
 // funcoes auxiliares
@@ -234,6 +255,75 @@ double MyAlgorithms::getPolarAngle(Point p1, Point p2) {
 double MyAlgorithms::getDistanceBetween(Point p1, Point p2) {
     double nx = p1.getX() - p2.getX();
     double ny = p1.getY() - p2.getY();
-    double h2 = pow(nx,2)+pow(ny,2);
+    double h2 = pow(nx, 2) + pow(ny, 2);
     return pow(h2, 0.5);
+}
+
+void MyAlgorithms::printPointsList(Point* points, int size) {
+    for (int i = 0; i < size; ++i) {
+        points[i].print();
+    }
+}
+
+void MyAlgorithms::sortByAngleMergeSort(Point* points, int left, int right) {
+    if (left < right) {
+        int center = left + ((right - left) / 2);
+        this->sortByAngleMergeSort(points, left, center);
+        this->sortByAngleMergeSort(points, center + 1, right);
+
+        this->mergeHalves(points, left, center, right);
+    }
+}
+
+void MyAlgorithms::mergeHalves(Point* points, int left, int center, int right) {
+    int i, j, k;
+    int n1 = center - left + 1;
+    int n2 = right - center;
+
+    Point* tempP1 = new Point[n1];
+    Point* tempP2 = new Point[n2];
+
+    for (i = 0; i < n1; i++) {
+        tempP1[i] = points[left + i];
+    }
+    for (j = 0; j < n2; j++) {
+        tempP2[j] = points[center + 1 + j];
+    }
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    while (i < n1 && j < n2) {
+        if (tempP1[i].getAngle() <= tempP2[j].getAngle()) {
+            points[k] = tempP1[i];
+            i++;
+        } else {
+            points[k] = tempP2[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        points[k] = tempP1[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        points[k] = tempP2[j];
+        j++;
+        k++;
+    }
+
+    delete[] tempP1;
+    delete[] tempP2;
+}
+
+Point MyAlgorithms::getNextToTop(Stack<Point>& stack) {
+    Point p = stack.pop();
+    Point res = stack.getTop();
+    stack.push(p);
+    return res;
 }

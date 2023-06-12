@@ -8,6 +8,7 @@
 #include <stdexcept>
 
 #include "LinkedList.hpp"
+#include "Stack.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
@@ -23,7 +24,7 @@ class MyAlgorithms {
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
     LinkedList getConvexHullByJarvis(LinkedList);
-    void getConvexHullByGraham(LinkedList);
+    void getConvexHullByGraham(Point*, int);
 
    private:
     // funcoes auxiliares
@@ -33,6 +34,10 @@ class MyAlgorithms {
     int orientation(Point, Point, Point);
     double getPolarAngle(Point, Point);
     double getDistanceBetween(Point, Point);
+    void printPointsList(Point*, int);
+    void sortByAngleMergeSort(Point*, int, int);
+    void mergeHalves(Point*, int, int, int);
+    Point getNextToTop(Stack<Point>&);
 };
 
 #endif
