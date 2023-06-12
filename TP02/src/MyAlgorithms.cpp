@@ -60,8 +60,8 @@ void MyAlgorithms::fillArrayWithRandom(int* arr, int n) {
     }
 }
 
-LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList pointsList) {
-    int size = pointsList.getSize();
+LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList* pointsList) {
+    int size = pointsList->getSize();
 
     // Se tiver menos que 3 pontos, retorna erro
     if (size < 3) {
@@ -74,20 +74,20 @@ LinkedList MyAlgorithms::getConvexHullByJarvis(LinkedList pointsList) {
 
     // Busca o ponto com menor coordenada X
     int l = 0;
-    for (int i = 0; i < size; i++) {
-        if (pointsList.getByIndex(i).getX() < pointsList.getByIndex(l).getX()) {
+    for (int i = 1; i < size; i++) {
+        if (pointsList->getByIndex(i).getX() < pointsList->getByIndex(l).getX()) {
             l = i;
         };
     }
 
     int p = l, q;
     do {
-        result.insertEnd(pointsList.getByIndex(p));
+        result.insertEnd(pointsList->getByIndex(p));
 
         q = (p + 1) % size;
         for (int i = 0; i < size; i++) {
-            if (orientation(pointsList.getByIndex(p), pointsList.getByIndex(i),
-                            pointsList.getByIndex(q)) == 2) {
+            if (this->orientation(pointsList->getByIndex(p), pointsList->getByIndex(i),
+                            pointsList->getByIndex(q)) == 2) {
                 q = i;
             };
         }

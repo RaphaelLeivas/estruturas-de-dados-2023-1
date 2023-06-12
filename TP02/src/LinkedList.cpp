@@ -7,6 +7,10 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::~LinkedList() {
+    if (this->head == nullptr) {
+        return;
+    }
+
     Node* p = this->head->next;
     while (p != nullptr) {
         this->head->next = p->next;
@@ -124,6 +128,11 @@ Point LinkedList::removeEnd() {
 }
 
 void LinkedList::printList() {
+    if (this->isEmpty()) {
+        throw std::invalid_argument(
+            "Unable to printList LinkedList: LinkedList is empty!");
+    }
+    
     Node* current = this->head;
 
     while (current != nullptr) {
@@ -133,8 +142,6 @@ void LinkedList::printList() {
     std::cout << std::endl;
 }
 
-bool LinkedList::isEmpty() {
-    return this->size == 0;
-}
+bool LinkedList::isEmpty() { return this->size == 0; }
 
 int LinkedList::getSize() { return this->size; }

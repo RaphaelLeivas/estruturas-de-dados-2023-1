@@ -23,7 +23,7 @@ class MyAlgorithms {
     void mergeSort(int*, int, int);
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
-    LinkedList getConvexHullByJarvis(LinkedList);
+    LinkedList getConvexHullByJarvis(LinkedList*);
     void getConvexHullByGraham(Point*, int);
 
    private:
