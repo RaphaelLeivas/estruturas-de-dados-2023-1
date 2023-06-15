@@ -337,16 +337,16 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
         points[i].setRoundedAngle((int)roundedAngle);
     }
 
-    Point* output = new Point[n + 1];
     Point maxPoint = this->getLargestPointAngle(points, n);
     int maxValue = maxPoint.getRoundedAngle();
+    int i, j;
 
     int* count = new int[maxValue + 1];
-    for (int i = 0; i <= maxValue; i++) {
+    for (i = 0; i <= maxValue; i++) {
         count[i] = 0;  // inicializa com zero
     }
 
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         if (points[i].getRoundedAngle() < 0) {
             count[0]++;
             continue;
@@ -355,8 +355,13 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
         count[points[i].getRoundedAngle()]++;
     }
 
-    for (int i = 1; i <= maxValue; i++) {
-        count[i] += count[i - 1];
+    i = 0;
+
+    for (j = 0; j < maxValue; ++j) {
+        while (count[j] > 0) {
+            debug(j);
+            count[j]--;
+        }
     }
 
     // for (int i = 0; i < maxValue + 1; i++) {
@@ -365,18 +370,6 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
     //                   << std::endl;
     // }
 
-    for (int i = n - 1; i >= 0; i--) {
-        output[count[points[i].getRoundedAngle() - 1]] = points[i];
-        count[points[i].getRoundedAngle()]--;
-    }
-
-    for (int i = 0; i < n; i++) {
-        points[i] = output[i];
-    }
-
-    // this->printPointsList(points, n);
-
-    delete[] output;
     delete[] count;
 };
 

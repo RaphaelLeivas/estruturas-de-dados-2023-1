@@ -1,15 +1,17 @@
 #include <iostream>
 
 #include "Line.hpp"
+#include "List.hpp"
 
 class ConvexHull {
    public:
-    ConvexHull();
+    ConvexHull(int);
     ~ConvexHull();
     void print();
     void addLine(Line);
     Line* getLines();
 
    private:
-    Line* lines; // array de Lines
+    List<Line>* lines;
+    int n;
 };
