@@ -59,6 +59,12 @@ int main(int argc, char** argv) {
     list->getStart().print();
     list->getEnd().print();
 
+    list->insertEnd(Point(52, 100));
+    list->insertEnd(Point(12, 250));
+    list->insertEnd(Point(88, 8888));
+
+    list->print();
+
     // list->insertAtIndex(Point(42, 555), list->getCurrentSize());
     // list->insertAtIndex(Point(777, 545), list->getCurrentSize());
 

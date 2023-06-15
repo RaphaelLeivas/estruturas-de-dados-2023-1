@@ -36,6 +36,7 @@ template <typename T> class List {
     bool isFull();
     int getSize();
     int getCurrentSize();
+    void print();
 
    private:
     int size;
