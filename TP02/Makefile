@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/LinkedList.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/LinkedList.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/Stack.o $(OBJ)/fecho.o
+HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -55,6 +55,9 @@ $(OBJ)/Point.o: $(HDRS) $(SRC)/Point.cpp
 
 $(OBJ)/Line.o: $(HDRS) $(SRC)/Line.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Line.o $(SRC)/Line.cpp
+
+$(OBJ)/List.o: $(HDRS) $(SRC)/List.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/List.o $(SRC)/List.cpp
 
 $(OBJ)/LinkedList.o: $(HDRS) $(SRC)/LinkedList.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/LinkedList.o $(SRC)/LinkedList.cpp
