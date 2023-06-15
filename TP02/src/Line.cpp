@@ -20,3 +20,22 @@ Point Line::getStart() {
 Point Line::getEnd() {
     return this->end;
 }
+
+std::string Line::getEquation() {
+    int y1 = this->getStart().getY();
+    int y2 = this->getEnd().getY();
+    int x1 = this->getStart().getX();
+    int x2 = this->getEnd().getX();
+
+    double angularCoef = (y2 - y1) / (double)(x2 - x1); // delta y sobre delta x
+    double linearCoef = y1 - angularCoef * x1;
+
+    if (linearCoef < 0) {
+        return "y = " + std::to_string(angularCoef) + " * x - " + std::to_string(linearCoef * -1);
+    } else if (linearCoef > 0) {
+        return "y = " + std::to_string(angularCoef) + " * x + " + std::to_string(linearCoef);
+    } else { // linearCoef == 0
+        return "y = " + std::to_string(angularCoef) + " * x";
+    }
+}
+

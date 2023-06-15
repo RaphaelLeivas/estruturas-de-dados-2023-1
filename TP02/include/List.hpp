@@ -5,6 +5,7 @@
 #include <stdexcept>
 
 #include "Point.hpp"
+#include "Line.hpp"
 
 template <typename T> class List {
    public:

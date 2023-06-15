@@ -88,9 +88,31 @@ int main(int argc, char** argv) {
     for (int i = 0; i < numberOfPoints; ++i) {
         points->insertEnd(inputPoints.getByIndex(i));
     }
-    List<Point>* convexHull = myAlgorithms.getConvexHullByGraham(
-        points, GrahamOption::LINEAR_SORT);
+
+    List<Point>* convexHull = myAlgorithms.getConvexHullByJarvis(points);
     convexHull->print();
+
+    List<Line>* linesList = new List<Line>(convexHull->getCurrentSize());
+
+    for (int i = 0; i < convexHull->getCurrentSize(); ++i) {
+        Point p1 = convexHull->getByIndex(i);
+        Point p2;
+
+        if (i == convexHull->getCurrentSize() - 1) {
+            // se é o ultimo, da a volta e termina a linha no ponto de origem
+            p2 = convexHull->getByIndex(0);
+        } else {
+            p2 = convexHull->getByIndex(i + 1);
+        }
+
+        Line line = Line(p1, p2);
+
+        linesList->insertEnd(line);
+    }
+
+    for (int i = 0; i < linesList->getCurrentSize(); i++) {
+        std::cout << linesList->getByIndex(i).getEquation() << std::endl;
+    }
 
     // std::cout << "FECHO CONVEXO: " << std::endl;
 
@@ -133,6 +155,7 @@ int main(int argc, char** argv) {
     //           << std::endl;
 
     delete points;
+    delete linesList;
     delete convexHull;
 
     return 0;

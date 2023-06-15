@@ -207,5 +207,13 @@ void List<Point>::print() {
     }
 }
 
+template <>
+void List<Line>::print() {
+    for (int i = 0; i < this->getCurrentSize(); ++i) {
+        this->list[i].print();
+    }
+}
+
 template class List<Point>; 
+template class List<Line>; 
 template class List<int>;
