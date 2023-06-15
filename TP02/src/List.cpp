@@ -195,20 +195,16 @@ int List<T>::getCurrentSize() {
 
 template <typename T>
 void List<T>::print() {
-    std::cout << "Start" << std::endl << "------" << std::endl;
     for (int i = 0; i < this->getCurrentSize(); ++i) {
         std::cout << this->list[i] << std::endl;
     }
-    std::cout << "------" << std::endl << "End" << std::endl;
 }
 
 template <>
 void List<Point>::print() {
-    std::cout << "Start" << std::endl << "------" << std::endl;
     for (int i = 0; i < this->getCurrentSize(); ++i) {
         this->list[i].print();
     }
-    std::cout << "------" << std::endl << "End" << std::endl;
 }
 
 template class List<Point>; 

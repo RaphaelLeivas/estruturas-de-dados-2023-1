@@ -13,7 +13,7 @@
 
 #define debug(a) std::cout << a << std::endl
 
-enum class GrahamOption { INSERTION_SORT, MERGE_SORT, RADIX_SORT };
+enum class GrahamOption { INSERTION_SORT, MERGE_SORT, LINEAR_SORT };
 
 class MyAlgorithms {
    public:
@@ -25,7 +25,7 @@ class MyAlgorithms {
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
     List<Point>* getConvexHullByJarvis(List<Point>*);
-    List<Point>* getConvexHullByGraham(List<Point>*);
+    List<Point>* getConvexHullByGraham(List<Point>*, GrahamOption);
 
    private:
     // funcoes auxiliares

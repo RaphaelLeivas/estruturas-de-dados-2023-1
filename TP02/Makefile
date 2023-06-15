@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+OBJS = $(OBJ)/customTime.o $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/Stack.o $(OBJ)/fecho.o
+HDRS = $(INC)/customTime.h $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -23,7 +23,7 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/fecho
 
-INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA10.txt
+INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA100.txt
 
 run:  $(EXE)
 	$(EXE) $(INPUTFILE)
@@ -46,6 +46,9 @@ $(OBJ)/MyAlgorithms.o: $(HDRS) $(SRC)/MyAlgorithms.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c
+
+$(OBJ)/customTime.o: $(HDRS) $(SRC)/customTime.c
+	$(CC) $(CFLAGS) -o $(OBJ)/customTime.o $(SRC)/customTime.c
 
 $(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp

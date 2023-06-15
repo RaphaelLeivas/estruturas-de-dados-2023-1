@@ -99,7 +99,8 @@ List<Point>* MyAlgorithms::getConvexHullByJarvis(List<Point>* pointsList) {
     return result;
 }
 
-List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points) {
+List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points,
+                                                 GrahamOption option) {
     int size = points->getSize();
 
     // Se tiver menos que 3 pontos, retorna erro
@@ -140,9 +141,26 @@ List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points) {
         newPoints[i] = currentPoint;
     }
 
-    this->sortByAngleMergeSort(newPoints, 0, size - 1);
-    // this->sortByAngleInsertionSort(newPoints, size);
-    // this->sortByAngleCountingSort(newPoints, size);
+    // aqui efetuamos a mudança do algoritmo de ordenação do Graham
+    switch (option) {
+        case GrahamOption::INSERTION_SORT: {
+            this->sortByAngleInsertionSort(newPoints, size);
+            break;
+        }
+        case GrahamOption::MERGE_SORT: {
+            this->sortByAngleMergeSort(newPoints, 0, size - 1);
+            break;
+        }
+        case GrahamOption::LINEAR_SORT: {
+            // this->sortByAngleCountingSort(newPoints, size);
+            this->sortByAngleInsertionSort(newPoints, size);
+            break;
+        }
+
+        default:
+            this->sortByAngleMergeSort(newPoints, 0, size - 1);
+    }
+
     // newPoints->print();
 
     List<Point>* newPointsList = this->checkSameAngles(newPoints, size);
@@ -338,17 +356,12 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
         count[i] += count[i - 1];
     }
 
-
-
     for (int i = n; i >= 1; i--) {
         output[count[points[i].getRoundedAngle()]] = points[i];
         count[points[i].getRoundedAngle()] -= 1;
     }
 
     this->printPointsList(output, n + 1);
-
-
-
 
     for (int i = 0; i < n; i++) {
         points[i] = output[i];
