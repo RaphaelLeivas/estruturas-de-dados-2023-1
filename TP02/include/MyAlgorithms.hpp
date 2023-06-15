@@ -25,7 +25,7 @@ class MyAlgorithms {
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
     List<Point>* getConvexHullByJarvis(List<Point>*);
-    LinkedList getConvexHullByGraham(LinkedList*);
+    List<Point>* getConvexHullByGraham(List<Point>*);
 
    private:
     // funcoes auxiliares
@@ -39,7 +39,7 @@ class MyAlgorithms {
     void sortByAngleMergeSort(Point*, int, int);
     void mergeHalves(Point*, int, int, int);
     Point getNextToTop(Stack<Point>&);
-    LinkedList checkSameAngles(Point*, int);
+    List<Point>* checkSameAngles(Point*, int);
 };
 
 #endif

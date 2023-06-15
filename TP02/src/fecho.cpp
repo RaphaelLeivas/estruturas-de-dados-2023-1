@@ -77,17 +77,17 @@ int main(int argc, char** argv) {
     // restante do codigo. isso é feito pois trabalhar com lista encadeada é
     // dificil (muitos ponteiros)
     int numberOfPoints = inputPoints.getSize();
-    List<Point>* points = new List<Point>(numberOfPoints); 
+    List<Point>* points = new List<Point>(numberOfPoints);
 
     for (int i = 0; i < numberOfPoints; ++i) {
         points->insertEnd(inputPoints.getByIndex(i));
     }
 
-    List<Point>* convexHull = myAlgorithms.getConvexHullByJarvis(points);
-    convexHull->print();
+    // List<Point>* convexHull = myAlgorithms.getConvexHullByJarvis(points);
+    // convexHull->print();
 
-    // LinkedList convexHull = myAlgorithms.getConvexHullByGraham(&inputPoints);
-    // convexHull.printList();
+    List<Point>* convexHull = myAlgorithms.getConvexHullByGraham(points);
+    convexHull->print();
 
     delete points;
     delete convexHull;

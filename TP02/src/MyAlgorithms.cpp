@@ -75,7 +75,8 @@ List<Point>* MyAlgorithms::getConvexHullByJarvis(List<Point>* pointsList) {
     // Busca o ponto com menor coordenada X
     int l = 0;
     for (int i = 1; i < size; i++) {
-        if (pointsList->getByIndex(i).getX() < pointsList->getByIndex(l).getX()) {
+        if (pointsList->getByIndex(i).getX() <
+            pointsList->getByIndex(l).getX()) {
             l = i;
         };
     }
@@ -86,8 +87,9 @@ List<Point>* MyAlgorithms::getConvexHullByJarvis(List<Point>* pointsList) {
 
         q = (p + 1) % size;
         for (int i = 0; i < size; i++) {
-            if (this->orientation(pointsList->getByIndex(p), pointsList->getByIndex(i),
-                            pointsList->getByIndex(q)) == 2) {
+            if (this->orientation(pointsList->getByIndex(p),
+                                  pointsList->getByIndex(i),
+                                  pointsList->getByIndex(q)) == 2) {
                 q = i;
             };
         }
@@ -97,7 +99,7 @@ List<Point>* MyAlgorithms::getConvexHullByJarvis(List<Point>* pointsList) {
     return result;
 }
 
-LinkedList MyAlgorithms::getConvexHullByGraham(LinkedList* points) {
+List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points) {
     int size = points->getSize();
 
     // Se tiver menos que 3 pontos, retorna erro
@@ -110,8 +112,8 @@ LinkedList MyAlgorithms::getConvexHullByGraham(LinkedList* points) {
     int ymin = points->getByIndex(0).getY(), min = 0;
     for (int i = 0; i < size; i++) {
         int y = points->getByIndex(i).getY();
-        if ((y < ymin) ||
-            (ymin == y && points->getByIndex(i).getX() < points->getByIndex(min).getX())) {
+        if ((y < ymin) || (ymin == y && points->getByIndex(i).getX() <
+                                            points->getByIndex(min).getX())) {
             ymin = points->getByIndex(i).getY();
             min = i;
         }
@@ -140,8 +142,8 @@ LinkedList MyAlgorithms::getConvexHullByGraham(LinkedList* points) {
 
     this->sortByAngleMergeSort(newPoints, 0, size - 1);
 
-    LinkedList newPointsList = this->checkSameAngles(newPoints, size);
-    int newSize = newPointsList.getSize();
+    List<Point>* newPointsList = this->checkSameAngles(newPoints, size);
+    int newSize = newPointsList->getCurrentSize();
 
     if (newSize < 3) {
         throw std::invalid_argument(
@@ -150,25 +152,25 @@ LinkedList MyAlgorithms::getConvexHullByGraham(LinkedList* points) {
 
     Stack<Point>* stack = new Stack<Point>(newSize);
 
-    stack->push(newPointsList.getByIndex(0));
-    stack->push(newPointsList.getByIndex(1));
-    stack->push(newPointsList.getByIndex(2));
+    stack->push(newPointsList->getByIndex(0));
+    stack->push(newPointsList->getByIndex(1));
+    stack->push(newPointsList->getByIndex(2));
 
     for (int i = 3; i < newSize; i++) {
         while (!stack->isEmpty() &&
                this->orientation(this->getNextToTop(*stack), stack->getTop(),
-                                 newPointsList.getByIndex(i)) != 2) {
+                                 newPointsList->getByIndex(i)) != 2) {
             stack->pop();
         }
 
-        stack->push(newPointsList.getByIndex(i));
+        stack->push(newPointsList->getByIndex(i));
     }
 
-    LinkedList finalResult;
+   List<Point>* finalResult = new List<Point>(size);
 
     while (!stack->isEmpty()) {
         Point p = stack->getTop();
-        finalResult.insertEnd(p);
+        finalResult->insertEnd(p);
         stack->pop();
     }
 
@@ -292,20 +294,20 @@ void MyAlgorithms::sortByAngleMergeSort(Point* points, int left, int right) {
 
 // se dois pontos tem o mesmo angulo polar, mantem apenas o que é mais longe do
 // inicial
-LinkedList MyAlgorithms::checkSameAngles(Point* points, int size) {
+List<Point>* MyAlgorithms::checkSameAngles(Point* points, int size) {
     Point initial = points[0];
 
     // usa lista encadeada, pois nao sei o tamanho final dela
-    LinkedList newPoints;
-    newPoints.insertEnd(initial);
+    List<Point>* newPoints = new List<Point>(size);
+    newPoints->insertEnd(initial);
 
-    LinkedList aux;
+    List<Point>* aux = new List<Point>(size);
 
     for (int i = 1; i < size - 1; ++i) {
         while (points[i].getAngle() == points[i + 1].getAngle() ||
                points[i].getAngle() == points[i - 1].getAngle()) {
             // vai jogando para a lista auxiliar
-            aux.insertEnd(points[i]);
+            aux->insertEnd(points[i]);
             ++i;  // pula o proximo
         }
 
@@ -313,20 +315,20 @@ LinkedList MyAlgorithms::checkSameAngles(Point* points, int size) {
         double maxDistance = 0;
         Point farthestPoint;
         farthestPoint.setAngle(-1);  // indica que nao foi setado aindo
-        for (int j = 0; j < aux.getSize(); ++j) {
+        for (int j = 0; j < aux->getCurrentSize(); ++j) {
             // calcula a distancia
             double distance =
-                this->getDistanceBetween(aux.getByIndex(j), initial);
+                this->getDistanceBetween(aux->getByIndex(j), initial);
             if (distance > maxDistance) {
                 maxDistance = distance;
-                farthestPoint = aux.getByIndex(j);
+                farthestPoint = aux->getByIndex(j);
             }
         }
 
         if (farthestPoint.getAngle() == -1) {
-            newPoints.insertEnd(points[i]);
+            newPoints->insertEnd(points[i]);
         } else {
-            newPoints.insertEnd(farthestPoint);
+            newPoints->insertEnd(farthestPoint);
         }
     }
 
