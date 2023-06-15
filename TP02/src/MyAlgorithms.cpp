@@ -142,6 +142,8 @@ List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points) {
 
     this->sortByAngleMergeSort(newPoints, 0, size - 1);
     // this->sortByAngleInsertionSort(newPoints, size);
+    // this->sortByAngleCountingSort(newPoints, size);
+    // newPoints->print();
 
     List<Point>* newPointsList = this->checkSameAngles(newPoints, size);
     int newSize = newPointsList->getCurrentSize();
@@ -169,7 +171,7 @@ List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points) {
         stack->push(newPointsList->getByIndex(i));
     }
 
-   List<Point>* finalResult = new List<Point>(size);
+    List<Point>* finalResult = new List<Point>(size);
 
     while (!stack->isEmpty()) {
         Point p = stack->getTop();
@@ -309,6 +311,66 @@ void MyAlgorithms::sortByAngleInsertionSort(Point* points, int n) {
         }
         points[j + 1] = aux;
     }
+};
+
+void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
+    // multiplica por 1000 e arredonda, para trabalhar com inteiros
+    int factor = 1000;
+
+    for (int i = 0; i < n; ++i) {
+        points[i].setRoundedAngle(round(points[i].getAngle() * factor));
+    }
+
+    Point* output = new Point[n + 1];
+    Point maxPoint = this->getLargestPoint(points, n);
+    int maxValue = maxPoint.getRoundedAngle();
+
+    int* count = new int[maxValue + 1];
+    for (int i = 0; i <= maxValue; i++) {
+        count[i] = 0;  // inicializa com zero
+    }
+
+    for (int i = 0; i < n; i++) {
+        count[points[i].getRoundedAngle()]++;
+    }
+
+    for (int i = 1; i <= maxValue; i++) {
+        count[i] += count[i - 1];
+    }
+
+
+
+    for (int i = n; i >= 1; i--) {
+        output[count[points[i].getRoundedAngle()]] = points[i];
+        count[points[i].getRoundedAngle()] -= 1;
+    }
+
+    this->printPointsList(output, n + 1);
+
+
+
+
+    for (int i = 0; i < n; i++) {
+        points[i] = output[i];
+    }
+
+    delete[] output;
+    delete[] count;
+
+    // this->printPointsList(points, n);
+};
+
+Point MyAlgorithms::getLargestPoint(Point* points, int n) {
+    double maxAngle = -1;
+    Point maxPoint;
+
+    for (int i = 0; i < n; i++) {
+        if (points[i].getAngle() > maxAngle) {
+            maxPoint = points[i];
+            maxAngle = maxPoint.getAngle();
+        }
+    }
+    return maxPoint;  // the max element from the array
 };
 
 // se dois pontos tem o mesmo angulo polar, mantem apenas o que é mais longe do

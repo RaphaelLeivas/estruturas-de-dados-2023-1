@@ -38,9 +38,11 @@ class MyAlgorithms {
     void printPointsList(Point*, int);
     void sortByAngleMergeSort(Point*, int, int);
     void sortByAngleInsertionSort(Point*, int);
+    void sortByAngleCountingSort(Point*, int);
     void mergeHalves(Point*, int, int, int);
     Point getNextToTop(Stack<Point>&);
     List<Point>* checkSameAngles(Point*, int);
+    Point getLargestPoint(Point*, int);
 };
 
 #endif
