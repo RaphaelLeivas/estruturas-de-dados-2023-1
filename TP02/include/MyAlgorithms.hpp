@@ -42,7 +42,7 @@ class MyAlgorithms {
     void mergeHalves(Point*, int, int, int);
     Point getNextToTop(Stack<Point>&);
     List<Point>* checkSameAngles(Point*, int);
-    Point getLargestPoint(Point*, int);
+    Point getLargestPointAngle(Point*, int);
 };
 
 #endif

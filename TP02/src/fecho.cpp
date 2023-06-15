@@ -88,43 +88,49 @@ int main(int argc, char** argv) {
     for (int i = 0; i < numberOfPoints; ++i) {
         points->insertEnd(inputPoints.getByIndex(i));
     }
-
-    std::cout << "FECHO CONVEXO: " << std::endl;
-
-    before = getUnixTimestamp(NANOSECONDS_OPTION);
-    List<Point>* convexHull = myAlgorithms.getConvexHullByJarvis(points);
-    after = getUnixTimestamp(NANOSECONDS_OPTION);
-    int64_t jarvisTime = after - before;
-
+    List<Point>* convexHull = myAlgorithms.getConvexHullByGraham(
+        points, GrahamOption::LINEAR_SORT);
     convexHull->print();
-    std::cout << std::endl;
 
-    before = getUnixTimestamp(NANOSECONDS_OPTION);
-    convexHull =
-        myAlgorithms.getConvexHullByGraham(points, GrahamOption::MERGE_SORT);
-    after = getUnixTimestamp(NANOSECONDS_OPTION);
-    int64_t grahamMergeTime = after - before;
+    // std::cout << "FECHO CONVEXO: " << std::endl;
 
-    before = getUnixTimestamp(NANOSECONDS_OPTION);
-    convexHull = myAlgorithms.getConvexHullByGraham(
-        points, GrahamOption::INSERTION_SORT);
-    after = getUnixTimestamp(NANOSECONDS_OPTION);
-    int64_t grahamInsertionTIme = after - before;
+    // before = getUnixTimestamp(NANOSECONDS_OPTION);
+    // List<Point>* convexHull = myAlgorithms.getConvexHullByJarvis(points);
+    // after = getUnixTimestamp(NANOSECONDS_OPTION);
+    // int64_t jarvisTime = after - before;
 
-    before = getUnixTimestamp(NANOSECONDS_OPTION);
-    convexHull =
-        myAlgorithms.getConvexHullByGraham(points, GrahamOption::LINEAR_SORT);
-    after = getUnixTimestamp(NANOSECONDS_OPTION);
-    int64_t grahamLinearTime = after - before;
+    // convexHull->print();
+    // std::cout << std::endl;
 
-    std::cout << "GRAHAM+MERGESORT: " << (double)(grahamMergeTime) / pow(10, 9)
-              << "s" << std::endl;
-    std::cout << "GRAHAM+INSERTIONSORT: "
-              << (double)(grahamInsertionTIme) / pow(10, 9) << "s" << std::endl;
-    std::cout << "GRAHAM+LINEAR: " << (double)(grahamLinearTime) / pow(10, 9)
-              << "s" << std::endl;
-    std::cout << "JARVIS: " << (double)(jarvisTime) / pow(10, 9) << "s"
-              << std::endl;
+    // before = getUnixTimestamp(NANOSECONDS_OPTION);
+    // convexHull =
+    //     myAlgorithms.getConvexHullByGraham(points, GrahamOption::MERGE_SORT);
+    // after = getUnixTimestamp(NANOSECONDS_OPTION);
+    // int64_t grahamMergeTime = after - before;
+
+    // before = getUnixTimestamp(NANOSECONDS_OPTION);
+    // convexHull = myAlgorithms.getConvexHullByGraham(
+    //     points, GrahamOption::INSERTION_SORT);
+    // after = getUnixTimestamp(NANOSECONDS_OPTION);
+    // int64_t grahamInsertionTIme = after - before;
+
+    // before = getUnixTimestamp(NANOSECONDS_OPTION);
+    // convexHull =
+    //     myAlgorithms.getConvexHullByGraham(points,
+    //     GrahamOption::LINEAR_SORT);
+    // after = getUnixTimestamp(NANOSECONDS_OPTION);
+    // int64_t grahamLinearTime = after - before;
+
+    // std::cout << "GRAHAM+MERGESORT: " << (double)(grahamMergeTime) / pow(10,
+    // 9)
+    //           << "s" << std::endl;
+    // std::cout << "GRAHAM+INSERTIONSORT: "
+    //           << (double)(grahamInsertionTIme) / pow(10, 9) << "s" <<
+    //           std::endl;
+    // std::cout << "GRAHAM+LINEAR: " << (double)(grahamLinearTime) / pow(10, 9)
+    //           << "s" << std::endl;
+    // std::cout << "JARVIS: " << (double)(jarvisTime) / pow(10, 9) << "s"
+    //           << std::endl;
 
     delete points;
     delete convexHull;

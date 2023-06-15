@@ -152,16 +152,13 @@ List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points,
             break;
         }
         case GrahamOption::LINEAR_SORT: {
-            // this->sortByAngleCountingSort(newPoints, size);
-            this->sortByAngleInsertionSort(newPoints, size);
+            this->sortByAngleCountingSort(newPoints, size);
             break;
         }
 
         default:
             this->sortByAngleMergeSort(newPoints, 0, size - 1);
     }
-
-    // newPoints->print();
 
     List<Point>* newPointsList = this->checkSameAngles(newPoints, size);
     int newSize = newPointsList->getCurrentSize();
@@ -336,11 +333,12 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
     int factor = 1000;
 
     for (int i = 0; i < n; ++i) {
-        points[i].setRoundedAngle(round(points[i].getAngle() * factor));
+        double roundedAngle = round(points[i].getAngle() * factor);
+        points[i].setRoundedAngle((int)roundedAngle);
     }
 
     Point* output = new Point[n + 1];
-    Point maxPoint = this->getLargestPoint(points, n);
+    Point maxPoint = this->getLargestPointAngle(points, n);
     int maxValue = maxPoint.getRoundedAngle();
 
     int* count = new int[maxValue + 1];
@@ -349,6 +347,11 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
     }
 
     for (int i = 0; i < n; i++) {
+        if (points[i].getRoundedAngle() < 0) {
+            count[0]++;
+            continue;
+        }
+
         count[points[i].getRoundedAngle()]++;
     }
 
@@ -356,24 +359,28 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
         count[i] += count[i - 1];
     }
 
-    for (int i = n; i >= 1; i--) {
-        output[count[points[i].getRoundedAngle()]] = points[i];
-        count[points[i].getRoundedAngle()] -= 1;
-    }
+    // for (int i = 0; i < maxValue + 1; i++) {
+    //     if (count[i] != 0)
+    //         std::cout << i << ": " << count[points[i].getRoundedAngle() - 1]
+    //                   << std::endl;
+    // }
 
-    this->printPointsList(output, n + 1);
+    for (int i = n - 1; i >= 0; i--) {
+        output[count[points[i].getRoundedAngle() - 1]] = points[i];
+        count[points[i].getRoundedAngle()]--;
+    }
 
     for (int i = 0; i < n; i++) {
         points[i] = output[i];
     }
 
+    // this->printPointsList(points, n);
+
     delete[] output;
     delete[] count;
-
-    // this->printPointsList(points, n);
 };
 
-Point MyAlgorithms::getLargestPoint(Point* points, int n) {
+Point MyAlgorithms::getLargestPointAngle(Point* points, int n) {
     double maxAngle = -1;
     Point maxPoint;
 
