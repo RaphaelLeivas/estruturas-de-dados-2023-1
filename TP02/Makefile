@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/LinkedList.o $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/LinkedList.hpp $(INC)/CircularQueue.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/LinkedList.o $(OBJ)/Stack.o $(OBJ)/fecho.o
+HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/LinkedList.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -40,9 +40,6 @@ $(BIN)/fecho: $(OBJS)
 
 $(OBJ)/fecho.o: $(HDRS) $(SRC)/fecho.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/fecho.o $(SRC)/fecho.cpp
-
-$(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
 
 $(OBJ)/MyAlgorithms.o: $(HDRS) $(SRC)/MyAlgorithms.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/MyAlgorithms.o $(SRC)/MyAlgorithms.cpp

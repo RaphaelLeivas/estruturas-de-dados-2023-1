@@ -51,5 +51,6 @@ template <typename T> void Stack<T>::print() {
 // modificar as funções para deixar o template genérico
 
 template class Stack<Point>; // TP 02
+template class Stack<int>;
 template class Stack<double>;
 template class Stack<std::string>;

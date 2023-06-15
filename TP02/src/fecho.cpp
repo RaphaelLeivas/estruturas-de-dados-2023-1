@@ -10,7 +10,6 @@
 
 #include <fstream>
 
-#include "../include/CircularQueue.hpp"
 #include "../include/Line.hpp"
 #include "../include/LinkedList.hpp"
 #include "../include/MyAlgorithms.hpp"
@@ -53,16 +52,16 @@ int main(int argc, char** argv) {
         std::string item;
         char delimiter = ' ';
 
-        // fila de 2 posicoes para armazenar as coordenadas x e y no loop do
-        // getline
-        CircularQueue<int>* queue = new CircularQueue<int>(3);
+        // stack auxiliar de 2 posicoes para armazenar as coordenadas x e y no
+        // loop do getline
+        Stack<int>* stack = new Stack<int>(2);
 
         while (std::getline(iss, item, delimiter)) {
-            queue->add(atoi(item.c_str()));
+            stack->push(atoi(item.c_str()));
         }
 
-        int x = queue->remove();
-        int y = queue->remove();
+        int y = stack->pop();
+        int x = stack->pop();
 
         Point point;
         point.setX(x);
@@ -71,7 +70,7 @@ int main(int argc, char** argv) {
         // insere o ponto na lista encadeada de pontos
         pointsList.insertEnd(point);
 
-        delete queue;
+        delete stack;
     }
 
     LinkedList convexHull = myAlgorithms.getConvexHullByJarvis(&pointsList);
