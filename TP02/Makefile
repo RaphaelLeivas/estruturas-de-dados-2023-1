@@ -30,7 +30,7 @@ run:  $(EXE)
 
 dev:  $(EXE)
 	$(EXE) $(INPUTFILE)
-	valgrind -s --leak-check=full ./$(BIN)/fecho
+	valgrind -s --leak-check=full --track-origins=yes ./$(BIN)/fecho
 
 debug:  $(EXE)
 	gdb --args $(EXE) $(INPUTFILE)

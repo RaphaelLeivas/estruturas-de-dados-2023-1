@@ -10,10 +10,28 @@ template <typename T> class List {
    public:
     List(int);
     ~List();
+
+    // getters
     T getByIndex(int);
-    T removeByIndex(int);
+    T getEnd();
+    T getStart();
+
+    // setters
     void setAtIndex(T, int);
+    void setStart(T);
+    void setEnd(T);
+
+    // insert
     void insertAtIndex(T, int);
+    void insertStart(T);
+    void insertEnd(T);
+
+    // remove
+    T removeByIndex(int);
+    T removeStart();
+    T removeEnd();
+
+    // aux
     bool isEmpty();
     bool isFull();
     int getSize();
@@ -22,7 +40,7 @@ template <typename T> class List {
    private:
     int size;
     int currentSize;
-    T* list;
+    T* list = NULL;
 };
 
 #endif

@@ -45,23 +45,32 @@ int main(int argc, char** argv) {
     list->insertAtIndex(Point(10, 20), list->getCurrentSize());
     list->insertAtIndex(Point(52, 100), list->getCurrentSize());
     list->insertAtIndex(Point(12, 250), list->getCurrentSize());
+    list->insertAtIndex(Point(88, 8888), list->getCurrentSize());
 
-    list->removeByIndex(list->getCurrentSize() - 1).print();
-    list->removeByIndex(list->getCurrentSize() - 1).print();
-    list->removeByIndex(list->getCurrentSize() - 1).print();
+    list->removeStart();
+    list->removeEnd();
+    list->removeStart();
 
-    list->insertAtIndex(Point(42, 555), list->getCurrentSize());
-    list->insertAtIndex(Point(777, 545), list->getCurrentSize());
+    // list->setStart(Point(4, 4444));
+    // list->insertStart(Point(1, 1));
+    // list->insertStart(Point(2, 2));
+    // list->insertStart(Point(3, 3));
 
-    list->setAtIndex(Point(74, 5454), 0);
+    list->getStart().print();
+    list->getEnd().print();
 
-    list->removeByIndex(1);
+    // list->insertAtIndex(Point(42, 555), list->getCurrentSize());
+    // list->insertAtIndex(Point(777, 545), list->getCurrentSize());
 
-    debug("-----");
+    // list->setAtIndex(Point(74, 5454), 0);
 
-    for (int i = 0; i < list->getCurrentSize(); i++) {
-        list->getByIndex(i).print();
-    }
+    // list->removeByIndex(1);
+
+    // debug("-----");
+
+    // for (int i = 0; i < list->getCurrentSize(); i++) {
+    //     list->getByIndex(i).print();
+    // }
 
     delete list;
 
