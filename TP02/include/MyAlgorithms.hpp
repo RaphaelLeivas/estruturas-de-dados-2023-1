@@ -9,6 +9,7 @@
 
 #include "LinkedList.hpp"
 #include "Stack.hpp"
+#include "List.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
@@ -23,7 +24,7 @@ class MyAlgorithms {
     void mergeSort(int*, int, int);
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
-    LinkedList getConvexHullByJarvis(LinkedList*);
+    List<Point>* getConvexHullByJarvis(List<Point>*);
     LinkedList getConvexHullByGraham(LinkedList*);
 
    private:

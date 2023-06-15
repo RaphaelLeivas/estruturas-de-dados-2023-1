@@ -23,7 +23,7 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/fecho
 
-INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA10.txt
+INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA1000.txt
 
 run:  $(EXE)
 	$(EXE) $(INPUTFILE)

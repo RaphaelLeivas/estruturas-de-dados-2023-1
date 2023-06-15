@@ -40,86 +40,57 @@ int main(int argc, char** argv) {
     std::cout << std::fixed;
     std::cout.precision(3);
 
-    List<Point>* list = new List<Point>(10);
+    parse_args(argc, argv);
+    MyAlgorithms myAlgorithms;
 
-    list->insertAtIndex(Point(10, 20), list->getCurrentSize());
-    list->insertAtIndex(Point(52, 100), list->getCurrentSize());
-    list->insertAtIndex(Point(12, 250), list->getCurrentSize());
-    list->insertAtIndex(Point(88, 8888), list->getCurrentSize());
+    std::ifstream input(inputFilePath);
+    std::string line;
 
-    list->removeStart();
-    list->removeEnd();
-    list->removeStart();
+    // lista encadeada para ler entradas
+    LinkedList inputPoints;
 
-    // list->setStart(Point(4, 4444));
-    // list->insertStart(Point(1, 1));
-    // list->insertStart(Point(2, 2));
-    // list->insertStart(Point(3, 3));
+    while (std::getline(input, line)) {
+        std::istringstream iss(line);
+        std::string item;
+        char delimiter = ' ';
 
-    list->getStart().print();
-    list->getEnd().print();
+        List<int>* xyList = new List<int>(2);
 
-    list->insertEnd(Point(52, 100));
-    list->insertEnd(Point(12, 250));
-    list->insertEnd(Point(88, 8888));
+        while (std::getline(iss, item, delimiter)) {
+            xyList->insertEnd(atoi(item.c_str()));
+        }
 
-    list->print();
+        int x = xyList->getStart();
+        int y = xyList->getEnd();
 
-    // list->insertAtIndex(Point(42, 555), list->getCurrentSize());
-    // list->insertAtIndex(Point(777, 545), list->getCurrentSize());
+        Point point;
+        point.setX(x);
+        point.setY(y);
 
-    // list->setAtIndex(Point(74, 5454), 0);
+        // insere o ponto na lista encadeada de pontos
+        inputPoints.insertEnd(point);
 
-    // list->removeByIndex(1);
+        delete xyList;
+    }
 
-    // debug("-----");
+    // agora monta uma lista normal a partir da encadeada, que usaremos no
+    // restante do codigo. isso é feito pois trabalhar com lista encadeada é
+    // dificil (muitos ponteiros)
+    int numberOfPoints = inputPoints.getSize();
+    List<Point>* points = new List<Point>(numberOfPoints); 
 
-    // for (int i = 0; i < list->getCurrentSize(); i++) {
-    //     list->getByIndex(i).print();
-    // }
+    for (int i = 0; i < numberOfPoints; ++i) {
+        points->insertEnd(inputPoints.getByIndex(i));
+    }
 
-    delete list;
+    List<Point>* convexHull = myAlgorithms.getConvexHullByJarvis(points);
+    convexHull->print();
 
-    // parse_args(argc, argv);
-    // MyAlgorithms myAlgorithms;
-
-    // std::ifstream input(inputFilePath);
-    // std::string line;
-
-    // LinkedList pointsList;
-
-    // while (std::getline(input, line)) {
-    //     std::istringstream iss(line);
-    //     std::string item;
-    //     char delimiter = ' ';
-
-    //     // stack auxiliar de 2 posicoes para armazenar as coordenadas x e y
-    //     no
-    //     // loop do getline
-    //     Stack<int>* stack = new Stack<int>(2);
-
-    //     while (std::getline(iss, item, delimiter)) {
-    //         stack->push(atoi(item.c_str()));
-    //     }
-
-    //     int y = stack->pop();
-    //     int x = stack->pop();
-
-    //     Point point;
-    //     point.setX(x);
-    //     point.setY(y);
-
-    //     // insere o ponto na lista encadeada de pontos
-    //     pointsList.insertEnd(point);
-
-    //     delete stack;
-    // }
-
-    // LinkedList convexHull = myAlgorithms.getConvexHullByJarvis(&pointsList);
+    // LinkedList convexHull = myAlgorithms.getConvexHullByGraham(&inputPoints);
     // convexHull.printList();
 
-    // LinkedList convexHull = myAlgorithms.getConvexHullByGraham(&pointsList);
-    // convexHull.printList();
+    delete points;
+    delete convexHull;
 
     return 0;
 }

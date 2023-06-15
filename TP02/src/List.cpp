@@ -119,10 +119,6 @@ void List<T>::insertEnd(T value) {
 
     this->currentSize++;
 
-    for (int i = this->currentSize; i > index; --i) {
-        this->list[i] = this->list[i - 1];
-    }
-
     this->list[index] = value;
 }
 
@@ -215,5 +211,5 @@ void List<Point>::print() {
     std::cout << "------" << std::endl << "End" << std::endl;
 }
 
-template class List<Point>;  // TP 02
+template class List<Point>; 
 template class List<int>;
