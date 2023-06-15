@@ -37,6 +37,7 @@ class MyAlgorithms {
     double getDistanceBetween(Point, Point);
     void printPointsList(Point*, int);
     void sortByAngleMergeSort(Point*, int, int);
+    void sortByAngleInsertionSort(Point*, int);
     void mergeHalves(Point*, int, int, int);
     Point getNextToTop(Stack<Point>&);
     List<Point>* checkSameAngles(Point*, int);

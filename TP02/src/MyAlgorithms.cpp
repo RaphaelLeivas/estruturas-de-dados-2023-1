@@ -141,9 +141,12 @@ List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points) {
     }
 
     this->sortByAngleMergeSort(newPoints, 0, size - 1);
+    // this->sortByAngleInsertionSort(newPoints, size);
 
     List<Point>* newPointsList = this->checkSameAngles(newPoints, size);
     int newSize = newPointsList->getCurrentSize();
+
+    // newPointsList->print();
 
     if (newSize < 3) {
         throw std::invalid_argument(
@@ -291,6 +294,22 @@ void MyAlgorithms::sortByAngleMergeSort(Point* points, int left, int right) {
         this->mergeHalves(points, left, center, right);
     }
 }
+
+void MyAlgorithms::sortByAngleInsertionSort(Point* points, int n) {
+    int i, j;
+    Point aux;
+
+    for (i = 1; i < n; i++) {
+        aux = points[i];
+        j = i - 1;
+
+        while (j >= 0 && points[j].getAngle() > aux.getAngle()) {
+            points[j + 1] = points[j];
+            j = j - 1;
+        }
+        points[j + 1] = aux;
+    }
+};
 
 // se dois pontos tem o mesmo angulo polar, mantem apenas o que é mais longe do
 // inicial
