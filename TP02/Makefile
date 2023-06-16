@@ -26,7 +26,7 @@ EXE = $(BIN)/fecho
 INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA10.txt
 
 run:  $(EXE)
-	$(EXE) $(INPUTFILE) 
+	$(EXE) -r $(INPUTFILE) 
 
 dev:  $(EXE)
 	$(EXE) $(INPUTFILE)

@@ -79,9 +79,14 @@ int main(int argc, char** argv) {
         delete xyList;
     }
 
+    if (inputPoints.getSize() == 0) {
+        std::cout << "Arquivo de entrada vazio ou ele nao existe!" << std::endl;
+        return 0;
+    }
+
     // agora monta uma lista normal a partir da encadeada, que usaremos no
     // restante do codigo. isso é feito pois trabalhar com lista encadeada é
-    // dificil (muitos ponteiros)
+    // dificil (muitos ponteiros e nao aguento mais segmentation fault)
     int numberOfPoints = inputPoints.getSize();
     List<Point>* points = new List<Point>(numberOfPoints);
 
