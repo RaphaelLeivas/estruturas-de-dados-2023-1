@@ -359,7 +359,6 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
 
     for (j = 0; j < maxValue; ++j) {
         while (count[j] > 0) {
-            debug(j);
             count[j]--;
         }
     }

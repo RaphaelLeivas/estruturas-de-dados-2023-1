@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/customTime.o $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/customTime.h $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+OBJS = $(OBJ)/customTime.o $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/ConvexHull.o $(OBJ)/Stack.o $(OBJ)/fecho.o
+HDRS = $(INC)/customTime.h $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/ConvexHull.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -26,7 +26,7 @@ EXE = $(BIN)/fecho
 INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA10.txt
 
 run:  $(EXE)
-	$(EXE) $(INPUTFILE)
+	$(EXE) $(INPUTFILE) 
 
 dev:  $(EXE)
 	$(EXE) $(INPUTFILE)
@@ -64,6 +64,9 @@ $(OBJ)/List.o: $(HDRS) $(SRC)/List.cpp
 
 $(OBJ)/LinkedList.o: $(HDRS) $(SRC)/LinkedList.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/LinkedList.o $(SRC)/LinkedList.cpp
+
+$(OBJ)/ConvexHull.o: $(HDRS) $(SRC)/ConvexHull.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/ConvexHull.o $(SRC)/ConvexHull.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

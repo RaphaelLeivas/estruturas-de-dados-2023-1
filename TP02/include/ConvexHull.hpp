@@ -5,13 +5,13 @@
 
 class ConvexHull {
    public:
-    ConvexHull(int);
+    ConvexHull(List<Line>*);
     ~ConvexHull();
-    void print();
-    void addLine(Line);
-    Line* getLines();
+    void printPoints();
+    void printLines();
+    // demais metodos de insert, remove, etc sao feitos via TAD List, ja
+    // implementando
 
    private:
     List<Line>* lines;
-    int n;
 };
