@@ -2,6 +2,8 @@
 #define LINE_HPP
 
 #include <iostream>
+#include <string>
+#include <cmath>
 
 #include "Point.hpp"
 
@@ -13,6 +15,7 @@ class Line {
     void print();
     Point getStart();
     Point getEnd();
+    std::string getEquation();
 
    private:
     Point start;

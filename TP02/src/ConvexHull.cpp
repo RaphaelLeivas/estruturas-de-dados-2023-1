@@ -1,23 +1,19 @@
 #include "../include/ConvexHull.hpp"
 
-ConvexHull::ConvexHull() = default;
+ConvexHull::ConvexHull(List<Line>* lines) { this->lines = lines; };
 
-ConvexHull::~ConvexHull() = default;
+ConvexHull::~ConvexHull() { delete lines; };
 
-void ConvexHull::print() {
-    int numberOfLines = sizeof(Line) / sizeof(this->lines[0]);
-
-    for (int i = 0; i < numberOfLines; ++i) {
-        Line currentLine = this->lines[i];
-
-        currentLine.print();
+void ConvexHull::printPoints() {
+    for (int i = 0; i < this->lines->getCurrentSize(); ++i) {
+        Point startingPoint = this->lines->getByIndex(i).getStart();
+        startingPoint.print();
     }
 };
 
-// void ConvexHull::addLine(Line line) {
-//     return this->start;
-// }
-
-// Point Line::getLines() {
-//     return this->end;
-// }
+void ConvexHull::printLines() {
+    for (int i = 0; i < this->lines->getCurrentSize(); ++i) {
+        std::string equation = this->lines->getByIndex(i).getEquation();
+        std::cout << equation << std::endl;
+    }
+}

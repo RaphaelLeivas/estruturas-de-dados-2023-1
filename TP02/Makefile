@@ -14,8 +14,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/LinkedList.o $(OBJ)/CircularQueue.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/LinkedList.hpp $(INC)/CircularQueue.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+OBJS = $(OBJ)/customTime.o $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/ConvexHull.o $(OBJ)/Stack.o $(OBJ)/fecho.o
+HDRS = $(INC)/customTime.h $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/ConvexHull.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -26,11 +26,14 @@ EXE = $(BIN)/fecho
 INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA10.txt
 
 run:  $(EXE)
-	$(EXE) $(INPUTFILE)
+	$(EXE) -r $(INPUTFILE) 
 
 dev:  $(EXE)
-	$(EXE)
-	valgrind -s --leak-check=full ./$(BIN)/fecho
+	$(EXE) $(INPUTFILE)
+	valgrind -s --leak-check=full --track-origins=yes ./$(BIN)/fecho
+
+debug:  $(EXE)
+	gdb --args $(EXE) $(INPUTFILE)
 
 $(BIN)/fecho: $(OBJS)
 	$(CC) -pg -o $(BIN)/fecho $(OBJS) $(LIBS)
@@ -38,14 +41,14 @@ $(BIN)/fecho: $(OBJS)
 $(OBJ)/fecho.o: $(HDRS) $(SRC)/fecho.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/fecho.o $(SRC)/fecho.cpp
 
-$(OBJ)/CircularQueue.o: $(HDRS) $(SRC)/CircularQueue.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/CircularQueue.o $(SRC)/CircularQueue.cpp
-
 $(OBJ)/MyAlgorithms.o: $(HDRS) $(SRC)/MyAlgorithms.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/MyAlgorithms.o $(SRC)/MyAlgorithms.cpp
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c
+
+$(OBJ)/customTime.o: $(HDRS) $(SRC)/customTime.c
+	$(CC) $(CFLAGS) -o $(OBJ)/customTime.o $(SRC)/customTime.c
 
 $(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp
@@ -56,8 +59,14 @@ $(OBJ)/Point.o: $(HDRS) $(SRC)/Point.cpp
 $(OBJ)/Line.o: $(HDRS) $(SRC)/Line.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Line.o $(SRC)/Line.cpp
 
+$(OBJ)/List.o: $(HDRS) $(SRC)/List.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/List.o $(SRC)/List.cpp
+
 $(OBJ)/LinkedList.o: $(HDRS) $(SRC)/LinkedList.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/LinkedList.o $(SRC)/LinkedList.cpp
+
+$(OBJ)/ConvexHull.o: $(HDRS) $(SRC)/ConvexHull.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/ConvexHull.o $(SRC)/ConvexHull.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

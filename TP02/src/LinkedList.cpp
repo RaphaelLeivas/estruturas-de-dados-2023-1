@@ -7,6 +7,10 @@ LinkedList::LinkedList() {
 }
 
 LinkedList::~LinkedList() {
+    if (this->head == nullptr) {
+        return;
+    }
+
     Node* p = this->head->next;
     while (p != nullptr) {
         this->head->next = p->next;
@@ -68,23 +72,23 @@ Point LinkedList::getEnd() {
 }
 
 Point LinkedList::getByIndex(int index) {
-    if (!this->isEmpty()) {
-        Node* current = this->head;
-        for (int i = 0; i < this->size; ++i) {
-            if (i == index) {
-                return current->value;
-            }
-
-            current = current->next;
-        }
-
-        // se chegou ate aqui, index esta fora da lista
-        throw std::invalid_argument(
-            "Unable to getByIndex from LinkedList: index is outside the list!");
-    } else {
+    if (this->isEmpty()) {
         throw std::invalid_argument(
             "Unable to getByIndex from LinkedList: LinkedList is empty!");
     }
+
+    Node* current = this->head;
+    for (int i = 0; i < this->size; ++i) {
+        if (i == index) {
+            return current->value;
+        }
+
+        current = current->next;
+    }
+
+    // se chegou ate aqui, index esta fora da lista
+    throw std::invalid_argument(
+        "Unable to getByIndex from LinkedList: index is outside the list!");
 }
 
 Point LinkedList::removeEnd() {
@@ -124,6 +128,11 @@ Point LinkedList::removeEnd() {
 }
 
 void LinkedList::printList() {
+    if (this->isEmpty()) {
+        throw std::invalid_argument(
+            "Unable to printList LinkedList: LinkedList is empty!");
+    }
+
     Node* current = this->head;
 
     while (current != nullptr) {
@@ -133,8 +142,6 @@ void LinkedList::printList() {
     std::cout << std::endl;
 }
 
-bool LinkedList::isEmpty() {
-    return this->size == 0;
-}
+bool LinkedList::isEmpty() { return this->size == 0; }
 
 int LinkedList::getSize() { return this->size; }

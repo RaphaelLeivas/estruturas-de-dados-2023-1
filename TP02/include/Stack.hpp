@@ -4,11 +4,14 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "Point.hpp"
+
 template <typename T> class Stack {
    public:
     Stack(int size);
     ~Stack();
     T pop();
+    T getTop();
     void push(T value);
     bool isEmpty();
     bool isFull();
