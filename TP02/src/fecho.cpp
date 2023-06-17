@@ -96,7 +96,7 @@ int main(int argc, char** argv) {
 
     // chama o Jarvis para identificar oo pontos do feito convexo
     before = getUnixTimestamp(NANOSECONDS_OPTION);
-    List<Point>* convexPoints = myAlgorithms.getConvexHullByJarvis(points);
+    List<Point>* convexPoints = myAlgorithms.getConvexPointsByJarvis(points);
     after = getUnixTimestamp(NANOSECONDS_OPTION);
     int64_t jarvisTime = after - before;
 
@@ -128,19 +128,19 @@ int main(int argc, char** argv) {
 
     before = getUnixTimestamp(NANOSECONDS_OPTION);
     convexPoints =
-        myAlgorithms.getConvexHullByGraham(points, GrahamOption::MERGE_SORT);
+        myAlgorithms.getConvexPointsByGraham(points, GrahamOption::MERGE_SORT);
     after = getUnixTimestamp(NANOSECONDS_OPTION);
     int64_t grahamMergeTime = after - before;
 
     before = getUnixTimestamp(NANOSECONDS_OPTION);
-    convexPoints = myAlgorithms.getConvexHullByGraham(
+    convexPoints = myAlgorithms.getConvexPointsByGraham(
         points, GrahamOption::INSERTION_SORT);
     after = getUnixTimestamp(NANOSECONDS_OPTION);
     int64_t grahamInsertionTIme = after - before;
 
     before = getUnixTimestamp(NANOSECONDS_OPTION);
     convexPoints =
-        myAlgorithms.getConvexHullByGraham(points, GrahamOption::LINEAR_SORT);
+        myAlgorithms.getConvexPointsByGraham(points, GrahamOption::LINEAR_SORT);
     after = getUnixTimestamp(NANOSECONDS_OPTION);
     int64_t grahamLinearTime = after - before;
 

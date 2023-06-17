@@ -60,13 +60,13 @@ void MyAlgorithms::fillArrayWithRandom(int* arr, int n) {
     }
 }
 
-List<Point>* MyAlgorithms::getConvexHullByJarvis(List<Point>* pointsList) {
+List<Point>* MyAlgorithms::getConvexPointsByJarvis(List<Point>* pointsList) {
     int size = pointsList->getSize();
 
     // Se tiver menos que 3 pontos, retorna erro
     if (size < 3) {
         throw std::invalid_argument(
-            "Unable to getConvexHullByJarvis with less than 3 points!");
+            "Unable to getConvexPointsByJarvis with less than 3 points!");
     };
 
     // lista com os pontos que achar do fecho convexo
@@ -99,14 +99,14 @@ List<Point>* MyAlgorithms::getConvexHullByJarvis(List<Point>* pointsList) {
     return result;
 }
 
-List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points,
-                                                 GrahamOption option) {
+List<Point>* MyAlgorithms::getConvexPointsByGraham(List<Point>* points,
+                                                   GrahamOption option) {
     int size = points->getSize();
 
     // Se tiver menos que 3 pontos, retorna erro
     if (size < 3) {
         throw std::invalid_argument(
-            "Unable to getConvexHullByGraham with less than 3 points!");
+            "Unable to getConvexPointsByGraham with less than 3 points!");
     };
 
     // acha o ponto com menor coordenada Y
@@ -167,7 +167,8 @@ List<Point>* MyAlgorithms::getConvexHullByGraham(List<Point>* points,
 
     if (newSize < 3) {
         throw std::invalid_argument(
-            "Unable to getConvexHullByGraham with newSize less than 3 points!");
+            "Unable to getConvexPointsByGraham with newSize less than 3 "
+            "points!");
     }
 
     Stack<Point>* stack = new Stack<Point>(newSize);
@@ -357,17 +358,12 @@ void MyAlgorithms::sortByAngleCountingSort(Point* points, int n) {
 
     i = 0;
 
-    for (j = 0; j < maxValue; ++j) {
+    for (j = 0; j <= maxValue; j++) {
         while (count[j] > 0) {
+            // points[i++] = j;
             count[j]--;
         }
     }
-
-    // for (int i = 0; i < maxValue + 1; i++) {
-    //     if (count[i] != 0)
-    //         std::cout << i << ": " << count[points[i].getRoundedAngle() - 1]
-    //                   << std::endl;
-    // }
 
     delete[] count;
 };

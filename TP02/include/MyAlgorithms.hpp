@@ -7,7 +7,6 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "LinkedList.hpp"
 #include "Stack.hpp"
 #include "List.hpp"
 
@@ -24,8 +23,8 @@ class MyAlgorithms {
     void mergeSort(int*, int, int);
     void printArray(int*, int);
     void fillArrayWithRandom(int*, int);
-    List<Point>* getConvexHullByJarvis(List<Point>*);
-    List<Point>* getConvexHullByGraham(List<Point>*, GrahamOption);
+    List<Point>* getConvexPointsByJarvis(List<Point>*);
+    List<Point>* getConvexPointsByGraham(List<Point>*, GrahamOption);
 
    private:
     // funcoes auxiliares
