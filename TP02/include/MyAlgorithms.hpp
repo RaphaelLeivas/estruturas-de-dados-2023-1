@@ -23,9 +23,6 @@ class MyAlgorithms {
 
    private:
     // funcoes auxiliares
-    void merge(int*, int, int, int);
-    void countingSort(int*, int, int);
-    int getMaxInArray(int*, int);
     int orientation(Point, Point, Point);
     double getDistanceBetween(Point, Point);
     void sortByAngleMergeSort(Point*, int, int);
