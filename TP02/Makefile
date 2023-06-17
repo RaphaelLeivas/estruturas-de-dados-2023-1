@@ -23,14 +23,9 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/fecho
 
-INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA1000.txt
-
 run:  $(EXE)
-	$(EXE) -r $(INPUTFILE) 
+	$(EXE)
 
-dev:  $(EXE)
-	valgrind -s --leak-check=full --track-origins=yes ./$(BIN)/fecho $(INPUTFILE)
- 
 debug:  $(EXE)
 	gdb --args $(EXE) $(INPUTFILE)
 
