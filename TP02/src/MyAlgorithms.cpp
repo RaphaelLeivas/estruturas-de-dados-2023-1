@@ -3,63 +3,6 @@
 MyAlgorithms::MyAlgorithms() = default;
 MyAlgorithms::~MyAlgorithms() = default;
 
-// estavel
-// pior caso: vetor entrada decrescente. é O(n^2)
-// ele é simples, estável mas tem alto custo devido a n^2 de complexidade
-// assintotica. codigo copiado dos slides do moodle
-void MyAlgorithms::insertionSort(int* arr, int n) {
-    int i, aux, j;
-
-    for (i = 1; i < n; i++) {
-        aux = arr[i];
-        j = i - 1;
-
-        while (j >= 0 && arr[j] > aux) {
-            arr[j + 1] = arr[j];
-            j = j - 1;
-        }
-        arr[j + 1] = aux;
-    }
-};
-
-// estavel
-// complexidade O(n log n), melhor que o insertion sort
-// gasta mais espaco (usa recursividade)
-// codigo copiado de https://www.geeksforgeeks.org/merge-sort/ e dos slides da
-// disciplina
-void MyAlgorithms::mergeSort(int* arr, int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-
-        // Sort first and second halves
-        this->mergeSort(arr, l, m);
-        this->mergeSort(arr, m + 1, r);
-
-        this->merge(arr, l, m, r);
-    }
-};
-
-// algoritmo linear: radixsort
-// pendente entender o que esta acontecendo aqui
-void MyAlgorithms::radixSort(int* arr, int n) {
-    int maxValue = this->getMaxInArray(arr, n);
-
-    for (int exp = 1; maxValue / exp > 0; exp *= 10)
-        this->countingSort(arr, n, exp);
-}
-
-void MyAlgorithms::printArray(int* arr, int n) {
-    for (int i = 0; i < n; ++i) std::cout << arr[i] << " ";
-    std::cout << "\n";
-}
-
-void MyAlgorithms::fillArrayWithRandom(int* arr, int n) {
-    srand(time(NULL));
-    for (int i = 0; i < n; ++i) {
-        arr[i] = rand() % 1000;
-    }
-}
-
 List<Point>* MyAlgorithms::getConvexPointsByJarvis(List<Point>* pointsList) {
     int size = pointsList->getSize();
 
@@ -284,23 +227,11 @@ int MyAlgorithms::orientation(Point p, Point q, Point r) {
     return (val > 0) ? 1 : 2;  // horario ou anti-horario
 }
 
-double MyAlgorithms::getPolarAngle(Point p1, Point p2) {
-    double dx = p2.getX() - p1.getX();
-    double dy = p2.getY() - p1.getY();
-    return std::atan2(dy, dx);
-}
-
 double MyAlgorithms::getDistanceBetween(Point p1, Point p2) {
     double nx = p1.getX() - p2.getX();
     double ny = p1.getY() - p2.getY();
     double h2 = pow(nx, 2) + pow(ny, 2);
     return pow(h2, 0.5);
-}
-
-void MyAlgorithms::printPointsList(Point* points, int size) {
-    for (int i = 0; i < size; ++i) {
-        points[i].print();
-    }
 }
 
 void MyAlgorithms::sortByAngleMergeSort(Point* points, int left, int right) {

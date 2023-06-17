@@ -18,11 +18,6 @@ class MyAlgorithms {
    public:
     MyAlgorithms();
     ~MyAlgorithms();
-    void insertionSort(int*, int);
-    void radixSort(int*, int);
-    void mergeSort(int*, int, int);
-    void printArray(int*, int);
-    void fillArrayWithRandom(int*, int);
     List<Point>* getConvexPointsByJarvis(List<Point>*);
     List<Point>* getConvexPointsByGraham(List<Point>*, GrahamOption);
 
@@ -32,9 +27,7 @@ class MyAlgorithms {
     void countingSort(int*, int, int);
     int getMaxInArray(int*, int);
     int orientation(Point, Point, Point);
-    double getPolarAngle(Point, Point);
     double getDistanceBetween(Point, Point);
-    void printPointsList(Point*, int);
     void sortByAngleMergeSort(Point*, int, int);
     void sortByAngleInsertionSort(Point*, int);
     void sortByAngleCountingSort(Point*, int);

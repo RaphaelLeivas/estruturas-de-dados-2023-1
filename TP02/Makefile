@@ -15,7 +15,7 @@ OBJ = obj
 INC = include
 BIN = bin
 OBJS = $(OBJ)/customTime.o $(OBJ)/MyAlgorithms.o $(OBJ)/Point.o $(OBJ)/Line.o $(OBJ)/List.o $(OBJ)/LinkedList.o $(OBJ)/ConvexHull.o $(OBJ)/Stack.o $(OBJ)/fecho.o
-HDRS = $(INC)/customTime.h $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/ConvexHull.hpp $(INC)/Stack.hpp $(INC)/msgassert.h
+HDRS = $(INC)/customTime.h $(INC)/MyAlgorithms.hpp $(INC)/Point.hpp $(INC)/Line.hpp $(INC)/List.hpp $(INC)/LinkedList.hpp $(INC)/ConvexHull.hpp $(INC)/Stack.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
@@ -23,7 +23,7 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/fecho
 
-INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA1000.txt
+INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP02/exemplosTP2/ENTRADA10.txt
 
 run:  $(EXE)
 	$(EXE) -r $(INPUTFILE) 
@@ -31,7 +31,7 @@ run:  $(EXE)
 dev:  $(EXE)
 	$(EXE) $(INPUTFILE)
 	valgrind -s --leak-check=full --track-origins=yes ./$(BIN)/fecho
-
+ 
 debug:  $(EXE)
 	gdb --args $(EXE) $(INPUTFILE)
 
@@ -43,9 +43,6 @@ $(OBJ)/fecho.o: $(HDRS) $(SRC)/fecho.cpp
 
 $(OBJ)/MyAlgorithms.o: $(HDRS) $(SRC)/MyAlgorithms.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/MyAlgorithms.o $(SRC)/MyAlgorithms.cpp
-
-$(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
-	$(CC) $(CFLAGS) -o $(OBJ)/memlog.o $(SRC)/memlog.c
 
 $(OBJ)/customTime.o: $(HDRS) $(SRC)/customTime.c
 	$(CC) $(CFLAGS) -o $(OBJ)/customTime.o $(SRC)/customTime.c
