@@ -344,7 +344,7 @@ int main(int argc, char *argv[]) {
 
     exp.print = 0;
     exp.seed = 1;
-    exp.numops = 10000;
+    exp.numops = 100000;
     exp.maxch = 100;
     exp.op[PESQUISA] = 0.4;
     exp.op[INSERE] = 0.7;
@@ -381,7 +381,7 @@ int main(int argc, char *argv[]) {
                 Retira(x.Chave, &D);
                 break;
         }
-        if (exp.print) Imprime(D, stdout, &st, (char*)"");
+        if (exp.print) Imprime(D, stdout, &st, (char *)"");
     }
 
     return 0;

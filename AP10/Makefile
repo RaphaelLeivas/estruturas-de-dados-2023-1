@@ -23,9 +23,10 @@ CFLAGS = $(CFLAGS_DEBUG)
 
 EXE = $(BIN)/AP10
 
-all: $(EXE) # cria o binario, chamando a regra $(OBJ)/AP10.o: 
+run: $(EXE) # cria o binario, chamando a regra $(OBJ)/AP10.o: 
 	@echo "Binary created. Now calling the binary"
-	$(EXE) 
+	time -f "Program: %C\nTotal time: %E\nUser Mode (s) %U\nKernel Mode (s) %S\nCPU: %P" $(EXE) 
+	make clean
 
 $(BIN)/AP10: $(OBJS)
 	@echo "Creating AP10 binary"
@@ -33,7 +34,7 @@ $(BIN)/AP10: $(OBJS)
 
 $(OBJ)/AP10.o: $(HDRS) $(SRC)/AP10.c
 	@echo "Compiling AP10"
-	$(CC) $(CFLAGS) -Dm=2 -DCARGA=100 -o $(OBJ)/AP10.o $(SRC)/AP10.c
+	$(CC) $(CFLAGS) -Dm=8 -DCARGA=10000 -o $(OBJ)/AP10.o $(SRC)/AP10.c
 
 $(OBJ)/memlog.o: $(HDRS) $(SRC)/memlog.c
 	@echo "Compiling memlog"
