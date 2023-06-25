@@ -9,7 +9,7 @@ HDRS = $(INC)/Relacao.hpp $(INC)/ConjuntoDisjunto.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -I$(INC) -pg
-CFLAGS = $(CFLAGS_DEBUG)
+CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/main
 
@@ -17,6 +17,9 @@ run: $(EXE) # cria o binario, chamando a regra $(OBJ)/main.o:
 	@echo "Binary created. Now calling the binary"
 	$(EXE)
 	gnuplot plot.plt
+
+valgrind:
+	valgrind -s --leak-check=full --show-leak-kinds=reachable $(EXE)
 
 $(BIN)/main: $(OBJS)
 	@echo "Creating main binary"

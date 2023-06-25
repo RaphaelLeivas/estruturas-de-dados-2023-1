@@ -5,7 +5,9 @@
 
 class ConjuntoDisjunto {
    private:
-	long parent[MAX_TAM];
+	long* parent;
+	long* rank;
+   bool hasRankOptimazion;
 
    public:
     ConjuntoDisjunto();
