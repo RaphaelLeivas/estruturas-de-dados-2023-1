@@ -4,8 +4,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/Stack.o $(OBJ)/TP03.o
-HDRS = $(INC)/Stack.hpp
+OBJS = $(OBJ)/NodeItem.o $(OBJ)/Node.o $(OBJ)/BinaryTree.o $(OBJ)/TP03.o
+HDRS = $(INC)/NodeItem.hpp $(INC)/Node.hpp $(INC)/BinaryTree.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
@@ -30,8 +30,14 @@ $(BIN)/TP03: $(OBJS)
 $(OBJ)/TP03.o: $(HDRS) $(SRC)/TP03.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/TP03.o $(SRC)/TP03.cpp
 
-$(OBJ)/Stack.o: $(HDRS) $(SRC)/Stack.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/Stack.o $(SRC)/Stack.cpp
+$(OBJ)/NodeItem.o: $(HDRS) $(SRC)/NodeItem.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/NodeItem.o $(SRC)/NodeItem.cpp
+
+$(OBJ)/Node.o: $(HDRS) $(SRC)/Node.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Node.o $(SRC)/Node.cpp
+
+$(OBJ)/BinaryTree.o: $(HDRS) $(SRC)/BinaryTree.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/BinaryTree.o $(SRC)/BinaryTree.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

@@ -10,6 +10,8 @@
 
 #include <fstream>
 
+#include "../include/BinaryTree.hpp"
+
 std::string inputFilePath;
 
 // void parse_args(int argc, char** argv) {
@@ -24,6 +26,20 @@ std::string inputFilePath;
 int main(int argc, char** argv) {
     // parse_args(argc, argv);
 
-    std::cout << "HELLO_VERSION" << std::endl;
+    int valuesToInsert[7] = {5, 3, 2, 1, 4, 7, 6};
+    int size = sizeof(valuesToInsert)/sizeof(valuesToInsert[0]);
+
+    BinaryTree tree = BinaryTree();
+
+    for (int i = 0; i < size; ++i) {
+        NodeItem newItem = NodeItem();
+        newItem.setFrequency(valuesToInsert[i]);
+
+        tree.insert(newItem);
+    }
+
+    tree.walk(WALK_TYPES::IN_ORDER);
+    tree.walk(WALK_TYPES::PRE_ORDER);
+    tree.walk(WALK_TYPES::POST_ORDER);
     return 0;
 }
