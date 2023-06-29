@@ -26,7 +26,7 @@ std::string inputFilePath;
 int main(int argc, char** argv) {
     // parse_args(argc, argv);
 
-    int valuesToInsert[7] = {5, 3, 2, 1, 4, 7, 6};
+    int valuesToInsert[7] = {5, 5, 4, 2, 3, 1, 70};
     int size = sizeof(valuesToInsert)/sizeof(valuesToInsert[0]);
 
     BinaryTree tree = BinaryTree();
@@ -38,8 +38,9 @@ int main(int argc, char** argv) {
         tree.insert(newItem);
     }
 
-    tree.walk(WALK_TYPES::IN_ORDER);
+    tree.remove(5);
+
     tree.walk(WALK_TYPES::PRE_ORDER);
-    tree.walk(WALK_TYPES::POST_ORDER);
+
     return 0;
 }
