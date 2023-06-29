@@ -18,14 +18,14 @@ class LinkedList {
     void setItem(NodeItem, int);
 
     // inserts
-    void insertStart(NodeItem);
-    void insert(NodeItem, int);
+    void insertStart(NodeItem); // instaveis
+    void insert(NodeItem, int); // instaveis
     void insertEnd(NodeItem);
+
+    // getters
 
     // aux
     Cell* position(int, bool);
-    NodeItem getHead();
-    NodeItem getTail();
 
    private:
     Cell* head;

@@ -16,7 +16,13 @@ int LinkedList::getSize() { return this->size; }
 bool LinkedList::isEmpty() { return this->size == 0; }
 
 NodeItem LinkedList::getItem(int pos) {
-    return this->position(pos, false)->getItem();
+    Cell* p = this->position(pos, false);
+
+    if (p == nullptr) {
+        throw std::invalid_argument("LinkedList Error: unable to getItem in null cell");
+    }
+
+    return p->getItem();
 }
 
 void LinkedList::setItem(NodeItem item, int pos) {
@@ -110,22 +116,4 @@ Cell* LinkedList::position(int pos, bool before = false) {
     }
 
     return p;
-}
-
-NodeItem LinkedList::getHead() {
-    if (this->head == nullptr) {
-        throw std::invalid_argument(
-            "LinkedList Error: unable to getHead: head is null");
-    }
-
-    return this->head->getItem();
-}
-
-NodeItem LinkedList::getTail() {
-    if (this->tail == nullptr) {
-        throw std::invalid_argument(
-            "LinkedList Error: unable to getTail: tail is null");
-    }
-
-    return this->tail->getItem();
 }

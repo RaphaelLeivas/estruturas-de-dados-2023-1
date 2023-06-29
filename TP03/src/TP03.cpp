@@ -39,8 +39,13 @@ int main(int argc, char** argv) {
         list.insertEnd(newItem);
     }
 
+    for (int i = 0; i < size; ++i) {
+        NodeItem newItem = NodeItem();
+        newItem.setFrequency(valuesToInsert[i] * 100);
+        list.setItem(newItem, i + 1);
+    }
+
     list.print();
-    debug(list.getSize());
 
     return 0;
 }
