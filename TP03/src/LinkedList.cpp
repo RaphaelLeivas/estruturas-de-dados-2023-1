@@ -35,14 +35,13 @@ void LinkedList::insertStart(NodeItem item) {
     Cell* newCell = new Cell();
     newCell->setItem(item);
 
-    newCell->next = this->head;
+    newCell->next = this->head->next;
+    this->head->next = newCell;
+    this->size = this->size + 1;
 
-    if (this->head->next == nullptr) {
+    if (newCell->next == nullptr) {
         this->tail = newCell;
     }
-
-    this->head = newCell;
-    this->size = this->size + 1;
 }
 
 void LinkedList::insertEnd(NodeItem item) {
@@ -58,7 +57,7 @@ void LinkedList::insertEnd(NodeItem item) {
 
 void LinkedList::insert(NodeItem item, int pos) {
     Cell* newCell = new Cell();
-    Cell* p = this->position(pos, true);
+    Cell* p = this->position(pos, false);
 
     newCell->setItem(item);
 
@@ -169,6 +168,7 @@ NodeItem LinkedList::remove(int pos) {
 Cell* LinkedList::position(int pos, bool before = false) {
     // OBS: pos varia de 1 ate size, nao comeca em zero
     if (pos > this->size || pos <= 0) {
+        debug(pos);
         throw std::invalid_argument("LinkedList Error: invalid position");
     }
 
