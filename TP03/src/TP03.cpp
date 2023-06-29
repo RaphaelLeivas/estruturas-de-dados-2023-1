@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include "../include/BinaryTree.hpp"
+#include "../include/LinkedList.hpp"
 
 std::string inputFilePath;
 
@@ -26,21 +27,20 @@ std::string inputFilePath;
 int main(int argc, char** argv) {
     // parse_args(argc, argv);
 
-    int valuesToInsert[7] = {5, 5, 4, 2, 3, 1, 70};
-    int size = sizeof(valuesToInsert)/sizeof(valuesToInsert[0]);
+    int valuesToInsert[6] = {5, 33, 22, 5, 4, 100};
+    int size = sizeof(valuesToInsert) / sizeof(valuesToInsert[0]);
 
-    BinaryTree tree = BinaryTree();
+    LinkedList list = LinkedList();
 
     for (int i = 0; i < size; ++i) {
         NodeItem newItem = NodeItem();
         newItem.setFrequency(valuesToInsert[i]);
 
-        tree.insert(newItem);
+        list.insertEnd(newItem);
     }
 
-    tree.remove(5);
-
-    tree.walk(WALK_TYPES::PRE_ORDER);
+    list.print();
+    debug(list.getSize());
 
     return 0;
 }
