@@ -19,7 +19,8 @@ NodeItem LinkedList::getItem(int pos) {
     Cell* p = this->position(pos, false);
 
     if (p == nullptr) {
-        throw std::invalid_argument("LinkedList Error: unable to getItem in null cell");
+        throw std::invalid_argument(
+            "LinkedList Error: unable to getItem in null cell");
     }
 
     return p->getItem();
@@ -99,9 +100,75 @@ void LinkedList::print() {
     std::cout << "END LIST PRINT" << std::endl;
 }
 
+NodeItem LinkedList::removeStart() {
+    NodeItem aux;
+
+    if (this->isEmpty()) {
+        throw std::invalid_argument(
+            "LinkedList Error: unable to remove from empty list");
+    }
+
+    Cell* p = this->head->next;
+    this->head->next = p->next;
+    this->size = this->size - 1;
+
+    if (this->head->next == nullptr) {
+        this->tail = this->head;
+    }
+
+    aux = p->getItem();
+
+    delete p;
+    return aux;
+}
+
+NodeItem LinkedList::removeEnd() {
+    NodeItem aux;
+
+    if (this->isEmpty()) {
+        throw std::invalid_argument(
+            "LinkedList Error: unable to remove from empty list");
+    }
+
+    Cell* p = this->position(this->size, true);
+    p->next = nullptr;
+    this->size = this->size - 1;
+
+    aux = this->tail->getItem();
+    delete this->tail;
+    this->tail = p;
+
+    return aux;
+}
+
+NodeItem LinkedList::remove(int pos) {
+    NodeItem aux;
+
+    if (this->isEmpty()) {
+        throw std::invalid_argument(
+            "LinkedList Error: unable to remove from empty list");
+    }
+
+    Cell* p = this->position(pos, true);
+    Cell* q = p->next;
+
+    p->next = q->next;
+    this->size = this->size - 1;
+    aux = q->getItem();
+
+    delete q;
+
+    if (p->next == nullptr) {
+        this->tail = p;
+    }
+
+    return aux;
+}
+
 // auxiliar
 Cell* LinkedList::position(int pos, bool before = false) {
-    if (pos > this->size || pos < 0) {
+    // OBS: pos varia de 1 ate size, nao comeca em zero
+    if (pos > this->size || pos <= 0) {
         throw std::invalid_argument("LinkedList Error: invalid position");
     }
 

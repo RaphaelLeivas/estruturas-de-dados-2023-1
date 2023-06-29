@@ -22,7 +22,10 @@ class LinkedList {
     void insert(NodeItem, int); // instaveis
     void insertEnd(NodeItem);
 
-    // getters
+    // remove
+    NodeItem removeStart();
+    NodeItem remove(int);
+    NodeItem removeEnd();
 
     // aux
     Cell* position(int, bool);

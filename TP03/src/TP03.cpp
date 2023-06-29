@@ -32,11 +32,18 @@ int main(int argc, char** argv) {
 
     LinkedList list = LinkedList();
 
+
     for (int i = 0; i < size; ++i) {
         NodeItem newItem = NodeItem();
         newItem.setFrequency(valuesToInsert[i]);
 
-        list.insertEnd(newItem);
+        // if (i == 0) {
+        //     list.insertStart(newItem);
+        // } else if (i == size - 1) {
+            list.insertEnd(newItem);
+        // } else {
+        //     list.insert(newItem, i);
+        // }
     }
 
     for (int i = 0; i < size; ++i) {
@@ -45,7 +52,9 @@ int main(int argc, char** argv) {
         list.setItem(newItem, i + 1);
     }
 
+    list.remove(5);
     list.print();
+    debug(list.getItem(5).getFrequency());
 
     return 0;
 }
