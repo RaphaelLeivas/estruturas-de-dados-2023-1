@@ -3,7 +3,7 @@
 ConjuntoDisjunto::ConjuntoDisjunto() {
     this->parent = new long[MAX_TAM];
     this->rank = new long[MAX_TAM];
-    this->hasRankOptimazion = true;
+    this->hasRankOptimization = true;
 }
 
 ConjuntoDisjunto::~ConjuntoDisjunto() {
@@ -25,7 +25,7 @@ void ConjuntoDisjunto::unionSet(long x, long y) {
     // se ja estao no mesmo conjunto
     if (xset == yset) return;
 
-    if (hasRankOptimazion) {
+    if (this->hasRankOptimization) {
         // verificacao dos ranks
         if (rank[xset] < rank[yset]) {
             parent[xset] = yset;

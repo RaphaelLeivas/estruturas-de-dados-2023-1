@@ -34,7 +34,7 @@ int main(){
 	//a estrutura de conjuntos disjuntos
 	ConjuntoDisjunto* uf = NULL;
 	
-	for(long i = 100; i < 2000; i= i+100 ){
+	for(long i = 1000; i < 10001; i= i+1000 ){
 		printf("TESTANDO PARA %ld elementos\n", i);
 		rel = new Relacao(i);
 		uf = new ConjuntoDisjunto();

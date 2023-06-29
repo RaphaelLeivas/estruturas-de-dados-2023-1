@@ -7,7 +7,7 @@ class ConjuntoDisjunto {
    private:
 	long* parent;
 	long* rank;
-   bool hasRankOptimazion;
+   bool hasRankOptimization;
 
    public:
     ConjuntoDisjunto();
