@@ -185,7 +185,7 @@ Cell* LinkedList::position(int pos, bool before = false) {
     // OBS: pos varia de 1 ate size, nao comeca em zero
     if (pos > this->size || pos <= 0) {
         debug(pos);
-        throw std::invalid_argument("LinkedList Error: invalid position");
+        throw std::invalid_argument("LinkedList Error: invalid position: " + std::to_string(pos));
     }
 
     Cell* p = this->head;

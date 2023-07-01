@@ -3,6 +3,7 @@
 
 #include "Cell.hpp"
 #include <stdexcept>
+#include <string>
 
 #define debug(a) std::cout << a << std::endl
 
