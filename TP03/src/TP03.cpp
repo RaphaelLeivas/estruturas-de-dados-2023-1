@@ -50,43 +50,45 @@ int main(int argc, char** argv) {
     Utils utils = Utils();
     LinkedList list = LinkedList();
 
-    std::ifstream input(fileToComp);
-    std::string line;
+    std::ifstream inputFile(fileToComp);
+    char ch;
 
     int maxFreq = 0;  // usado na ordenação via counting sort
 
-    while (std::getline(input, line)) {
-        for (std::size_t i = 0; i < line.length(); ++i) {
-            char currentChar = line[i];
+    while (inputFile.get(ch)) {
+        // verifica se ja existe esse caracter
+        Cell* foundCell = list.getCellByChar(ch);
+        int newFreq;
 
-            // verifica se ja existe esse caracter
-            Cell* foundCell = list.getCellByChar(currentChar);
-            int newFreq;
+        if (foundCell == nullptr) {
+            // nao existe o caracter. cria um novo e salva
+            NodeItem newItem = NodeItem();
+            newItem.setData(ch);
+            newFreq = 1;
+            newItem.setFrequency(newFreq);
 
-            if (foundCell == nullptr) {
-                // nao existe o caracter. cria um novo e salva
-                NodeItem newItem = NodeItem();
-                newItem.setData(currentChar);
-                newFreq = 1;
-                newItem.setFrequency(newFreq);
+            list.insertEnd(newItem);
+        } else {
+            // caraceter ja existe na lista.
+            NodeItem currentItem = foundCell->getItem();
+            newFreq = currentItem.getFrequency() + 1;
+            currentItem.setFrequency(newFreq);
 
-                list.insertEnd(newItem);
-            } else {
-                // caraceter ja existe na lista.
-                NodeItem currentItem = foundCell->getItem();
-                newFreq = currentItem.getFrequency() + 1;
-                currentItem.setFrequency(newFreq);
+            foundCell->setItem(currentItem);
+        }
 
-                foundCell->setItem(currentItem);
-            }
-
-            if (newFreq >= maxFreq) {
-                maxFreq = newFreq;
-            }
+        if (newFreq >= maxFreq) {
+            maxFreq = newFreq;
         }
     }
 
-    // lista original
+    if (!list.getSize()) {
+        std::cout << "ERRO: arquivo de entrada vazio. Não é possível comprimir"
+                  << std::endl;
+        return 0;
+    }
+
+    // aux que salva a lista original
     LinkedList originalList = LinkedList();
 
     for (int i = 0; i < list.getSize(); i++) {
@@ -118,29 +120,68 @@ int main(int argc, char** argv) {
     Cell* root = list.getFirstCell();
 
     // adiciona um codigo a cada caracter da lista
-    assignHuffmanCodes(root, "");
+    if (originalList.getSize() == 1) {
+        // se so tem um caracter na entrada
+        NodeItem item = root->getItem();
+        item.setCode("1");
+        root->setItem(item);
+    } else {
+        assignHuffmanCodes(root, "");
+    }
+
+    // list.printHuffmanCodes(root);
 
     // agora percorre o arquivo de entrada mais um vez. para cada caracter,
     // adicina o correspondente codigo no arquivo de saida
-    std::ifstream input2(fileToComp);
-    std::ofstream output(fileToDecomp);
+    std::ifstream inputFile2(fileToComp);
+    std::ofstream outputFile(fileToDecomp, std::ios::binary);
 
-    while (std::getline(input2, line)) {
-        for (std::size_t i = 0; i < line.length(); ++i) {
-            char currentChar = line[i];
-            Cell* foundCell = list.findCellByChar(root, currentChar);
+    std::string buffer;
 
-            if (foundCell == nullptr) {
-                throw std::runtime_error("Compression error: not found character " + currentChar);
+    while (inputFile2.get(ch)) {
+        Cell* foundCell = list.findCellByChar(root, ch);
+
+        if (foundCell == nullptr) {
+            throw std::runtime_error("Compression error: not found character " +
+                                     ch);
+        }
+
+        buffer += foundCell->getItem().getCode();
+
+        // Write complete bytes to the output file
+        while (buffer.size() >= 8) {
+            unsigned char byte = 0;
+            for (int i = 0; i < 8; i++) {
+                if (buffer[i] == '1') {
+                    byte |= (1 << (7 - i));
+                }
             }
 
-            output << foundCell->getItem().getCode();
+            outputFile.write(reinterpret_cast<const char*>(&byte),
+                             sizeof(byte));
+            buffer = buffer.substr(8);
         }
     }
 
-    input.close();
-    input2.close();
-    output.close();
+    // Write the remaining bits (if any) padded with zeros
+    if (!buffer.empty()) {
+        unsigned char byte = 0;
+        for (long unsigned int i = 0; i < buffer.size(); i++) {
+            if (buffer[i] == '1') {
+                byte |= (1 << (7 - i));
+            }
+        }
+
+        // Pad the remaining bits with zeros
+        int remainingBits = 8 - buffer.size();
+        byte <<= remainingBits;
+
+        outputFile.write(reinterpret_cast<const char*>(&byte), sizeof(byte));
+    }
+
+    inputFile.close();
+    inputFile2.close();
+    outputFile.close();
 
     return 0;
 }
