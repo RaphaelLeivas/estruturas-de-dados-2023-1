@@ -12,6 +12,7 @@
 
 #include "../include/BinaryTree.hpp"
 #include "../include/LinkedList.hpp"
+#include "../include/Utils.hpp"
 
 std::string fileToComp;
 std::string fileToDecomp;
@@ -28,15 +29,25 @@ void parse_args(int argc, char** argv) {
     }
 }
 
-void printArray(int* arr, int n) {
-    for (int i = 0; i < n; i++) {
-        std::cout << arr[i] << std::endl;
+void assignHuffmanCodes(Cell* root, std::string str) {
+    if (!root) {
+        return;
     }
+
+    if (root->getItem().getData() != 0) {
+        NodeItem item = root->getItem();
+        item.setCode(str);
+        root->setItem(item);
+    }
+
+    assignHuffmanCodes(root->left, str + "0");
+    assignHuffmanCodes(root->right, str + "1");
 }
 
 int main(int argc, char** argv) {
     parse_args(argc, argv);
 
+    Utils utils = Utils();
     LinkedList list = LinkedList();
 
     std::ifstream input(fileToComp);
@@ -75,54 +86,33 @@ int main(int argc, char** argv) {
         }
     }
 
-    // ordena a lista em forma decrescente via countingsort
-    int* count = new int[maxFreq + 1];
-    int listSize = list.getSize();
+    // ordena a lista com counting sort
+    utils.sortbyCountingSort(&list, maxFreq);
 
-    for (int i = 0; i < listSize; i++) {
-        int num = list.getItem(i + 1).getFrequency();
-        count[num]++;
+    while (list.getSize() != 1) {
+        Cell* left = list.removeEndCell();
+        Cell* right = list.removeEndCell();
+
+        Cell* newCell = new Cell();
+        newCell->left = left;
+        newCell->right = right;
+
+        NodeItem newItem = NodeItem();
+        int newFreq =
+            left->getItem().getFrequency() + right->getItem().getFrequency();
+        newItem.setFrequency(newFreq);
+        newCell->setItem(newItem);
+
+        list.insertCellAtOrder(newCell);
     }
 
-    // calcula a soma cumulativa em ordem decrescente
-    for (int i = maxFreq - 1; i >= 0; i--) {
-        count[i] += count[i + 1];
-    }
+    // agora, a unica celula na lista encadeada é a raiz da arvore de Huffman.
+    Cell* root = list.getFirstCell();
 
-    LinkedList sortedList;
+    // adiciona um codigo a cada membro da lista
+    assignHuffmanCodes(root, "");
 
-    for (int i = 0; i < listSize; i++) {
-        NodeItem currentItem = list.getItem(i + 1);
-        sortedList.insertEnd(currentItem);
-    }
-
-    for (int i = listSize - 1; i >= 0; i--) {
-        NodeItem arrI = list.getItem(i + 1);
-        sortedList.setItem(arrI, count[arrI.getFrequency()]);
-        count[arrI.getFrequency()]--;
-    }
-
-    delete[] count;
-
-    // agora trabalhamos apenas com a sortedList decrescente
-    sortedList.print();
-
-    // while (sortedList.getSize() != 1) {
-    //     NodeItem left = sortedList.removeEnd();
-    //     NodeItem right = sortedList.removeEnd();
-
-    //     // monta o novo
-    //     NodeItem newNode = NodeItem();
-    //     newNode.setFrequency(left.getFrequency() + right.getFrequency());
-
-    //     debug(newNode.getFrequency());
-    //     debug(newNode.getData());
-    //     break;
-
-    //     // debug(left.getFrequency());
-    //     // debug(right.getFrequency());
-    //     // debug(sortedList.getSize());
-    // }
+    list.printHuffmanCodes(root);
 
     return 0;
 }

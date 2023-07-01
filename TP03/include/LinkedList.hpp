@@ -18,10 +18,15 @@ class LinkedList {
     NodeItem getItem(int);
     void setItem(NodeItem, int);
 
-    // inserts
+    // inserts - nivel de item
     void insertStart(NodeItem);
     void insert(NodeItem, int);
     void insertEnd(NodeItem);
+
+    // inserts - nivel de celula
+    void insertCellStart(Cell*);
+    void insertCell(Cell*, int);
+    void insertCellEnd(Cell*);
 
     // remove
     NodeItem removeStart();
@@ -31,6 +36,11 @@ class LinkedList {
     // aux
     Cell* position(int, bool);
     Cell* getCellByChar(char);
+    Cell* removeEndCell(); // nao deleta a referencia da cell
+    void insertEndCell(Cell*); 
+    void insertCellAtOrder(Cell*); 
+    Cell* getFirstCell();
+    void printHuffmanCodes(Cell* root);
 
    private:
     Cell* head;

@@ -8,6 +8,8 @@ class Cell {
     Cell();
     void setItem(NodeItem);
     NodeItem getItem();
+    Cell* left;
+    Cell* right;
 
    private:
     NodeItem item;

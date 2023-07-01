@@ -60,6 +60,16 @@ void LinkedList::insertStart(NodeItem item) {
     }
 }
 
+void LinkedList::insertCellStart(Cell* cell) {
+    cell->next = this->head->next;
+    this->head->next = cell;
+    this->size = this->size + 1;
+
+    if (cell->next == nullptr) {
+        this->tail = cell;
+    }
+}
+
 void LinkedList::insertEnd(NodeItem item) {
     Cell* newCell = new Cell();
 
@@ -67,6 +77,13 @@ void LinkedList::insertEnd(NodeItem item) {
 
     this->tail->next = newCell;
     this->tail = newCell;
+
+    this->size = this->size + 1;
+}
+
+void LinkedList::insertCellEnd(Cell* cell) {
+    this->tail->next = cell;
+    this->tail = cell;
 
     this->size = this->size + 1;
 }
@@ -82,6 +99,19 @@ void LinkedList::insert(NodeItem item, int pos) {
 
     if (newCell->next == nullptr) {
         this->tail = newCell;
+    }
+
+    this->size = this->size + 1;
+}
+
+void LinkedList::insertCell(Cell* cell, int pos) {
+    Cell* p = this->position(pos, false);
+
+    cell->next = p->next;
+    p->next = cell;
+
+    if (cell->next == nullptr) {
+        this->tail = cell;
     }
 
     this->size = this->size + 1;
@@ -184,8 +214,8 @@ NodeItem LinkedList::remove(int pos) {
 Cell* LinkedList::position(int pos, bool before = false) {
     // OBS: pos varia de 1 ate size, nao comeca em zero
     if (pos > this->size || pos <= 0) {
-        debug(pos);
-        throw std::invalid_argument("LinkedList Error: invalid position: " + std::to_string(pos));
+        throw std::invalid_argument("LinkedList Error: invalid position: " +
+                                    std::to_string(pos));
     }
 
     Cell* p = this->head;
@@ -199,4 +229,73 @@ Cell* LinkedList::position(int pos, bool before = false) {
     }
 
     return p;
+}
+
+Cell* LinkedList::removeEndCell() {
+    if (this->isEmpty()) {
+        throw std::invalid_argument(
+            "LinkedList Error: unable to remove from empty list");
+    }
+
+    Cell* aux = this->tail;
+
+    Cell* p = this->position(this->size, true);
+    p->next = nullptr;
+    this->size = this->size - 1;
+
+    this->tail = p;
+
+    return aux;
+}
+
+void LinkedList::insertEndCell(Cell* cell) {
+    this->tail->next = cell;
+    this->tail = cell;
+
+    this->size = this->size + 1;
+}
+
+void LinkedList::insertCellAtOrder(Cell* cell) {
+    Cell* p = this->head->next;
+    int freq = cell->getItem().getFrequency();
+    int position = 0;
+
+    while (p != nullptr) {
+        position++;
+        int currentFreq = p->getItem().getFrequency();
+
+        if (currentFreq < freq) {
+            int positionToInsert = position - 1;
+
+            if (positionToInsert == 0) {
+                this->insertCellStart(cell);
+            } else {
+                this->insertCell(cell, position - 1);
+            }
+
+            return;
+        }
+
+        p = p->next;
+    }
+
+    // se chegou ate aqui, insere no final
+    this->insertCellEnd(cell);
+}
+
+Cell* LinkedList::getFirstCell() {
+    return this->head->next;
+}
+
+void LinkedList::printHuffmanCodes(Cell* root) {
+    if (!root) {
+        return;
+    }
+
+    if (root->getItem().getData() != 0) {
+        std::cout << root->getItem().getData() << ": " << root->getItem().getCode() << "\n";
+    }
+
+    this->printHuffmanCodes(root->left);
+    this->printHuffmanCodes(root->right);
 }

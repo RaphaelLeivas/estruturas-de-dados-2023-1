@@ -13,6 +13,10 @@ int NodeItem::getFrequency() { return this->frequency; }
 
 char NodeItem::getData() { return this->data; }
 
+std::string NodeItem::getCode() { return this->code; }
+
+void NodeItem::setCode(std::string code) { this->code = code; }
+
 void NodeItem::print() {
     std::cout << "Char = " << this->data << " Frequency: " << this->frequency
               << std::endl;
