@@ -19,8 +19,8 @@ class LinkedList {
     void setItem(NodeItem, int);
 
     // inserts
-    void insertStart(NodeItem); // instaveis
-    void insert(NodeItem, int); // instaveis
+    void insertStart(NodeItem);
+    void insert(NodeItem, int);
     void insertEnd(NodeItem);
 
     // remove

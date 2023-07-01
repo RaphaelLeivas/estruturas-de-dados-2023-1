@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     std::ifstream input(fileToComp);
     std::string line;
 
-    int maxFreq = 0;  // usado na orndenação via counting sort
+    int maxFreq = 0;  // usado na ordenação via counting sort
 
     while (std::getline(input, line)) {
         for (std::size_t i = 0; i < line.length(); ++i) {
@@ -75,9 +75,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    list.print();
-
-    // ordena a lista via countingsort
+    // ordena a lista em forma decrescente via countingsort
     int* count = new int[maxFreq + 1];
     int listSize = list.getSize();
 
@@ -86,8 +84,9 @@ int main(int argc, char** argv) {
         count[num]++;
     }
 
-    for (int i = 1; i <= maxFreq; i++) {
-        count[i] += count[i - 1];
+    // calcula a soma cumulativa em ordem decrescente
+    for (int i = maxFreq - 1; i >= 0; i--) {
+        count[i] += count[i + 1];
     }
 
     LinkedList sortedList;
@@ -103,9 +102,27 @@ int main(int argc, char** argv) {
         count[arrI.getFrequency()]--;
     }
 
+    delete[] count;
+
+    // agora trabalhamos apenas com a sortedList decrescente
     sortedList.print();
 
-    delete[] count;
+    // while (sortedList.getSize() != 1) {
+    //     NodeItem left = sortedList.removeEnd();
+    //     NodeItem right = sortedList.removeEnd();
+
+    //     // monta o novo
+    //     NodeItem newNode = NodeItem();
+    //     newNode.setFrequency(left.getFrequency() + right.getFrequency());
+
+    //     debug(newNode.getFrequency());
+    //     debug(newNode.getData());
+    //     break;
+
+    //     // debug(left.getFrequency());
+    //     // debug(right.getFrequency());
+    //     // debug(sortedList.getSize());
+    // }
 
     return 0;
 }

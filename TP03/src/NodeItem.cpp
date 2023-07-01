@@ -1,6 +1,9 @@
 #include "../include/NodeItem.hpp"
 
-NodeItem::NodeItem() { this->frequency = -1; }
+NodeItem::NodeItem() { 
+    this->frequency = -1; 
+    this->data = 0; // caracter ASCII nulo
+}
 
 void NodeItem::setFrequency(int freq) { this->frequency = freq; }
 

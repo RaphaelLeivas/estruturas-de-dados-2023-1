@@ -12,6 +12,7 @@ class Cell {
    private:
     NodeItem item;
     Cell* next;
+
     friend class LinkedList;
 };
 
