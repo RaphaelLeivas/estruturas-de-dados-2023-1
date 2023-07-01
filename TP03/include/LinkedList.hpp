@@ -41,6 +41,7 @@ class LinkedList {
     void insertCellAtOrder(Cell*); 
     Cell* getFirstCell();
     void printHuffmanCodes(Cell* root);
+    Cell* findCellByChar(Cell* root, char c);
 
    private:
     Cell* head;

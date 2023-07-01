@@ -299,3 +299,19 @@ void LinkedList::printHuffmanCodes(Cell* root) {
     this->printHuffmanCodes(root->left);
     this->printHuffmanCodes(root->right);
 }
+
+Cell* LinkedList::findCellByChar(Cell* root, char c) {
+    if (root == nullptr) {
+        return nullptr;
+    }
+
+    if (root->getItem().getData() == c) {
+        return root;
+    }
+
+    Cell* result = this->findCellByChar(root->left, c);
+    if (result) {
+        return result;
+    }
+    return this->findCellByChar(root->right, c);
+}

@@ -86,6 +86,14 @@ int main(int argc, char** argv) {
         }
     }
 
+    // lista original
+    LinkedList originalList = LinkedList();
+
+    for (int i = 0; i < list.getSize(); i++) {
+        NodeItem currentItem = list.getItem(i + 1);
+        originalList.insertEnd(currentItem);
+    }
+
     // ordena a lista com counting sort
     utils.sortbyCountingSort(&list, maxFreq);
 
@@ -109,10 +117,30 @@ int main(int argc, char** argv) {
     // agora, a unica celula na lista encadeada é a raiz da arvore de Huffman.
     Cell* root = list.getFirstCell();
 
-    // adiciona um codigo a cada membro da lista
+    // adiciona um codigo a cada caracter da lista
     assignHuffmanCodes(root, "");
 
-    list.printHuffmanCodes(root);
+    // agora percorre o arquivo de entrada mais um vez. para cada caracter,
+    // adicina o correspondente codigo no arquivo de saida
+    std::ifstream input2(fileToComp);
+    std::ofstream output(fileToDecomp);
+
+    while (std::getline(input2, line)) {
+        for (std::size_t i = 0; i < line.length(); ++i) {
+            char currentChar = line[i];
+            Cell* foundCell = list.findCellByChar(root, currentChar);
+
+            if (foundCell == nullptr) {
+                throw std::runtime_error("Compression error: not found character " + currentChar);
+            }
+
+            output << foundCell->getItem().getCode();
+        }
+    }
+
+    input.close();
+    input2.close();
+    output.close();
 
     return 0;
 }
