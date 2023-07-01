@@ -15,6 +15,8 @@ class LinkedList {
     void clean();
     void print();
     NodeItem getItem(int);
+    NodeItem getItemByChar(char);
+    void setItemByChar(NodeItem);
     void setItem(NodeItem, int);
 
     // inserts

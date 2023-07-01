@@ -19,7 +19,7 @@
 #include "../include/Point.hpp"
 #include "../include/customTime.h"
 
-std::string inputFilePath;
+std::string fileToComp;
 bool shouldPrintLines = false;
 
 void parse_args(int argc, char** argv) {
@@ -34,7 +34,7 @@ void parse_args(int argc, char** argv) {
     // mais info:
     // https://www.tutorialspoint.com/getopt-function-in-c-to-parse-command-line-arguments
     for (; optind < argc; optind++) {  // when some extra arguments are passed
-        inputFilePath = argv[optind];
+        fileToComp = argv[optind];
     }
 }
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
     parse_args(argc, argv);
     MyAlgorithms myAlgorithms;
 
-    std::ifstream input(inputFilePath);
+    std::ifstream input(fileToComp);
     std::string line;
 
     // lista encadeada para ler entradas

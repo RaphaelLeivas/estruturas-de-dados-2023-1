@@ -6,56 +6,60 @@
 #include <string>
 
 // file management
-// #include <getopt.h>
+#include <getopt.h>
 
 #include <fstream>
 
 #include "../include/BinaryTree.hpp"
 #include "../include/LinkedList.hpp"
 
-std::string inputFilePath;
+std::string fileToComp;
+std::string fileToDecomp;
 
-// void parse_args(int argc, char** argv) {
-//     int c;
-//     while ((c = getopt(argc, argv, "f:")) != EOF) {
-//         if (c == 'f') {
-//             inputFilePath = optarg;
-//         }
-//     }
-// }
+void parse_args(int argc, char** argv) {
+    int c;
+    while ((c = getopt(argc, argv, "c:d:")) != EOF) {
+        if (c == 'c') {
+            fileToComp = optarg;
+        }
+        if (c == 'd') {
+            fileToDecomp = optarg;
+        }
+    }
+}
 
 int main(int argc, char** argv) {
-    // parse_args(argc, argv);
-
-    int valuesToInsert[5] = {33, 52, 1, 2, 3};
-    int size = sizeof(valuesToInsert) / sizeof(valuesToInsert[0]);
+    parse_args(argc, argv);
 
     LinkedList list = LinkedList();
 
+    std::ifstream input(fileToComp);
+    std::string line;
 
-    for (int i = 0; i < size; ++i) {
-        NodeItem newItem = NodeItem();
-        newItem.setFrequency(valuesToInsert[i]);
+    while (std::getline(input, line)) {
+        for (std::size_t i = 0; i < line.length(); ++i) {
+            char currentChar = line[i];
 
-        if (i == 0) {
-            list.insertStart(newItem);
-        } else if (i == (size - 1)) {
-            list.insertEnd(newItem);
-        } else {
-            list.insert(newItem, i);
+            // verifica se ja existe esse caracter
+            NodeItem foundItem = list.getItemByChar(currentChar);
+            int itemFrequency = foundItem.getFrequency();
+
+            if (itemFrequency == -1) {
+                // nao existe o caracter. cria um novo e salva
+                NodeItem newItem = NodeItem();
+                newItem.setData(currentChar);
+                newItem.setFrequency(1);
+
+                list.insertEnd(newItem);
+            } else {
+                // caraceter ja existe na lista.
+                foundItem.setFrequency(itemFrequency + 1);
+                list.setItemByChar(foundItem);
+            }
         }
     }
 
-    // for (int i = 0; i < size; ++i) {
-    //     NodeItem newItem = NodeItem();
-    //     newItem.setFrequency(valuesToInsert[i] * 100);
-    //     list.setItem(newItem, i + 1);
-    // }
-
-    // list.remove(5);
-    list.remove(2);
     list.print();
-    // debug(list.getItem(5).getFrequency());
 
     return 0;
 }

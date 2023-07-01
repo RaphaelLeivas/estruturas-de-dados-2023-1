@@ -21,5 +21,5 @@ char NodeItem::getData() {
 }
 
 void NodeItem::print() {
-    std::cout << "Frequency: " << this->frequency << std::endl;
+    std::cout << "Char = " << this->data << " Frequency: " << this->frequency << std::endl;
 }

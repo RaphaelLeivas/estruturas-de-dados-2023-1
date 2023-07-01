@@ -13,10 +13,11 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/TP03
 
-INPUTFILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/TP1entrada/entdouble.s1.n5.i.in
+FILE_TO_COMP = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToComp.txt
+FILE_TO_DECOMP = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToDecomp.txt
 
 run:  $(EXE)
-	$(EXE)
+	$(EXE) -c $(FILE_TO_COMP) -d $(FILE_TO_DECOMP)
 
 debug:  $(EXE)
 	gdb --args $(EXE)

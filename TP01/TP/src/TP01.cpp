@@ -12,13 +12,13 @@
 
 #include "../include/NumSolver.hpp"
 
-std::string inputFilePath;
+std::string fileToComp;
 
 void parse_args(int argc, char** argv) {
     int c;
     while ((c = getopt(argc, argv, "f:")) != EOF) {
         if (c == 'f') {
-            inputFilePath = optarg;
+            fileToComp = optarg;
         }
     }
 }
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 
     NumSolver* numSolver = new NumSolver();
 
-    std::ifstream input(inputFilePath);
+    std::ifstream input(fileToComp);
     std::string line;
 
     while (std::getline(input, line)) {
