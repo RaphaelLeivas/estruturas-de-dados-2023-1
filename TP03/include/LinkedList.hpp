@@ -15,8 +15,6 @@ class LinkedList {
     void clean();
     void print();
     NodeItem getItem(int);
-    NodeItem getItemByChar(char);
-    void setItemByChar(NodeItem);
     void setItem(NodeItem, int);
 
     // inserts
@@ -31,6 +29,7 @@ class LinkedList {
 
     // aux
     Cell* position(int, bool);
+    Cell* getCellByChar(char);
 
    private:
     Cell* head;

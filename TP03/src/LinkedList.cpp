@@ -26,35 +26,20 @@ NodeItem LinkedList::getItem(int pos) {
     return p->getItem();
 }
 
-NodeItem LinkedList::getItemByChar(char c) {
+Cell* LinkedList::getCellByChar(char c) {
     Cell* p = this->head->next;
 
     while (p != nullptr) {
         NodeItem currentItem = p->getItem();
 
         if (currentItem.getData() == c) {
-            return currentItem;
+            return p;
         }
 
         p = p->next;
     }
 
-    return NodeItem();
-}
-
-void LinkedList::setItemByChar(NodeItem item) {
-    Cell* p = this->head->next;
-
-    while (p != nullptr) {
-        NodeItem currentItem = p->getItem();
-
-        if (currentItem.getData() == item.getData()) {
-            p->setItem(item);
-            return;
-        }
-
-        p = p->next;
-    }
+    return nullptr;
 }
 
 void LinkedList::setItem(NodeItem item, int pos) {

@@ -41,10 +41,9 @@ int main(int argc, char** argv) {
             char currentChar = line[i];
 
             // verifica se ja existe esse caracter
-            NodeItem foundItem = list.getItemByChar(currentChar);
-            int itemFrequency = foundItem.getFrequency();
+            Cell* foundCell = list.getCellByChar(currentChar);
 
-            if (itemFrequency == -1) {
+            if (foundCell == nullptr) {
                 // nao existe o caracter. cria um novo e salva
                 NodeItem newItem = NodeItem();
                 newItem.setData(currentChar);
@@ -53,13 +52,16 @@ int main(int argc, char** argv) {
                 list.insertEnd(newItem);
             } else {
                 // caraceter ja existe na lista.
-                foundItem.setFrequency(itemFrequency + 1);
-                list.setItemByChar(foundItem);
+                NodeItem currentItem = foundCell->getItem();
+                currentItem.setFrequency(currentItem.getFrequency() + 1);
+                
+                foundCell->setItem(currentItem);
             }
         }
     }
 
     list.print();
+    debug(list.getSize());
 
     return 0;
 }
