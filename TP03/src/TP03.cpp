@@ -176,6 +176,19 @@ int main(int argc, char** argv) {
         outputFile.close();
 
         // tree.walk(WALK_TYPES::PRE_ORDER);
+
+        std::string* code = new std::string("");
+
+        tree.codifyTree(tree.getRoot(), code);
+        tree.setCode(*code);
+        delete code;
+
+        // agora tenta remontar a arvore a partir do codigo. se funcionar aqui, funciona na descompressao
+        // referencia https://stackoverflow.com/a/759766
+
+        
+
+        debug(tree.getCode());
     } else {
         std::ifstream inputFile(fileToDecomp, std::ios::binary);
 
@@ -183,9 +196,7 @@ int main(int argc, char** argv) {
             unsigned char byte;
             inputFile.read(reinterpret_cast<char*>(&byte), sizeof(byte));
 
-            int charAsInt = (int)byte;
-
-            std::cout << utils.intTo8Bits(charAsInt) << " ";
+            std::cout << utils.charTo8Bits(byte) << " ";
         }
 
         std::cout << std::endl;

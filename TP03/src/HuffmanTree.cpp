@@ -1,12 +1,18 @@
 #include "../include/HuffmanTree.hpp"
 
+static Utils utils = Utils();
+
 HuffmanTree::HuffmanTree() { this->root = nullptr; }
 
-HuffmanTree::~HuffmanTree() { }
+HuffmanTree::~HuffmanTree() {}
 
 void HuffmanTree::setRoot(Cell* root) { this->root = root; }
 
 Cell* HuffmanTree::getRoot() { return this->root; }
+
+void HuffmanTree::setCode(std::string code) { this->code = code; }
+
+std::string HuffmanTree::getCode() { return this->code; }
 
 void HuffmanTree::insert(NodeItem item) {
     // this->insertRecursive(this->root, item);
@@ -45,6 +51,21 @@ Cell* HuffmanTree::findCellByChar(Cell* root, char c) {
         return result;
     }
     return this->findCellByChar(root->right, c);
+}
+
+// retorna sequencia de bits que representam a arvore
+void HuffmanTree::codifyTree(Cell* p, std::string* str) {
+    if (p != nullptr) {
+        if (this->isLeaf(p)) {
+            // gera bit 1 + 8-bit do char
+            char c = p->getItem().getData();
+            *str = *str + "1" + utils.charTo8Bits(c).to_string();
+        } else {
+            *str = *str + "0";
+            this->codifyTree(p->left, str);
+            this->codifyTree(p->right, str);
+        }
+    }
 }
 
 void HuffmanTree::clean() {
@@ -133,4 +154,8 @@ void HuffmanTree::cleanRecursive(Cell* p) {
         this->cleanRecursive(p->left);
         delete p;
     }
+}
+
+bool HuffmanTree::isLeaf(Cell* cell) {
+    return cell->left == nullptr && cell->right == nullptr;
 }

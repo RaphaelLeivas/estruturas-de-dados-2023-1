@@ -2,7 +2,9 @@
 #define HUFFMAN_TREE_HPP
 
 #include <string>
+
 #include "Cell.hpp"
+#include "Utils.hpp"
 
 #define debug(a) std::cout << a << std::endl
 
@@ -20,8 +22,12 @@ class HuffmanTree {
     void remove(int);
     void setRoot(Cell*);
     Cell* getRoot();
+    void setCode(std::string);
+    std::string getCode();
     void assignHuffmanCodes(Cell*, std::string);
     Cell* findCellByChar(Cell*, char);
+    void codifyTree(Cell*, std::string*);
+    bool isLeaf(Cell*);
 
    private:
     void insertRecursive(Cell*& p, NodeItem item);
@@ -32,9 +38,10 @@ class HuffmanTree {
     void postOrder(Cell* p);
     int searchRecursive(Cell* p, int);
     void removeRecursive(Cell*& p, int);
-    void predecessor(Cell* q, Cell* &r);
+    void predecessor(Cell* q, Cell*& r);
 
     Cell* root;
+    std::string code;  // arvore codificada
 };
 
 #endif
