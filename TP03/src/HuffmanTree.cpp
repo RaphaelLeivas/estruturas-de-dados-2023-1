@@ -2,7 +2,7 @@
 
 HuffmanTree::HuffmanTree() { this->root = nullptr; }
 
-HuffmanTree::~HuffmanTree() { this->clean(); }
+HuffmanTree::~HuffmanTree() { }
 
 void HuffmanTree::setRoot(Cell* root) { this->root = root; }
 

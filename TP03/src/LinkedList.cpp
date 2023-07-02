@@ -8,7 +8,10 @@ LinkedList::LinkedList() {
 
 LinkedList::~LinkedList() {
     this->clean();
-    delete this->head;
+
+    if (this->head != nullptr) {
+        delete this->head;
+    }
 }
 
 int LinkedList::getSize() { return this->size; }
@@ -283,6 +286,4 @@ void LinkedList::insertCellAtOrder(Cell* cell) {
     this->insertCellEnd(cell);
 }
 
-Cell* LinkedList::getFirstCell() {
-    return this->head->next;
-}
+Cell* LinkedList::getFirstCell() { return this->head->next; }

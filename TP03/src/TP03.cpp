@@ -116,7 +116,7 @@ int main(int argc, char** argv) {
             // se so tem um caracter na entrada
             NodeItem item = root->getItem();
             item.setCode("1");
-            tree.getRoot()->setItem(item);
+            root->setItem(item);
         } else {
             tree.assignHuffmanCodes(root, "");
         }
@@ -174,6 +174,8 @@ int main(int argc, char** argv) {
         inputFile.close();
         inputFile2.close();
         outputFile.close();
+
+        // tree.walk(WALK_TYPES::PRE_ORDER);
     } else {
         std::ifstream inputFile(fileToDecomp, std::ios::binary);
 
