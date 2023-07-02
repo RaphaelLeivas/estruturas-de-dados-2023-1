@@ -54,17 +54,50 @@ Cell* HuffmanTree::findCellByChar(Cell* root, char c) {
 }
 
 // retorna sequencia de bits que representam a arvore
-void HuffmanTree::codifyTree(Cell* p, std::string* str) {
+void HuffmanTree::codifyTree(Cell* p, std::string& str) {
     if (p != nullptr) {
         if (this->isLeaf(p)) {
             // gera bit 1 + 8-bit do char
             char c = p->getItem().getData();
-            *str = *str + "1" + utils.charTo8Bits(c).to_string();
+            str = str + "1" + utils.charTo8Bits(c).to_string();
         } else {
-            *str = *str + "0";
+            str = str + "0";
             this->codifyTree(p->left, str);
             this->codifyTree(p->right, str);
         }
+    }
+}
+
+Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
+    if (currentIndex >= encodedTree.size()) {
+        return nullptr;
+    }
+
+    // debug(encodedTree);
+
+    if (encodedTree[currentIndex] == '1') {
+        // Leaf node: extract the symbol from the next 8 bits
+        std::string symbolBits = encodedTree.substr(currentIndex + 1, 8);
+        char data = static_cast<char>(std::bitset<8>(symbolBits).to_ulong());
+        currentIndex += 9;  // Move the current index past the symbol bits
+
+        Cell* leafNode = new Cell();
+        NodeItem newItem = NodeItem();
+        newItem.setData(data);
+        leafNode->setItem(newItem);
+        leafNode->left = nullptr;
+        leafNode->right = nullptr;
+
+        return leafNode;
+    } else {
+        // Internal node: recursively process the left and right child nodes
+        currentIndex++;  // Move the current index past the internal node flag
+
+        Cell* internalNode = new Cell();
+        internalNode->left = this->decodifyTree(encodedTree, currentIndex);
+        internalNode->right = this->decodifyTree(encodedTree, currentIndex);
+
+        return internalNode;
     }
 }
 

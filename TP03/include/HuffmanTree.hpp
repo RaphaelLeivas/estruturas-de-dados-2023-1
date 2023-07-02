@@ -26,7 +26,8 @@ class HuffmanTree {
     std::string getCode();
     void assignHuffmanCodes(Cell*, std::string);
     Cell* findCellByChar(Cell*, char);
-    void codifyTree(Cell*, std::string*);
+    void codifyTree(Cell*, std::string&);
+    Cell* decodifyTree(std::string&, int&);
     bool isLeaf(Cell*);
 
    private:

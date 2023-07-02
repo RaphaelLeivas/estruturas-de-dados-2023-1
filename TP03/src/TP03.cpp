@@ -177,18 +177,25 @@ int main(int argc, char** argv) {
 
         // tree.walk(WALK_TYPES::PRE_ORDER);
 
-        std::string* code = new std::string("");
+        std::string code = "";
 
         tree.codifyTree(tree.getRoot(), code);
-        tree.setCode(*code);
-        delete code;
+        tree.setCode(code);
 
         // agora tenta remontar a arvore a partir do codigo. se funcionar aqui, funciona na descompressao
         // referencia https://stackoverflow.com/a/759766
 
-        
+        int currentIndex = 0;
 
-        debug(tree.getCode());
+        Cell* decodedRoot = tree.decodifyTree(code, currentIndex);
+
+        HuffmanTree decodedTree = HuffmanTree();
+        decodedTree.setCode(code);
+        decodedTree.setRoot(decodedRoot);
+
+        decodedTree.assignHuffmanCodes(decodedTree.getRoot(), "");
+        decodedTree.walk(WALK_TYPES::PRE_ORDER);
+        tree.walk(WALK_TYPES::PRE_ORDER);
     } else {
         std::ifstream inputFile(fileToDecomp, std::ios::binary);
 
