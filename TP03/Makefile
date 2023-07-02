@@ -4,8 +4,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/NodeItem.o $(OBJ)/Node.o $(OBJ)/Cell.o $(OBJ)/BinaryTree.o $(OBJ)/LinkedList.o $(OBJ)/Utils.o $(OBJ)/TP03.o
-HDRS = $(INC)/NodeItem.hpp $(INC)/Node.hpp $(INC)/Cell.hpp  $(INC)/BinaryTree.hpp $(INC)/LinkedList.hpp $(INC)/Utils.hpp 
+OBJS = $(OBJ)/NodeItem.o $(OBJ)/Node.o $(OBJ)/Cell.o $(OBJ)/BinaryTree.o $(OBJ)/LinkedList.o $(OBJ)/HuffmanTree.o $(OBJ)/Utils.o $(OBJ)/TP03.o
+HDRS = $(INC)/NodeItem.hpp $(INC)/Node.hpp $(INC)/Cell.hpp  $(INC)/BinaryTree.hpp $(INC)/LinkedList.hpp $(INC)/HuffmanTree.hpp $(INC)/Utils.hpp 
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
@@ -45,6 +45,9 @@ $(OBJ)/BinaryTree.o: $(HDRS) $(SRC)/BinaryTree.cpp
 
 $(OBJ)/LinkedList.o: $(HDRS) $(SRC)/LinkedList.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/LinkedList.o $(SRC)/LinkedList.cpp
+
+$(OBJ)/HuffmanTree.o: $(HDRS) $(SRC)/HuffmanTree.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/HuffmanTree.o $(SRC)/HuffmanTree.cpp
 
 $(OBJ)/Utils.o: $(HDRS) $(SRC)/Utils.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Utils.o $(SRC)/Utils.cpp

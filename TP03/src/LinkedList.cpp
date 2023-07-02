@@ -286,32 +286,3 @@ void LinkedList::insertCellAtOrder(Cell* cell) {
 Cell* LinkedList::getFirstCell() {
     return this->head->next;
 }
-
-void LinkedList::printHuffmanCodes(Cell* root) {
-    if (!root) {
-        return;
-    }
-
-    if (root->getItem().getData() != 0) {
-        std::cout << root->getItem().getData() << ": " << root->getItem().getCode() << "\n";
-    }
-
-    this->printHuffmanCodes(root->left);
-    this->printHuffmanCodes(root->right);
-}
-
-Cell* LinkedList::findCellByChar(Cell* root, char c) {
-    if (root == nullptr) {
-        return nullptr;
-    }
-
-    if (root->getItem().getData() == c) {
-        return root;
-    }
-
-    Cell* result = this->findCellByChar(root->left, c);
-    if (result) {
-        return result;
-    }
-    return this->findCellByChar(root->right, c);
-}
