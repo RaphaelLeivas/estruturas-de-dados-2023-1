@@ -138,6 +138,7 @@ int main(int argc, char** argv) {
         std::ofstream outputFile(fileToDecomp, std::ios::binary);
 
         std::string buffer;
+        std::string dataBytesWritten = "";
 
         while (inputFile2.get(ch)) {
             Cell* foundCell = tree.findCellByChar(root, ch);
@@ -147,7 +148,7 @@ int main(int argc, char** argv) {
                     "Compression error: not found character " + ch);
             }
 
-            // debug(foundCell->getItem().getCode());
+            dataBytesWritten += foundCell->getItem().getCode();
             buffer += foundCell->getItem().getCode();
 
             // Write complete bytes to the output file
@@ -165,50 +166,47 @@ int main(int argc, char** argv) {
             }
         }
 
+        debug(dataBytesWritten);
+
         // Write the remaining bits (if any) padded with zeros
-        // if (!buffer.empty()) {
-        //     unsigned char byte = 0;
-        //     for (long unsigned int i = 0; i < buffer.size(); i++) {
-        //         if (buffer[i] == '1') {
-        //             byte |= (1 << (7 - i));
-        //         }
-        //     }
+        if (!buffer.empty()) {
+            unsigned char byte = 0;
+            for (long unsigned int i = 0; i < buffer.size(); i++) {
+                if (buffer[i] == '1') {
+                    byte |= (1 << (7 - i));
+                }
+            }
 
-        //     // Pad the remaining bits with zeros
-        //     int remainingBits = 8 - buffer.size();
-        //     byte <<= remainingBits;
+            // Pad the remaining bits with zeros
+            int remainingBits = 8 - buffer.size();
+            byte <<= remainingBits;
 
-        //     outputFile.write(reinterpret_cast<const char*>(&byte),
-        //                      sizeof(byte));
-        // }
-
-        // tree.walk(WALK_TYPES::PRE_ORDER);
+            outputFile.write(reinterpret_cast<const char*>(&byte),
+                             sizeof(byte));
+        }
 
         std::string treeCode = "";
 
         tree.codifyTree(tree.getRoot(), treeCode);
         tree.setCode(treeCode);
 
-        // agora tenta remontar a arvore a partir do codigo. se funcionar aqui,
-        // funciona na descompressao referencia
-        // https://stackoverflow.com/a/759766
+        // escreve byte 0 (ASCII null character) no arquivo de saida, seguido do codigo da arvore
+        buffer = "00000000";
+        // Write complete bytes to the output file
+        while (buffer.size() >= 8) {
+            unsigned char byte = 0;
+            for (int i = 0; i < 8; i++) {
+                if (buffer[i] == '1') {
+                    byte |= (1 << (7 - i));
+                }
+            }
 
-        int currentIndex = 0;
+            outputFile.write(reinterpret_cast<const char*>(&byte),
+                             sizeof(byte));
+            buffer = buffer.substr(8);
+        }
 
-        Cell* decodedRoot = tree.decodifyTree(treeCode, currentIndex);
-
-        HuffmanTree decodedTree = HuffmanTree();
-        decodedTree.setCode(treeCode);
-        decodedTree.setRoot(decodedRoot);
-
-        decodedTree.assignHuffmanCodes(decodedTree.getRoot(), "");
-        // decodedTree.walk(WALK_TYPES::PRE_ORDER);
-        // tree.walk(WALK_TYPES::PRE_ORDER);
-
-        // escreve byte 0 no arquivo de saida, seguido do codigo da arvore
-        unsigned char byte = 0;
-        outputFile.write(reinterpret_cast<const char*>(&byte), sizeof(byte));
-
+        // agora escreve a arvore codificada
         buffer = treeCode;
 
         while (buffer.size() >= 8) {
@@ -224,7 +222,7 @@ int main(int argc, char** argv) {
             buffer = buffer.substr(8);
         }
 
-        // debug(treeCode);
+        debug(treeCode);
 
         inputFile.close();
         inputFile2.close();
@@ -250,11 +248,12 @@ int main(int argc, char** argv) {
                 treeCode += utils.charTo8Bits(byte).to_string();
             } else {
                 dataBytes += utils.charTo8Bits(byte).to_string();
+                dataBytes += " ";
             }
         }
 
-        // debug(dataBytes);
-        // debug(treeCode);
+        debug(dataBytes);
+        debug(treeCode);
 
         HuffmanTree decodedTree = HuffmanTree();
         Cell* decodedRoot = decodedTree.decodifyTree(treeCode, currentIndex);
