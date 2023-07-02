@@ -14,7 +14,7 @@ class Utils {
     ~Utils();
     void printArray(int*, int);
     void sortbyCountingSort(LinkedList* list, int max);
-    std::bitset<BYTE_IN_BITS> intTo8Bits(int);
+    std::bitset<BYTE_IN_BITS> charTo8Bits(char);
 };
 
 #endif

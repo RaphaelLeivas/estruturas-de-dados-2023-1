@@ -10,8 +10,8 @@
 
 #include <fstream>
 
-#include "../include/BinaryTree.hpp"
 #include "../include/LinkedList.hpp"
+#include "../include/HuffmanTree.hpp"
 #include "../include/Utils.hpp"
 
 bool isCompression = true;
@@ -29,21 +29,6 @@ void parse_args(int argc, char** argv) {
             fileToDecomp = optarg;
         }
     }
-}
-
-void assignHuffmanCodes(Cell* root, std::string str) {
-    if (!root) {
-        return;
-    }
-
-    if (root->getItem().getData() != 0) {
-        NodeItem item = root->getItem();
-        item.setCode(str);
-        root->setItem(item);
-    }
-
-    assignHuffmanCodes(root->left, str + "0");
-    assignHuffmanCodes(root->right, str + "1");
 }
 
 int main(int argc, char** argv) {
@@ -72,7 +57,7 @@ int main(int argc, char** argv) {
 
                 list.insertEnd(newItem);
             } else {
-                // caraceter ja existe na lista.
+                // caracter ja existe na lista.
                 NodeItem currentItem = foundCell->getItem();
                 newFreq = currentItem.getFrequency() + 1;
                 currentItem.setFrequency(newFreq);
@@ -122,7 +107,9 @@ int main(int argc, char** argv) {
 
         // agora, a unica celula na lista encadeada é a raiz da arvore de
         // Huffman.
+        HuffmanTree tree = HuffmanTree();
         Cell* root = list.getFirstCell();
+        tree.setRoot(root);
 
         // adiciona um codigo a cada caracter da lista
         if (originalList.getSize() == 1) {
@@ -131,10 +118,8 @@ int main(int argc, char** argv) {
             item.setCode("1");
             root->setItem(item);
         } else {
-            assignHuffmanCodes(root, "");
+            tree.assignHuffmanCodes(root, "");
         }
-
-        // list.printHuffmanCodes(root);
 
         // agora percorre o arquivo de entrada mais um vez. para cada caracter,
         // adicina o correspondente codigo no arquivo de saida
@@ -144,14 +129,14 @@ int main(int argc, char** argv) {
         std::string buffer;
 
         while (inputFile2.get(ch)) {
-            Cell* foundCell = list.findCellByChar(root, ch);
+            Cell* foundCell = tree.findCellByChar(root, ch);
 
             if (foundCell == nullptr) {
                 throw std::runtime_error(
                     "Compression error: not found character " + ch);
             }
 
-            debug(foundCell->getItem().getCode());
+            // debug(foundCell->getItem().getCode());
             buffer += foundCell->getItem().getCode();
 
             // Write complete bytes to the output file
@@ -189,6 +174,21 @@ int main(int argc, char** argv) {
         inputFile.close();
         inputFile2.close();
         outputFile.close();
+
+        // tree.walk(WALK_TYPES::PRE_ORDER);
+
+        std::string* code = new std::string("");
+
+        tree.codifyTree(tree.getRoot(), code);
+        tree.setCode(*code);
+        delete code;
+
+        // agora tenta remontar a arvore a partir do codigo. se funcionar aqui, funciona na descompressao
+        // referencia https://stackoverflow.com/a/759766
+
+        
+
+        debug(tree.getCode());
     } else {
         std::ifstream inputFile(fileToDecomp, std::ios::binary);
 
@@ -196,9 +196,7 @@ int main(int argc, char** argv) {
             unsigned char byte;
             inputFile.read(reinterpret_cast<char*>(&byte), sizeof(byte));
 
-            int charAsInt = (int)byte;
-
-            std::cout << utils.intTo8Bits(charAsInt) << " ";
+            std::cout << utils.charTo8Bits(byte) << " ";
         }
 
         std::cout << std::endl;

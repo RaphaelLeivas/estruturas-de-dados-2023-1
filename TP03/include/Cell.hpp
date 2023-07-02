@@ -16,6 +16,7 @@ class Cell {
     Cell* next;
 
     friend class LinkedList;
+    friend class HuffmanTree;
 };
 
 #endif

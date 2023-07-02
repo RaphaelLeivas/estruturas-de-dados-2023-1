@@ -46,6 +46,7 @@ void Utils::sortbyCountingSort(LinkedList* list, int maxFreq) {
     delete[] count;
 }
 
-std::bitset<BYTE_IN_BITS> Utils::intTo8Bits(int number) {
+std::bitset<BYTE_IN_BITS> Utils::charTo8Bits(char c) {
+    int number = (int)c;
     return std::bitset<8>(number);
 };
