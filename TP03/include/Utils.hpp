@@ -3,7 +3,10 @@
 
 #include <iostream>
 #include <string>
+#include <bitset>
 #include "LinkedList.hpp"
+
+#define BYTE_IN_BITS 8
 
 class Utils {
    public:
@@ -11,6 +14,7 @@ class Utils {
     ~Utils();
     void printArray(int*, int);
     void sortbyCountingSort(LinkedList* list, int max);
+    std::bitset<BYTE_IN_BITS> intTo8Bits(int);
 };
 
 #endif
