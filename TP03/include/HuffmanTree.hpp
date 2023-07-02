@@ -29,6 +29,7 @@ class HuffmanTree {
     void codifyTree(Cell*, std::string&);
     Cell* decodifyTree(std::string&, int&);
     bool isLeaf(Cell*);
+    void getDecodedText(std::string, std::string&);
 
    private:
     void insertRecursive(Cell*& p, NodeItem item);

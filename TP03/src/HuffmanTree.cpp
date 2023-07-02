@@ -101,6 +101,23 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
     }
 }
 
+void HuffmanTree::getDecodedText(std::string dataBytes, std::string& decodedText) {
+    Cell* currentNode = this->root;
+
+    for (char bit : dataBytes) {
+        if (bit == '0') {
+            currentNode = currentNode->left;
+        } else if (bit == '1') {
+            currentNode = currentNode->right;
+        }
+
+        if (this->isLeaf(currentNode)) {
+            decodedText += currentNode->getItem().getData();
+            currentNode = root;
+        }
+    }
+}
+
 void HuffmanTree::clean() {
     this->cleanRecursive(this->root);
     this->root = nullptr;

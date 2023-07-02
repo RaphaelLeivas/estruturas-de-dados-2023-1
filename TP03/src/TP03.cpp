@@ -10,23 +10,34 @@
 
 #include <fstream>
 
-#include "../include/LinkedList.hpp"
 #include "../include/HuffmanTree.hpp"
+#include "../include/LinkedList.hpp"
 #include "../include/Utils.hpp"
 
-bool isCompression = true;
+bool isCompression = false;
 
 std::string fileToComp;
 std::string fileToDecomp;
 
 void parse_args(int argc, char** argv) {
     int c;
-    while ((c = getopt(argc, argv, "c:d:")) != EOF) {
+    while ((c = getopt(argc, argv, "cd")) != EOF) {
         if (c == 'c') {
-            fileToComp = optarg;
+            isCompression = true;
         }
         if (c == 'd') {
-            fileToDecomp = optarg;
+            isCompression = false;
+        }
+    }
+
+    // mais info:
+    // https://www.tutorialspoint.com/getopt-function-in-c-to-parse-command-line-arguments
+    for (; optind < argc; optind++) {  // when some extra arguments are passed
+        if (optind == 2) {
+            fileToComp = argv[optind];
+
+        } else if (optind == 3) {
+            fileToDecomp = argv[optind];
         }
     }
 }
@@ -155,58 +166,107 @@ int main(int argc, char** argv) {
         }
 
         // Write the remaining bits (if any) padded with zeros
-        if (!buffer.empty()) {
+        // if (!buffer.empty()) {
+        //     unsigned char byte = 0;
+        //     for (long unsigned int i = 0; i < buffer.size(); i++) {
+        //         if (buffer[i] == '1') {
+        //             byte |= (1 << (7 - i));
+        //         }
+        //     }
+
+        //     // Pad the remaining bits with zeros
+        //     int remainingBits = 8 - buffer.size();
+        //     byte <<= remainingBits;
+
+        //     outputFile.write(reinterpret_cast<const char*>(&byte),
+        //                      sizeof(byte));
+        // }
+
+        // tree.walk(WALK_TYPES::PRE_ORDER);
+
+        std::string treeCode = "";
+
+        tree.codifyTree(tree.getRoot(), treeCode);
+        tree.setCode(treeCode);
+
+        // agora tenta remontar a arvore a partir do codigo. se funcionar aqui,
+        // funciona na descompressao referencia
+        // https://stackoverflow.com/a/759766
+
+        int currentIndex = 0;
+
+        Cell* decodedRoot = tree.decodifyTree(treeCode, currentIndex);
+
+        HuffmanTree decodedTree = HuffmanTree();
+        decodedTree.setCode(treeCode);
+        decodedTree.setRoot(decodedRoot);
+
+        decodedTree.assignHuffmanCodes(decodedTree.getRoot(), "");
+        // decodedTree.walk(WALK_TYPES::PRE_ORDER);
+        // tree.walk(WALK_TYPES::PRE_ORDER);
+
+        // escreve byte 0 no arquivo de saida, seguido do codigo da arvore
+        unsigned char byte = 0;
+        outputFile.write(reinterpret_cast<const char*>(&byte), sizeof(byte));
+
+        buffer = treeCode;
+
+        while (buffer.size() >= 8) {
             unsigned char byte = 0;
-            for (long unsigned int i = 0; i < buffer.size(); i++) {
+            for (int i = 0; i < 8; i++) {
                 if (buffer[i] == '1') {
                     byte |= (1 << (7 - i));
                 }
             }
 
-            // Pad the remaining bits with zeros
-            int remainingBits = 8 - buffer.size();
-            byte <<= remainingBits;
-
             outputFile.write(reinterpret_cast<const char*>(&byte),
                              sizeof(byte));
+            buffer = buffer.substr(8);
         }
+
+        // debug(treeCode);
 
         inputFile.close();
         inputFile2.close();
         outputFile.close();
-
-        // tree.walk(WALK_TYPES::PRE_ORDER);
-
-        std::string code = "";
-
-        tree.codifyTree(tree.getRoot(), code);
-        tree.setCode(code);
-
-        // agora tenta remontar a arvore a partir do codigo. se funcionar aqui, funciona na descompressao
-        // referencia https://stackoverflow.com/a/759766
-
-        int currentIndex = 0;
-
-        Cell* decodedRoot = tree.decodifyTree(code, currentIndex);
-
-        HuffmanTree decodedTree = HuffmanTree();
-        decodedTree.setCode(code);
-        decodedTree.setRoot(decodedRoot);
-
-        decodedTree.assignHuffmanCodes(decodedTree.getRoot(), "");
-        decodedTree.walk(WALK_TYPES::PRE_ORDER);
-        tree.walk(WALK_TYPES::PRE_ORDER);
     } else {
         std::ifstream inputFile(fileToDecomp, std::ios::binary);
+        std::string dataBytes = "";
+        std::string treeCode = "";
+        int currentIndex = 0;
+        bool isCodeTree = false;
 
         while (!inputFile.eof()) {
             unsigned char byte;
             inputFile.read(reinterpret_cast<char*>(&byte), sizeof(byte));
 
-            std::cout << utils.charTo8Bits(byte) << " ";
+            if ((int)byte == 0) {
+                // byte de separacao: tudo para baixo e a arvore codificado
+                isCodeTree = true;
+                continue;
+            }
+
+            if (isCodeTree) {
+                treeCode += utils.charTo8Bits(byte).to_string();
+            } else {
+                dataBytes += utils.charTo8Bits(byte).to_string();
+            }
         }
 
-        std::cout << std::endl;
+        // debug(dataBytes);
+        // debug(treeCode);
+
+        HuffmanTree decodedTree = HuffmanTree();
+        Cell* decodedRoot = decodedTree.decodifyTree(treeCode, currentIndex);
+        decodedTree.setRoot(decodedRoot);
+        decodedTree.setCode(treeCode);
+        decodedTree.assignHuffmanCodes(decodedRoot, "");
+
+        std::string decodedText = "";
+        decodedTree.getDecodedText(dataBytes, decodedText);
+
+        debug(decodedText);
+
         inputFile.close();
     }
 

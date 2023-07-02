@@ -17,7 +17,8 @@ FILE_TO_COMP = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToComp.txt
 FILE_TO_DECOMP = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToDecomp.txt
 
 run:  $(EXE)
-	$(EXE) -c $(FILE_TO_COMP) -d $(FILE_TO_DECOMP)
+	$(EXE) -c $(FILE_TO_COMP) $(FILE_TO_DECOMP)
+	$(EXE) -d $(FILE_TO_COMP) $(FILE_TO_DECOMP)
 
 debug:  $(EXE)
 	gdb --args $(EXE)
