@@ -14,7 +14,7 @@
 #include "../include/LinkedList.hpp"
 #include "../include/Utils.hpp"
 
-bool isCompression = false;
+bool isCompression = true;
 
 std::string fileToComp;
 std::string fileToDecomp;
@@ -151,6 +151,7 @@ int main(int argc, char** argv) {
                     "Compression error: not found character " + ch);
             }
 
+            debug(foundCell->getItem().getCode());
             buffer += foundCell->getItem().getCode();
 
             // Write complete bytes to the output file
