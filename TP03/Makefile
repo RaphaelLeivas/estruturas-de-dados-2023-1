@@ -17,7 +17,6 @@ UNCOMPRESSED_FILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToComp.txt
 COMPRESSED_FILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToDecomp.txt
 
 run:  $(EXE)
-	$(EXE) -c $(UNCOMPRESSED_FILE) $(COMPRESSED_FILE)
 	$(EXE) -d $(COMPRESSED_FILE) $(UNCOMPRESSED_FILE)
 
 debug:  $(EXE)

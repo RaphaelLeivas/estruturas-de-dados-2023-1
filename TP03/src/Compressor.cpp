@@ -242,7 +242,10 @@ void Compressor::decompressFile(std::string inputFile, std::string outputFile) {
     std::string decodedText = "";
     decodedTree.getDecodedText(dataBytes, decodedText);
 
-    debug(decodedText);
+    // por ultimo, escreve o decodedText no arquivo de saida
+    std::ofstream outputStream(outputFile);
+    outputStream << decodedText;
 
     inputStream.close();
+    outputStream.close();
 }
