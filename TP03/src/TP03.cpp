@@ -150,79 +150,26 @@ int main(int argc, char** argv) {
 
             dataBytesWritten += foundCell->getItem().getCode();
             buffer += foundCell->getItem().getCode();
-
-            // Write complete bytes to the output file
-            while (buffer.size() >= 8) {
-                unsigned char byte = 0;
-                for (int i = 0; i < 8; i++) {
-                    if (buffer[i] == '1') {
-                        byte |= (1 << (7 - i));
-                    }
-                }
-
-                outputFile.write(reinterpret_cast<const char*>(&byte),
-                                 sizeof(byte));
-                buffer = buffer.substr(8);
-            }
         }
 
-        debug(dataBytesWritten);
+        // escreve os bytes no arquivo 
+        utils.writeBytesToFile(outputFile, buffer);
 
-        // Write the remaining bits (if any) padded with zeros
-        if (!buffer.empty()) {
-            unsigned char byte = 0;
-            for (long unsigned int i = 0; i < buffer.size(); i++) {
-                if (buffer[i] == '1') {
-                    byte |= (1 << (7 - i));
-                }
-            }
-
-            // Pad the remaining bits with zeros
-            int remainingBits = 8 - buffer.size();
-            byte <<= remainingBits;
-
-            outputFile.write(reinterpret_cast<const char*>(&byte),
-                             sizeof(byte));
-        }
-
-        std::string treeCode = "";
-
-        tree.codifyTree(tree.getRoot(), treeCode);
-        tree.setCode(treeCode);
-
-        // escreve byte 0 (ASCII null character) no arquivo de saida, seguido do codigo da arvore
+        // escreve byte 0 (ASCII null character) no arquivo de saida, seguido do
+        // codigo da arvore
         buffer = "00000000";
-        // Write complete bytes to the output file
-        while (buffer.size() >= 8) {
-            unsigned char byte = 0;
-            for (int i = 0; i < 8; i++) {
-                if (buffer[i] == '1') {
-                    byte |= (1 << (7 - i));
-                }
-            }
-
-            outputFile.write(reinterpret_cast<const char*>(&byte),
-                             sizeof(byte));
-            buffer = buffer.substr(8);
-        }
+        utils.writeBytesToFile(outputFile, buffer);
 
         // agora escreve a arvore codificada
+        std::string treeCode = "";
+        tree.codifyTree(tree.getRoot(), treeCode);
+        tree.setCode(treeCode);
         buffer = treeCode;
 
-        while (buffer.size() >= 8) {
-            unsigned char byte = 0;
-            for (int i = 0; i < 8; i++) {
-                if (buffer[i] == '1') {
-                    byte |= (1 << (7 - i));
-                }
-            }
+        // escreve o codigo da arvore
+        utils.writeBytesToFile(outputFile, buffer);
 
-            outputFile.write(reinterpret_cast<const char*>(&byte),
-                             sizeof(byte));
-            buffer = buffer.substr(8);
-        }
-
-        debug(treeCode);
+        // debug(treeCode);
 
         inputFile.close();
         inputFile2.close();
@@ -237,6 +184,7 @@ int main(int argc, char** argv) {
         while (!inputFile.eof()) {
             unsigned char byte;
             inputFile.read(reinterpret_cast<char*>(&byte), sizeof(byte));
+            // debug((int)byte);
 
             if ((int)byte == 0) {
                 // byte de separacao: tudo para baixo e a arvore codificado
@@ -252,8 +200,8 @@ int main(int argc, char** argv) {
             }
         }
 
-        debug(dataBytes);
-        debug(treeCode);
+        // debug(dataBytes);
+        // debug(treeCode);
 
         HuffmanTree decodedTree = HuffmanTree();
         Cell* decodedRoot = decodedTree.decodifyTree(treeCode, currentIndex);
