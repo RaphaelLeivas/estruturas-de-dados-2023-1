@@ -66,10 +66,10 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, long unsigned int& cur
     }
 
     if (encodedTree[currentIndex] == '1') {
-        // Leaf node: extract the symbol from the next 8 bits
+        // folha
         std::string symbolBits = encodedTree.substr(currentIndex + 1, 8);
         char data = static_cast<char>(std::bitset<8>(symbolBits).to_ulong());
-        currentIndex += 9;  // Move the current index past the symbol bits
+        currentIndex += 9; 
 
         Cell* leafNode = new Cell();
         NodeItem newItem = NodeItem();
@@ -80,8 +80,8 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, long unsigned int& cur
 
         return leafNode;
     } else {
-        // Internal node: recursively process the left and right child nodes
-        currentIndex++;  // Move the current index past the internal node flag
+        // no interno
+        currentIndex++; 
 
         Cell* internalNode = new Cell();
         internalNode->left = this->decodifyTree(encodedTree, currentIndex);

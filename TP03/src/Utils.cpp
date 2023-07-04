@@ -81,7 +81,7 @@ void Utils::writeBytesToFile(std::ofstream& file, std::string buffer) {
         return;
     }
 
-    //add trailing zeros no que sobrou ate formar 8 bits 
+    // add trailing zeros no que sobrou ate formar 8 bits 
     while (buffer.size() % 8 != 0) {
         buffer += "0";
     }
