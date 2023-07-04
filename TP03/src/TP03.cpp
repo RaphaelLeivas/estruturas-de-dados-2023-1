@@ -30,12 +30,10 @@ void parse_args(int argc, char** argv) {
         }
     }
 
-    // mais info:
     // https://www.tutorialspoint.com/getopt-function-in-c-to-parse-command-line-arguments
-    for (; optind < argc; optind++) {  // when some extra arguments are passed
+    for (; optind < argc; optind++) {
         if (optind == 2) {
             fileToComp = argv[optind];
-
         } else if (optind == 3) {
             fileToDecomp = argv[optind];
         }
@@ -44,13 +42,12 @@ void parse_args(int argc, char** argv) {
 
 int main(int argc, char** argv) {
     parse_args(argc, argv);
-
     Utils utils = Utils();
-    LinkedList list = LinkedList();
 
     if (isCompression) {
         std::ifstream inputFile(fileToComp);
         char ch;
+        LinkedList list = LinkedList();
 
         int maxFreq = 0;  // usado na ordenação via counting sort
 
@@ -152,32 +149,18 @@ int main(int argc, char** argv) {
 
         std::string dataBytesToWrite = buffer;
 
-        // escreve os bytes no arquivo
-        // utils.writeBytesToFile(outputFile, buffer);
-        // utils.printBytes(buffer);
-
-        // escreve byte 0 (ASCII null character) no arquivo de saida, seguido do
-        // codigo da arvore
-        buffer = "00000000";
-        // utils.writeBytesToFile(outputFile, buffer);
-
         // agora escreve a arvore codificada
         std::string treeCodeToWrite = "";
         tree.codifyTree(tree.getRoot(), treeCodeToWrite);
         tree.setCode(treeCodeToWrite);
         buffer = treeCodeToWrite;
 
-        // escreve o codigo da arvore
-        // utils.writeBytesToFile(outputFile, buffer);
-
-        // utils.printBytes(treeCodeToWrite);
-
         // conta quantos bits tem no dataBytes e no treeCode
         int dataLength = dataBytesToWrite.length();
         int treeCodeLength = treeCodeToWrite.length();
 
         // escreve esses tamanhos no inicio do arquivo, reservando 32 bits para
-        // cada
+        // cada (pode no maximo tamanho 2^32 bits = s^29 bytes = 500 MB)
         utils.writeBytesToFile(outputFile,
                                std::bitset<32>(dataLength).to_string());
         utils.writeBytesToFile(outputFile,
@@ -187,12 +170,6 @@ int main(int argc, char** argv) {
         buffer = dataBytesToWrite + treeCodeToWrite;
         utils.writeBytesToFile(outputFile, buffer);
 
-        debug(dataLength);
-        debug(treeCodeLength);
-
-        utils.printBytes(dataBytesToWrite);
-        utils.printBytes(treeCodeToWrite);
-
         inputFile.close();
         inputFile2.close();
         outputFile.close();
@@ -200,11 +177,9 @@ int main(int argc, char** argv) {
         std::ifstream inputFile(fileToDecomp, std::ios::binary);
         std::string dataBytes = "";
         std::string treeCode = "";
-        int currentIndex = 0;
-        bool isCodeTree = false;
 
-        unsigned long long int decodedDataLength = -1;
-        unsigned long long int decodedTreeLength = -1;
+        long long int decodedDataLength = -1;
+        long long int decodedTreeLength = -1;
 
         std::string dataLengthBuffer = "";
         std::string treeLengthBuffer = "";
@@ -246,11 +221,9 @@ int main(int argc, char** argv) {
             }
 
             // se chegou aqui, ja leu os dois tamanhos. agora sao os bits de
-            // dados
-
-            // dois casos possiveis:
-            // - posso ler 8 bits de uma vez e salvar (caso 1)
-            // - tenho que ler menos que 8 bits (caso 2)
+            // dados; temos dois casos possiveis:
+            // - caso 1: posso ler 8 bits de uma vez e salvar
+            // - caso 2: tenho que ler menos que 8 bits
 
             if (!finishedReadingData) {
                 if (decodedDataLength - dataBytes.length() >= 8) {
@@ -259,7 +232,6 @@ int main(int argc, char** argv) {
                 } else {
                     // caso 2
                     int diff = decodedDataLength - dataBytes.length();
-                    // debug(diff);
 
                     // tenho que ler somente diff bits. o resto vai para o
                     // treeCode.
@@ -271,14 +243,14 @@ int main(int argc, char** argv) {
                     finishedReadingData = true;
                 }
             } else {
-                // ja finalizou de ler os dados. agora é tudo treeCode
+                // ja finalizou de ler os dados. agora é tudo treeCode, de novo
+                // com 2 casos
                 if (decodedTreeLength - treeCode.length() >= 8) {
                     // caso 1
                     treeCode += std::bitset<8>(byte).to_string();
                 } else {
                     // caso 2
                     int diff = decodedTreeLength - treeCode.length();
-                    // debug(diff);
 
                     // tenho que ler somente diff bits
                     std::string read8Bits = std::bitset<8>(byte).to_string();
@@ -289,11 +261,16 @@ int main(int argc, char** argv) {
             }
         }
 
-        // debug(dataBytes.length());
-        // debug(treeCode.length());
+        if (!finishedReadingData || !finishedReadingTree) {
+            std::cout
+                << "ERRO: falha ao ler arquivo de entrada para descomprimir. Verifique se ele nao esta vazio."
+                << std::endl;
+                
+            inputFile.close();
+            return 0;
+        }
 
-        // utils.printBytes(dataBytes);
-        // utils.printBytes(treeCode);
+        int currentIndex = 0;
 
         HuffmanTree decodedTree = HuffmanTree();
         Cell* decodedRoot = decodedTree.decodifyTree(treeCode, currentIndex);

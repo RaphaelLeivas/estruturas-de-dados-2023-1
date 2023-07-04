@@ -73,8 +73,6 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
         return nullptr;
     }
 
-    // debug(encodedTree);
-
     if (encodedTree[currentIndex] == '1') {
         // Leaf node: extract the symbol from the next 8 bits
         std::string symbolBits = encodedTree.substr(currentIndex + 1, 8);
