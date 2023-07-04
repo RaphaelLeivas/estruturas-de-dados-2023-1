@@ -101,10 +101,20 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
     }
 }
 
-void HuffmanTree::getDecodedText(std::string dataBytes, std::string& decodedText) {
+void HuffmanTree::getDecodedText(std::string dataBytes,
+                                 std::string& decodedText) {
     Cell* currentNode = this->root;
 
+    if (currentNode == nullptr) {
+        throw std::invalid_argument(
+            "currentNode is nullptr in getDecodedText !");
+    }
+
     for (char bit : dataBytes) {
+        if (currentNode == nullptr) {
+            continue;
+        }
+
         if (bit == '0') {
             currentNode = currentNode->left;
         } else if (bit == '1') {
@@ -113,7 +123,7 @@ void HuffmanTree::getDecodedText(std::string dataBytes, std::string& decodedText
 
         if (this->isLeaf(currentNode)) {
             decodedText += currentNode->getItem().getData();
-            currentNode = root;
+            currentNode = this->root;
         }
     }
 }
@@ -207,5 +217,9 @@ void HuffmanTree::cleanRecursive(Cell* p) {
 }
 
 bool HuffmanTree::isLeaf(Cell* cell) {
+    if (cell == nullptr) {
+        return false;
+    }
+
     return cell->left == nullptr && cell->right == nullptr;
 }
