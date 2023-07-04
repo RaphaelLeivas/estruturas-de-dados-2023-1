@@ -15,13 +15,13 @@ class LinkedList {
     bool isEmpty();
     void clean();
     void print();
-    NodeItem getItem(int);
-    void setItem(NodeItem, int);
+    CellItem getItem(int);
+    void setItem(CellItem, int);
 
     // inserts - nivel de item
-    void insertStart(NodeItem);
-    void insert(NodeItem, int);
-    void insertEnd(NodeItem);
+    void insertStart(CellItem);
+    void insert(CellItem, int);
+    void insertEnd(CellItem);
 
     // inserts - nivel de celula
     void insertCellStart(Cell*);
@@ -29,9 +29,9 @@ class LinkedList {
     void insertCellEnd(Cell*);
 
     // remove
-    NodeItem removeStart();
-    NodeItem remove(int);
-    NodeItem removeEnd();
+    CellItem removeStart();
+    CellItem remove(int);
+    CellItem removeEnd();
 
     // aux
     Cell* position(int, bool);

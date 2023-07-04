@@ -20,7 +20,7 @@ void Compressor::compressFile(std::string inputFile, std::string outputFile) {
 
         if (foundCell == nullptr) {
             // nao existe o caracter. cria um novo e salva
-            NodeItem newItem = NodeItem();
+            CellItem newItem = CellItem();
             newItem.setData(ch);
             newFreq = 1;
             newItem.setFrequency(newFreq);
@@ -28,7 +28,7 @@ void Compressor::compressFile(std::string inputFile, std::string outputFile) {
             list.insertEnd(newItem);
         } else {
             // caracter ja existe na lista.
-            NodeItem currentItem = foundCell->getItem();
+            CellItem currentItem = foundCell->getItem();
             newFreq = currentItem.getFrequency() + 1;
             currentItem.setFrequency(newFreq);
 
@@ -49,7 +49,7 @@ void Compressor::compressFile(std::string inputFile, std::string outputFile) {
     LinkedList originalList = LinkedList();
 
     for (int i = 0; i < list.getSize(); i++) {
-        NodeItem currentItem = list.getItem(i + 1);
+        CellItem currentItem = list.getItem(i + 1);
         originalList.insertEnd(currentItem);
     }
 
@@ -64,7 +64,7 @@ void Compressor::compressFile(std::string inputFile, std::string outputFile) {
         newCell->left = left;
         newCell->right = right;
 
-        NodeItem newItem = NodeItem();
+        CellItem newItem = CellItem();
         int newFreq =
             left->getItem().getFrequency() + right->getItem().getFrequency();
         newItem.setFrequency(newFreq);
@@ -82,7 +82,7 @@ void Compressor::compressFile(std::string inputFile, std::string outputFile) {
     // adiciona um codigo a cada caracter da lista
     if (originalList.getSize() == 1) {
         // se so tem um caracter na entrada
-        NodeItem item = root->getItem();
+        CellItem item = root->getItem();
         item.setCode("1");
         root->setItem(item);
     } else {

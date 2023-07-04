@@ -20,7 +20,7 @@ void HuffmanTree::assignHuffmanCodes(Cell* root, std::string str) {
     }
 
     if (root->getItem().getData() != 0) {
-        NodeItem item = root->getItem();
+        CellItem item = root->getItem();
         item.setCode(str);
         root->setItem(item);
     }
@@ -72,7 +72,7 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, long unsigned int& cur
         currentIndex += 9; 
 
         Cell* leafNode = new Cell();
-        NodeItem newItem = NodeItem();
+        CellItem newItem = CellItem();
         newItem.setData(data);
         leafNode->setItem(newItem);
         leafNode->left = nullptr;

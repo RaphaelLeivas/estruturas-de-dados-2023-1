@@ -1,17 +1,17 @@
 #include "../include/Cell.hpp"
 
 Cell::Cell() {
-    NodeItem newItem = NodeItem();
+    CellItem newItem = CellItem();
     newItem.setFrequency(-1);
 
     this->item = newItem;   
     this->next = nullptr;
 }
 
-void Cell::setItem(NodeItem item) {
+void Cell::setItem(CellItem item) {
     this->item = item;
 }
 
-NodeItem Cell::getItem() {
+CellItem Cell::getItem() {
     return this->item;
 }

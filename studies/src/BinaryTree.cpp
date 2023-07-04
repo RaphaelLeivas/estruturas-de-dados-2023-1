@@ -4,7 +4,7 @@ BinaryTree::BinaryTree() { this->root = nullptr; }
 
 BinaryTree::~BinaryTree() { this->clean(); }
 
-void BinaryTree::insert(NodeItem item) {
+void BinaryTree::insert(CellItem item) {
     this->insertRecursive(this->root, item);
 }
 
@@ -51,7 +51,7 @@ void BinaryTree::walk(WALK_TYPES type) {
     std::cout << "WALK ENDED" << std::endl;
 }
 
-void BinaryTree::insertRecursive(Node*& p, NodeItem item) {
+void BinaryTree::insertRecursive(Node*& p, CellItem item) {
     if (p == nullptr) {
         p = new Node();
         p->setItem(item);
