@@ -262,15 +262,15 @@ int main(int argc, char** argv) {
         }
 
         if (!finishedReadingData || !finishedReadingTree) {
-            std::cout
-                << "ERRO: falha ao ler arquivo de entrada para descomprimir. Verifique se ele nao esta vazio."
-                << std::endl;
-                
+            std::cout << "ERRO: falha ao ler arquivo de entrada para ";
+            std::cout << "descomprimir. Verifique se ele nao esta vazio."
+                      << std::endl;
+
             inputFile.close();
             return 0;
         }
 
-        int currentIndex = 0;
+        long unsigned int currentIndex = 0;
 
         HuffmanTree decodedTree = HuffmanTree();
         Cell* decodedRoot = decodedTree.decodifyTree(treeCode, currentIndex);

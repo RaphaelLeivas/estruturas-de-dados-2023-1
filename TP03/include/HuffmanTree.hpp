@@ -15,11 +15,8 @@ class HuffmanTree {
     HuffmanTree();
     ~HuffmanTree();
 
-    void insert(NodeItem item);
     void walk(WALK_TYPES);
     void clean();
-    int search(int);
-    void remove(int);
     void setRoot(Cell*);
     Cell* getRoot();
     void setCode(std::string);
@@ -27,20 +24,15 @@ class HuffmanTree {
     void assignHuffmanCodes(Cell*, std::string);
     Cell* findCellByChar(Cell*, char);
     void codifyTree(Cell*, std::string&);
-    Cell* decodifyTree(std::string&, int&);
+    Cell* decodifyTree(std::string&, long unsigned int&);
     bool isLeaf(Cell*);
     void getDecodedText(std::string, std::string&);
 
    private:
-    void insertRecursive(Cell*& p, NodeItem item);
     void cleanRecursive(Cell* p);
-    void byLevel();
     void preOrder(Cell* p);
     void inOrder(Cell* p);
     void postOrder(Cell* p);
-    int searchRecursive(Cell* p, int);
-    void removeRecursive(Cell*& p, int);
-    void predecessor(Cell* q, Cell*& r);
 
     Cell* root;
     std::string code;  // arvore codificada

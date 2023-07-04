@@ -52,7 +52,7 @@ std::bitset<BYTE_IN_BITS> Utils::charTo8Bits(char c) {
 };
 
 void Utils::printBytes(std::string bits) {
-    for (int i = 0; i < bits.size(); ++i) {
+    for (long unsigned int i = 0; i < bits.size(); ++i) {
         if (i % 8 == 0 && i != 0) {
             std::cout << " ";
         } else {

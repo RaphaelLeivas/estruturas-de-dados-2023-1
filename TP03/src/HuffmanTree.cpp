@@ -14,14 +14,6 @@ void HuffmanTree::setCode(std::string code) { this->code = code; }
 
 std::string HuffmanTree::getCode() { return this->code; }
 
-void HuffmanTree::insert(NodeItem item) {
-    // this->insertRecursive(this->root, item);
-}
-
-void HuffmanTree::remove(int freq) {
-    // return this->removeRecursive(this->root, freq);
-}
-
 void HuffmanTree::assignHuffmanCodes(Cell* root, std::string str) {
     if (!root) {
         return;
@@ -68,7 +60,7 @@ void HuffmanTree::codifyTree(Cell* p, std::string& str) {
     }
 }
 
-Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
+Cell* HuffmanTree::decodifyTree(std::string& encodedTree, long unsigned int& currentIndex) {
     if (currentIndex >= encodedTree.size()) {
         return nullptr;
     }
@@ -131,10 +123,6 @@ void HuffmanTree::clean() {
     this->root = nullptr;
 }
 
-int HuffmanTree::search(int freq) {
-    // return this->searchRecursive(this->root, freq);
-}
-
 void HuffmanTree::walk(WALK_TYPES type) {
     std::cout << "WALK STARTED" << std::endl;
     std::cout << "------------" << std::endl;
@@ -152,10 +140,6 @@ void HuffmanTree::walk(WALK_TYPES type) {
             this->postOrder(this->root);
             break;
 
-        case WALK_TYPES::BY_LEVEL:
-            this->byLevel();
-            break;
-
         default:
             this->inOrder(this->root);
             break;
@@ -163,19 +147,6 @@ void HuffmanTree::walk(WALK_TYPES type) {
 
     std::cout << "------------" << std::endl;
     std::cout << "WALK ENDED" << std::endl;
-}
-
-void HuffmanTree::predecessor(Cell* q, Cell*& r) {
-    if (r->right != nullptr) {
-        this->predecessor(q, r->right);
-        return;
-    }
-
-    q->item = r->item;
-    q = r;
-    r = r->left;
-
-    delete q;
 }
 
 void HuffmanTree::preOrder(Cell* p) {
@@ -202,10 +173,6 @@ void HuffmanTree::postOrder(Cell* p) {
     }
 }
 
-void HuffmanTree::byLevel() {
-    // implementar caso necessário
-}
-
 void HuffmanTree::cleanRecursive(Cell* p) {
     if (p != nullptr) {
         this->cleanRecursive(p->right);
@@ -216,7 +183,7 @@ void HuffmanTree::cleanRecursive(Cell* p) {
 
 bool HuffmanTree::isLeaf(Cell* cell) {
     if (cell == nullptr) {
-        return false;
+        return false; // gambiarra
     }
 
     return cell->left == nullptr && cell->right == nullptr;
