@@ -18,7 +18,6 @@ class CellItem {
    private:
     int frequency;
     char data;
-    int key;
     std::string code;
 };
 

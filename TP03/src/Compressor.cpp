@@ -90,7 +90,7 @@ void Compressor::compressFile(std::string inputFile, std::string outputFile) {
     }
 
     // agora percorre o arquivo de entrada mais um vez. para cada caracter,
-    // adicina o correspondente codigo no arquivo de saida
+    // identifica o código correspondente e salva no buffer
     std::ifstream inputStream2(inputFile);
     std::ofstream outputStream(outputFile, std::ios::binary);
 
@@ -245,6 +245,8 @@ void Compressor::decompressFile(std::string inputFile, std::string outputFile) {
     // por ultimo, escreve o decodedText no arquivo de saida
     std::ofstream outputStream(outputFile);
     outputStream << decodedText;
+
+    debug(decodedText);
 
     inputStream.close();
     outputStream.close();
