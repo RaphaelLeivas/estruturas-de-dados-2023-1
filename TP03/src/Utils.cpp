@@ -28,18 +28,18 @@ void Utils::sortbyCountingSort(LinkedList* list, int maxFreq) {
     LinkedList sortedList;
 
     for (int i = 0; i < listSize; i++) {
-        NodeItem currentItem = list->getItem(i + 1);
+        CellItem currentItem = list->getItem(i + 1);
         sortedList.insertEnd(currentItem);
     }
 
     for (int i = listSize - 1; i >= 0; i--) {
-        NodeItem arrI = list->getItem(i + 1);
+        CellItem arrI = list->getItem(i + 1);
         sortedList.setItem(arrI, count[arrI.getFrequency()]);
         count[arrI.getFrequency()]--;
     }
 
     for (int i = 0; i < list->getSize(); i++) {
-        NodeItem currentItem = sortedList.getItem(i + 1);
+        CellItem currentItem = sortedList.getItem(i + 1);
         list->setItem(currentItem, i + 1);
     }
 
@@ -52,7 +52,7 @@ std::bitset<BYTE_IN_BITS> Utils::charTo8Bits(char c) {
 };
 
 void Utils::printBytes(std::string bits) {
-    for (int i = 0; i < bits.size(); ++i) {
+    for (long unsigned int i = 0; i < bits.size(); ++i) {
         if (i % 8 == 0 && i != 0) {
             std::cout << " ";
         } else {
@@ -81,7 +81,7 @@ void Utils::writeBytesToFile(std::ofstream& file, std::string buffer) {
         return;
     }
 
-    //add trailing zeros no que sobrou ate formar 8 bits 
+    // add trailing zeros no que sobrou ate formar 8 bits 
     while (buffer.size() % 8 != 0) {
         buffer += "0";
     }

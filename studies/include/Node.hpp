@@ -6,11 +6,11 @@
 class Node {
    public:
     Node();
-    void setItem(NodeItem);
-    NodeItem getItem();
+    void setItem(CellItem);
+    CellItem getItem();
 
    private:
-    NodeItem item;
+    CellItem item;
 
     Node* left;
     Node* right;

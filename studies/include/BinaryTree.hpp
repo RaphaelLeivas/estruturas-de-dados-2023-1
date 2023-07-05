@@ -12,14 +12,14 @@ class BinaryTree {
     BinaryTree();
     ~BinaryTree();
 
-    void insert(NodeItem item);
+    void insert(CellItem item);
     void walk(WALK_TYPES);
     void clean();
     int search(int);
     void remove(int);
 
    private:
-    void insertRecursive(Node*& p, NodeItem item);
+    void insertRecursive(Node*& p, CellItem item);
     void cleanRecursive(Node* p);
     void byLevel();
     void preOrder(Node* p);

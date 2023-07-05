@@ -1,12 +1,12 @@
-#ifndef NODE_ITEM_HPP
-#define NODE_ITEM_HPP
+#ifndef CELL_ITEM_HPP
+#define CELL_ITEM_HPP
 
 #include <iostream>
 #include <string>
 
-class NodeItem {
+class CellItem {
    public:
-    NodeItem();
+    CellItem();
     void setFrequency(int);
     void setData(char);
     int getFrequency();
@@ -18,7 +18,6 @@ class NodeItem {
    private:
     int frequency;
     char data;
-    int key;
     std::string code;
 };
 

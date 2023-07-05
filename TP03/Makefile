@@ -4,8 +4,8 @@ SRC = src
 OBJ = obj
 INC = include
 BIN = bin
-OBJS = $(OBJ)/NodeItem.o $(OBJ)/Node.o $(OBJ)/Cell.o $(OBJ)/BinaryTree.o $(OBJ)/LinkedList.o $(OBJ)/HuffmanTree.o $(OBJ)/Utils.o $(OBJ)/TP03.o
-HDRS = $(INC)/NodeItem.hpp $(INC)/Node.hpp $(INC)/Cell.hpp  $(INC)/BinaryTree.hpp $(INC)/LinkedList.hpp $(INC)/HuffmanTree.hpp $(INC)/Utils.hpp 
+OBJS = $(OBJ)/CellItem.o $(OBJ)/Cell.o $(OBJ)/LinkedList.o $(OBJ)/HuffmanTree.o $(OBJ)/Utils.o $(OBJ)/Compressor.o $(OBJ)/TP03.o
+HDRS = $(INC)/CellItem.hpp $(INC)/Cell.hpp $(INC)/LinkedList.hpp $(INC)/HuffmanTree.hpp $(INC)/Utils.hpp $(INC)/Compressor.hpp
 
 CFLAGS_DEBUG = -g -w -c -std=c++14 -I$(INC) 
 CFLAGS_PROD = -Wall -c -std=c++14 -I$(INC) -pg
@@ -13,18 +13,18 @@ CFLAGS = $(CFLAGS_PROD)
 
 EXE = $(BIN)/TP03
 
-FILE_TO_COMP = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToComp.txt
-FILE_TO_DECOMP = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToDecomp.txt
+UNCOMPRESSED_FILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToComp.txt
+COMPRESSED_FILE = /mnt/c/dev/estruturas-de-dados-2023-1/TP03/fileToDecomp.txt
 
 run:  $(EXE)
-	$(EXE) -c $(FILE_TO_COMP) $(FILE_TO_DECOMP)
-	$(EXE) -d $(FILE_TO_COMP) $(FILE_TO_DECOMP)
+	$(EXE) -c $(UNCOMPRESSED_FILE) $(COMPRESSED_FILE)
+	$(EXE) -d $(COMPRESSED_FILE) $(UNCOMPRESSED_FILE)
 
 debug:  $(EXE)
 	gdb --args $(EXE)
 
 valgrind:
-	valgrind -s --leak-check=full --show-leak-kinds=reachable $(EXE)
+	valgrind -s --leak-check=full --show-leak-kinds=reachable $(EXE) -c $(UNCOMPRESSED_FILE) $(COMPRESSED_FILE)
 
 $(BIN)/TP03: $(OBJS)
 	$(CC) -pg -o $(BIN)/TP03 $(OBJS) $(LIBS)
@@ -32,17 +32,11 @@ $(BIN)/TP03: $(OBJS)
 $(OBJ)/TP03.o: $(HDRS) $(SRC)/TP03.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/TP03.o $(SRC)/TP03.cpp
 
-$(OBJ)/NodeItem.o: $(HDRS) $(SRC)/NodeItem.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/NodeItem.o $(SRC)/NodeItem.cpp
-
-$(OBJ)/Node.o: $(HDRS) $(SRC)/Node.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/Node.o $(SRC)/Node.cpp
+$(OBJ)/CellItem.o: $(HDRS) $(SRC)/CellItem.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/CellItem.o $(SRC)/CellItem.cpp
 
 $(OBJ)/Cell.o: $(HDRS) $(SRC)/Cell.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Cell.o $(SRC)/Cell.cpp
-
-$(OBJ)/BinaryTree.o: $(HDRS) $(SRC)/BinaryTree.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/BinaryTree.o $(SRC)/BinaryTree.cpp
 
 $(OBJ)/LinkedList.o: $(HDRS) $(SRC)/LinkedList.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/LinkedList.o $(SRC)/LinkedList.cpp
@@ -52,6 +46,9 @@ $(OBJ)/HuffmanTree.o: $(HDRS) $(SRC)/HuffmanTree.cpp
 
 $(OBJ)/Utils.o: $(HDRS) $(SRC)/Utils.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/Utils.o $(SRC)/Utils.cpp
+
+$(OBJ)/Compressor.o: $(HDRS) $(SRC)/Compressor.cpp
+	$(CC) $(CFLAGS) -o $(OBJ)/Compressor.o $(SRC)/Compressor.cpp
 	
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

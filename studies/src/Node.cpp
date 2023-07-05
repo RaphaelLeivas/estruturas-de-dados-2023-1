@@ -1,7 +1,7 @@
 #include "../include/Node.hpp"
 
 Node::Node() {
-    NodeItem newItem = NodeItem();
+    CellItem newItem = CellItem();
     newItem.setFrequency(-1);
 
     this->item = newItem;   
@@ -10,10 +10,10 @@ Node::Node() {
     this->right = nullptr;
 }
 
-void Node::setItem(NodeItem item) {
+void Node::setItem(CellItem item) {
     this->item = item;
 }
 
-NodeItem Node::getItem() {
+CellItem Node::getItem() {
     return this->item;
 }

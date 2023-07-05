@@ -1,18 +1,18 @@
 #ifndef CELL_HPP
 #define CELL_HPP
 
-#include "NodeItem.hpp"
+#include "CellItem.hpp"
 
 class Cell {
    public:
     Cell();
-    void setItem(NodeItem);
-    NodeItem getItem();
+    void setItem(CellItem);
+    CellItem getItem();
     Cell* left;
     Cell* right;
 
    private:
-    NodeItem item;
+    CellItem item;
     Cell* next;
 
     friend class LinkedList;

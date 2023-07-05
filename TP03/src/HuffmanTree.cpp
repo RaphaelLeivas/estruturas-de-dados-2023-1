@@ -14,21 +14,13 @@ void HuffmanTree::setCode(std::string code) { this->code = code; }
 
 std::string HuffmanTree::getCode() { return this->code; }
 
-void HuffmanTree::insert(NodeItem item) {
-    // this->insertRecursive(this->root, item);
-}
-
-void HuffmanTree::remove(int freq) {
-    // return this->removeRecursive(this->root, freq);
-}
-
 void HuffmanTree::assignHuffmanCodes(Cell* root, std::string str) {
     if (!root) {
         return;
     }
 
     if (root->getItem().getData() != 0) {
-        NodeItem item = root->getItem();
+        CellItem item = root->getItem();
         item.setCode(str);
         root->setItem(item);
     }
@@ -68,21 +60,19 @@ void HuffmanTree::codifyTree(Cell* p, std::string& str) {
     }
 }
 
-Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
+Cell* HuffmanTree::decodifyTree(std::string& encodedTree, long unsigned int& currentIndex) {
     if (currentIndex >= encodedTree.size()) {
         return nullptr;
     }
 
-    // debug(encodedTree);
-
     if (encodedTree[currentIndex] == '1') {
-        // Leaf node: extract the symbol from the next 8 bits
+        // folha
         std::string symbolBits = encodedTree.substr(currentIndex + 1, 8);
         char data = static_cast<char>(std::bitset<8>(symbolBits).to_ulong());
-        currentIndex += 9;  // Move the current index past the symbol bits
+        currentIndex += 9; 
 
         Cell* leafNode = new Cell();
-        NodeItem newItem = NodeItem();
+        CellItem newItem = CellItem();
         newItem.setData(data);
         leafNode->setItem(newItem);
         leafNode->left = nullptr;
@@ -90,8 +80,8 @@ Cell* HuffmanTree::decodifyTree(std::string& encodedTree, int& currentIndex) {
 
         return leafNode;
     } else {
-        // Internal node: recursively process the left and right child nodes
-        currentIndex++;  // Move the current index past the internal node flag
+        // no interno
+        currentIndex++; 
 
         Cell* internalNode = new Cell();
         internalNode->left = this->decodifyTree(encodedTree, currentIndex);
@@ -133,10 +123,6 @@ void HuffmanTree::clean() {
     this->root = nullptr;
 }
 
-int HuffmanTree::search(int freq) {
-    // return this->searchRecursive(this->root, freq);
-}
-
 void HuffmanTree::walk(WALK_TYPES type) {
     std::cout << "WALK STARTED" << std::endl;
     std::cout << "------------" << std::endl;
@@ -154,10 +140,6 @@ void HuffmanTree::walk(WALK_TYPES type) {
             this->postOrder(this->root);
             break;
 
-        case WALK_TYPES::BY_LEVEL:
-            this->byLevel();
-            break;
-
         default:
             this->inOrder(this->root);
             break;
@@ -165,19 +147,6 @@ void HuffmanTree::walk(WALK_TYPES type) {
 
     std::cout << "------------" << std::endl;
     std::cout << "WALK ENDED" << std::endl;
-}
-
-void HuffmanTree::predecessor(Cell* q, Cell*& r) {
-    if (r->right != nullptr) {
-        this->predecessor(q, r->right);
-        return;
-    }
-
-    q->item = r->item;
-    q = r;
-    r = r->left;
-
-    delete q;
 }
 
 void HuffmanTree::preOrder(Cell* p) {
@@ -204,10 +173,6 @@ void HuffmanTree::postOrder(Cell* p) {
     }
 }
 
-void HuffmanTree::byLevel() {
-    // implementar caso necessário
-}
-
 void HuffmanTree::cleanRecursive(Cell* p) {
     if (p != nullptr) {
         this->cleanRecursive(p->right);
@@ -218,7 +183,7 @@ void HuffmanTree::cleanRecursive(Cell* p) {
 
 bool HuffmanTree::isLeaf(Cell* cell) {
     if (cell == nullptr) {
-        return false;
+        return false; // gambiarra
     }
 
     return cell->left == nullptr && cell->right == nullptr;

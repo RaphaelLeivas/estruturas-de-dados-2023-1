@@ -18,7 +18,7 @@ int LinkedList::getSize() { return this->size; }
 
 bool LinkedList::isEmpty() { return this->size == 0; }
 
-NodeItem LinkedList::getItem(int pos) {
+CellItem LinkedList::getItem(int pos) {
     Cell* p = this->position(pos, false);
 
     if (p == nullptr) {
@@ -33,7 +33,7 @@ Cell* LinkedList::getCellByChar(char c) {
     Cell* p = this->head->next;
 
     while (p != nullptr) {
-        NodeItem currentItem = p->getItem();
+        CellItem currentItem = p->getItem();
 
         if (currentItem.getData() == c) {
             return p;
@@ -45,12 +45,12 @@ Cell* LinkedList::getCellByChar(char c) {
     return nullptr;
 }
 
-void LinkedList::setItem(NodeItem item, int pos) {
+void LinkedList::setItem(CellItem item, int pos) {
     Cell* p = this->position(pos, false);
     p->setItem(item);
 }
 
-void LinkedList::insertStart(NodeItem item) {
+void LinkedList::insertStart(CellItem item) {
     Cell* newCell = new Cell();
     newCell->setItem(item);
 
@@ -73,7 +73,7 @@ void LinkedList::insertCellStart(Cell* cell) {
     }
 }
 
-void LinkedList::insertEnd(NodeItem item) {
+void LinkedList::insertEnd(CellItem item) {
     Cell* newCell = new Cell();
 
     newCell->setItem(item);
@@ -91,7 +91,7 @@ void LinkedList::insertCellEnd(Cell* cell) {
     this->size = this->size + 1;
 }
 
-void LinkedList::insert(NodeItem item, int pos) {
+void LinkedList::insert(CellItem item, int pos) {
     Cell* newCell = new Cell();
     Cell* p = this->position(pos, false);
 
@@ -148,8 +148,8 @@ void LinkedList::print() {
     std::cout << "END LIST PRINT" << std::endl;
 }
 
-NodeItem LinkedList::removeStart() {
-    NodeItem aux;
+CellItem LinkedList::removeStart() {
+    CellItem aux;
 
     if (this->isEmpty()) {
         throw std::invalid_argument(
@@ -170,8 +170,8 @@ NodeItem LinkedList::removeStart() {
     return aux;
 }
 
-NodeItem LinkedList::removeEnd() {
-    NodeItem aux;
+CellItem LinkedList::removeEnd() {
+    CellItem aux;
 
     if (this->isEmpty()) {
         throw std::invalid_argument(
@@ -189,8 +189,8 @@ NodeItem LinkedList::removeEnd() {
     return aux;
 }
 
-NodeItem LinkedList::remove(int pos) {
-    NodeItem aux;
+CellItem LinkedList::remove(int pos) {
+    CellItem aux;
 
     if (this->isEmpty()) {
         throw std::invalid_argument(
