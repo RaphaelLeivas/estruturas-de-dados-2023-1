@@ -246,7 +246,7 @@ void Compressor::decompressFile(std::string inputFile, std::string outputFile) {
     std::ofstream outputStream(outputFile);
     outputStream << decodedText;
 
-    debug(decodedText);
+    // debug(decodedText);
 
     inputStream.close();
     outputStream.close();
